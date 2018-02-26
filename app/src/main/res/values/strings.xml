@@ -1,0 +1,127 @@
+<resources>
+    <string name="app_name">Labika Omra</string>
+    <string name="action_settings">LogOut</string>
+    <string name="errorapp">\"Error is in application \"</string>
+    <string name="title_activity_company_register">CompanyRegisterActivity</string>
+    <string name="completeaction">Complete action using</string>
+    <string name="creat_acount">Creating Account...</string>
+    <string name="somewrong">Something went wrong</string>
+    <string name="useuproimg">UsersProfileImages</string>
+    <string name="profress">Progress</string>
+    <string name="onProgress">onProgress: %5.2f MB transferred</string>
+    <string name="error_notadd">\"Error : not add \"</string>
+    <string name="welcome">Welcome</string>
+    <string name="data">data</string>
+    <string name="error_num">Error number seat</string>
+    <string name="register">Register</string>
+    <string name="confpassword_hint">Confirm Password</string>
+    <string name="password_hint">Password</string>
+    <string name="phone_hint">Phone</string>
+    <string name="email_hint">Email</string>
+    <string name="username_hint">User Name</string>
+    <string name="location">Location</string>
+    <string name="companyname_hint">Company Name</string>
+    <string name="mobile_hint">Mobile</string>
+    <string name="add_doc_tost_lat">lat, Error Complete Data</string>
+    <string name="gps_enable">GPS is Enabled in your device</string>
+    <string name="tabed_loc">Taped Location</string>
+    <string name="no_permission">No Permissions Granted</string>
+    <string name="gps_disable">GPS is disabled in your device. Would you like to enable it?</string>
+    <string name="cancel">Cancel</string>
+    <string name="enable_gps">Goto Settings Page To Enable GPS</string>
+    <string name="title_activity_company_login">CompanyLoginActivity</string>
+    <string name="login_account">Login Account...</string>
+    <string name="faild">Failed</string>
+    <string name="less6">less than 6</string>
+    <string name="pls_wail">Please Wait...</string>
+    <string name="enter_email">Enter email address!</string>
+    <string name="enter_pass">Enter password!</string>
+    <string name="userin">u are in</string>
+    <string name="login">Login</string>
+    <string name="title_activity_company_offers">CompanyOffersActivity</string>
+    <string name="fi" />
+    <string name="nodataload">No Data Loaded</string>
+    <string name="title_activity_add_offer">AddOfferActivity</string>
+    <string name="hotelname_hint">Hotel Name</string>
+    <string name="startday">Start Day</string>
+    <string name="attend_start_time">Attend Start Time</string>
+    <string name="start_time">Start Time</string>
+    <string name="back_day">Back Day</string>
+    <string name="attend_end_time">Attend End Time</string>
+    <string name="end_time">End Time</string>
+    <string name="deals_hint">Deals</string>
+    <string name="chairs_count_hint">Chairs Count</string>
+    <string name="price_hint">Price</string>
+    <string name="add_offer">Add Offer</string>
+    <!--//add doctor-->
+    <string-array name="sub_level_array" translatable="false">
+        <item>First class</item>
+        <item>Second Class</item>
+        <item>Third Class</item>
+    </string-array>
+    <string name="bus_level_spinner" translatable="false">Bus Level</string>
+    <string name="hotel_level_spinner" translatable="false">Hotel Level</string>
+    <string name="choose_multi_imgs">Choose Multi Image</string>
+    <string name="return_data">return-data</string>
+    <string name="aspc_y">aspectY</string>
+    <string name="aspc_x">aspectX</string>
+    <string name="crop">crop</string>
+    <string name="image">image/*</string>
+    <string name="onfailure">onfailure</string>
+    <string name="offer_img">Upload Offer Image ...</string>
+    <string name="offer_imgs">OfferImgs</string>
+    <string name="photos">Photos</string>
+    <string name="profile">profile</string>
+    <string name="upload_multi_imgs">Upload Multi Image</string>
+    <string name="lists">Lists</string>
+    <string name="timestamp">timestamp</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="error_hotelname">Error Hotel Name</string>
+    <string name="error_deals">Error Deals</string>
+    <string name="error_price">Error Price</string>
+    <string name="error_chairCount">Error Chair Count</string>
+    <string name="error_hotelLevel">Error hotel Level</string>
+    <string name="error_busLevel">Error busLevel</string>
+    <string name="error_profileImg">Error Offer Image</string>
+    <string name="title_activity_company_offer_detail">CompanyOfferDetailActivity</string>
+    <string name="your_location">Your Location</string>
+    <string name="title_activity_user_login">UserLoginActivity</string>
+    <string name="loading">Loading</string>
+    <string name="web_client_id">888906199724-jqmmk6b5opp3r0i11q7h2a6uv1pmq67i.apps.googleusercontent.com</string>
+    <string name="Search">Search</string>
+    <string name="Omera_Company_Touries_and_more">Omera Company Touries and more...</string>
+    <string name="check_in">check in</string>
+    <string name="check_out">check out</string>
+    <string name="type_hotel">type hotel</string>
+    <string name="Enter_Distination">Enter Distination</string>
+    <string name="Number_seat">Number seat</string>
+    <string name="title_activity_offers">OffersActivity</string>
+    <string name="title_activity_offer_detail">OfferDetailActivity</string>
+    <string name="font_path">fonts/Raleway-ExtraBold.ttf</string>
+    <string name="slogan">Your Offer\'s Here</string>
+    <string name="adding_fav">Add to Favorite</string>
+    <string name="adding_book">Add to Booking</string>
+    <string name="error">error</string>
+    <string name="add_fav">Success to Favorite</string>
+    <string name="add_book">Success to Booking</string>
+    <string name="type_bus">Type bus</string>
+    <string name="company_email">Email Company</string>
+
+
+    <string-array name="types_hotel">
+
+        <item>5 stars</item>
+        <item>4 stars</item>
+        <item>3 stars</item>
+        <item>2 stars</item>
+        <item>1 stars</item>
+    </string-array>
+
+    <string-array name="types_bus">
+        <item>after 2017 \n</item>
+        <item>2010-2017 \n</item>
+        <item>2000-2010 \n</item>
+        <item>Before 2000 \n</item>
+
+    </string-array>
+</resources>

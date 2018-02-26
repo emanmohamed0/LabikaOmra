@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.apps.labikaomra">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <permission
+        android:name="com.example.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.permission.MAPS_RECEIVE" />
+
+    <application
+        android:name=".Application_config.myApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/leader"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
+
+        <!-- This meta-data tag is required to use Google Play Services. -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.gms.version" -->
+        <!-- android:value="@integer/google_play_services_version" /> -->
+
+
+        <!-- Include the AdActivity configChanges and theme. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.maps.v2.API_KEY" -->
+        <!-- android:value="@string/google_maps_key" /> -->
+        <!-- Camera -->
+        <activity
+            android:name="com.gun0912.tedpicker.ImagePickerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activities.ChooseLocationActivity" />
+        <activity android:name=".activities.ChoiceActivity" />
+
+        <activity
+            android:name=".activities.CompanyRegisterActivity"
+            android:label="@string/title_activity_company_register"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.CompanyLoginActivity"
+            android:theme="@style/AppTheme" >
+      </activity>
+        <activity
+            android:name=".activities.CompanyOffersActivity"
+            android:label="@string/title_activity_company_offers"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.AddOfferActivity"
+            android:label="@string/title_activity_add_offer"
+            android:theme="@style/AppTheme" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".activities.MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".activities.CompanyOfferDetailActivity"
+            android:label="@string/title_activity_company_offer_detail"
+            android:theme="@style/AppTheme" >
+            </activity>
+        <activity
+            android:name=".activities.UserLoginActivity"
+            android:label="@string/title_activity_user_login"
+            android:theme="@style/AppTheme"></activity>
+
+
+        <activity android:name=".activities.BaseActivity" />
+        <activity
+            android:name=".activities.OffersActivity"
+            android:label="@string/title_activity_offers"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.OfferDetailActivity"
+            android:label="@string/title_activity_offer_detail"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".activities.SplachActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>

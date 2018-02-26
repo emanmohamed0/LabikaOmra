@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_book"
+        android:icon="@drawable/ic_border_color_whit"
+        android:title="Booking" />
+
+    <item
+        android:id="@+id/menu_favorite"
+        android:icon="@drawable/ic_star_half_whit"
+        android:title="Favorite" />
+   <!-- <item
+        android:id="@+id/menu_fav"
+        android:icon="@drawable/ic_favorite_whit"
+        android:title="مفضل" />
+
+    <item
+        android:id="@+id/menu_call"
+        android:icon="@drawable/ic_call_whit"
+        android:title="إتصال" />
+    <item
+        android:id="@+id/menu_review"
+        android:icon="@drawable/ic_star_half_whit"
+        android:title="تقييم" />
+
+    <item
+        android:id="@+id/menu_order"
+        android:icon="@drawable/ic_border_color_whit"
+        android:title="حجز" />-->
+
+
+</menu>

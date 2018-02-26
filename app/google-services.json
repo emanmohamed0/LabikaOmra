@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "888906199724",
+    "firebase_url": "https://labika-omra.firebaseio.com",
+    "project_id": "labika-omra",
+    "storage_bucket": "labika-omra.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888906199724:android:66daab92924d33be",
+        "android_client_info": {
+          "package_name": "com.apps.labikaomra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888906199724-1nir2haajkqitmna377o5k9f3tg98oju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apps.labikaomra",
+            "certificate_hash": "bc4bd7b13d4bf2ec39500829bf0ada203df0dab7"
+          }
+        },
+        {
+          "client_id": "888906199724-jqmmk6b5opp3r0i11q7h2a6uv1pmq67i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQc1As7MU_X3uA44_WUsZ01QWzSUzJLak"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888906199724-jqmmk6b5opp3r0i11q7h2a6uv1pmq67i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
