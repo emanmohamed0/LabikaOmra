@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">Labika Omra</string>
+    <string name="app_name">Omrati</string>
     <string name="action_settings">LogOut</string>
     <string name="errorapp">\"Error is in application \"</string>
     <string name="title_activity_company_register">CompanyRegisterActivity</string>
     <string name="completeaction">Complete action using</string>
     <string name="creat_acount">Creating Account...</string>
+    <string name="customer">Customer</string>
     <string name="somewrong">Something went wrong</string>
     <string name="useuproimg">UsersProfileImages</string>
     <string name="profress">Progress</string>
@@ -37,7 +38,7 @@
     <string name="enter_email">Enter email address!</string>
     <string name="enter_pass">Enter password!</string>
     <string name="userin">u are in</string>
-    <string name="login">Login</string>
+    <string name="login">Log In</string>
     <string name="title_activity_company_offers">CompanyOffersActivity</string>
     <string name="fi" />
     <string name="nodataload">No Data Loaded</string>
@@ -106,6 +107,7 @@
     <string name="add_book">Success to Booking</string>
     <string name="type_bus">Type bus</string>
     <string name="company_email">Email Company</string>
+    <string name="choose_lang">Choose Language</string>
 
 
     <string-array name="types_hotel">
@@ -124,4 +126,16 @@
         <item>Before 2000 \n</item>
 
     </string-array>
+    <string name="title_activity_navigation">NavigationActivity</string>
+
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="Reservations">Reservations</string>
+    <string name="Favorite_Companies">Favorite Companies</string>
+    <string name="Service_Provider">Services</string>
+    <string name="Languages">Languages</string>
+    <string name="Share_Application">Share Application</string>
 </resources>

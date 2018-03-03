@@ -76,7 +76,7 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
     MapView mapView;
     private GoogleApiClient googleApiClient;
     CircleImageView profilrImg;
-    TextView mTxtPlace , mTxtPrice ,mTxtHotel ,mTxtFood,mTxtBus;
+    TextView mTxtPlace, mTxtPrice, mTxtHotel, mTxtFood, mTxtBus;
     String nameCompany;
 
     @Override
@@ -118,8 +118,8 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         mTxtHotel = (TextView) findViewById(R.id.hotels);
         mTxtFood = (TextView) findViewById(R.id.food);
         mTxtBus = (TextView) findViewById(R.id.bus);
-        TextView name = (TextView)findViewById(R.id.dispaly_nameCompany);
-        profilrImg = (CircleImageView)findViewById(R.id.profilrImg);
+        TextView name = (TextView) findViewById(R.id.dispaly_nameCompany);
+        profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
 
         mTxtPlace.setText(mPharmacy.getLocation());
         mTxtPrice.setText(mPharmacy.getPrice());
@@ -128,7 +128,7 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         mTxtBus.setText(mPharmacy.getBusLevel());
         name.setText(nameCompany);
 
-        if(mPharmacy.getOfferImage()!=null){
+        if (mPharmacy.getOfferImage() != null) {
             Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
             Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
         }

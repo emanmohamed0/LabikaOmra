@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorback"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:id="@+id/choose_lang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/pad_10dp"
+        android:padding="@dimen/pad_10dp"
+        android:text="@string/choose_lang"
+        android:textColor="@android:color/black"
+        android:textSize="22sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/pad_10dp"
+        android:orientation="vertical" >
+
+        <RadioGroup
+            android:id="@+id/rBGPoly1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dp20"
+                android:id="@+id/radiobuttonAr"
+                android:text="العربية"
+                />
+
+            <RadioButton
+                android:id="@+id/radiobuttonEn"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_width="match_parent"
+                android:textSize="@dimen/dp20"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="English"
+                android:checked="true" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</LinearLayout>

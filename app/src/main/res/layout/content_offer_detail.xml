@@ -164,7 +164,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="@dimen/pad_10dp"
-                                android:text="Type_Food"
+                                android:text="@string/Type_Food"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
                                 android:textStyle="italic" />
@@ -174,7 +174,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="10dp"
-                                android:text="Type_Hotels"
+                                android:text="@string/type_hotel"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
                                 android:textStyle="italic" />
@@ -184,7 +184,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="@dimen/pad_10dp"
-                                android:text="Price"
+                                android:text="@string/price_hint"
                                 android:textColor="@android:color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold|italic" />

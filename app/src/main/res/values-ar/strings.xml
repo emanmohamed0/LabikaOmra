@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">عمرتي</string>
+    <string name="action_settings">خروج</string>
+    <string name="errorapp">\"خطأ في التطبيق \"</string>
+    <string name="title_activity_company_register">عمرتي</string>
+    <string name="completeaction">تم</string>
+    <string name="creat_acount">انشاء حساب ..</string>
+    <string name="somewrong">Something went wrong</string>
+    <string name="useuproimg">صور المستخدمين الشخصية</string>
+    <string name="profress">Progress</string>
+    <string name="onProgress">onProgress: %5.2f MB transferred</string>
+    <string name="error_notadd">\"Error : not add \"</string>
+    <string name="welcome">مرحبا</string>
+    <string name="data">بيانات</string>
+    <string name="error_num">خطأ في عندد المقاعد</string>
+    <string name="register">تسجيل</string>
+    <string name="confpassword_hint">تأكيد كلمة السر</string>
+    <string name="password_hint">كلمة السر</string>
+    <string name="phone_hint">رقم الهاتف</string>
+    <string name="email_hint">البريد الإلكتروني</string>
+    <string name="username_hint">اسم المستخدم</string>
+    <string name="location">الموقع</string>
+    <string name="companyname_hint">اسم الشركة</string>
+    <string name="mobile_hint">رقم الجوال</string>
+    <string name="add_doc_tost_lat">lat, Error Complete Data</string>
+    <string name="gps_enable">GPS is Enabled in your device</string>
+    <string name="tabed_loc">Taped Location</string>
+    <string name="no_permission">No Permissions Granted</string>
+    <string name="gps_disable">GPS is disabled in your device. Would you like to enable it?</string>
+    <string name="cancel">إلغاء</string>
+    <string name="enable_gps">Goto Settings Page To Enable GPS</string>
+    <string name="title_activity_company_login">عمرتي</string>
+    <string name="login_account">الدخول للحساب ..</string>
+    <string name="faild">فشل</string>
+    <string name="less6">اقل من 6</string>
+    <string name="pls_wail">برجاء الانتظار ...</string>
+    <string name="enter_email">ادخل البريد الالكتروني!</string>
+    <string name="enter_pass">ادخل كلمة السر</string>
+    <string name="userin">اهلا بك </string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="title_activity_company_offers">عمرتي</string>
+    <string name="fi" />
+    <string name="nodataload">لايوجد بيانات تم تحميلها</string>
+    <string name="title_activity_add_offer">عمرتي</string>
+    <string name="hotelname_hint">اسم الفندق</string>
+    <string name="startday"> يوم الذهاب</string>
+    <string name="attend_start_time">وقت التجمع</string>
+    <string name="start_time">وقت الانطلاق</string>
+    <string name="back_day"> يوم العودة</string>
+    <string name="attend_end_time">وقت التجمع للعودة</string>
+    <string name="end_time">وقت الانطلاق للعودة</string>
+    <string name="deals_hint">الوجبات</string>
+    <string name="chairs_count_hint">عدد الكراسي</string>
+    <string name="price_hint">السعر</string>
+    <string name="add_offer">اضافه عرض</string>
+    <string name="customer">العميل</string>
+    <!--//add doctor-->
+    <string-array name="sub_level_array" translatable="false">
+        <item>نوع الباص</item>
+        <item>بعد2017</item>
+        <item>2010-2017</item>
+        <item>2000-2015</item>
+        <item>قبل 2000</item>
+
+    </string-array>
+    <string name="bus_level_spinner" translatable="false">نوع الباص</string>
+    <string name="hotel_level_spinner" translatable="false">مستوى الفندق</string>
+    <string name="choose_multi_imgs">اختر اكثر من صوره</string>
+    <string name="return_data">ارجاع البيانات</string>
+    <string name="aspc_y">aspectY</string>
+    <string name="aspc_x">aspectX</string>
+    <string name="crop">crop</string>
+    <string name="image">image/*</string>
+    <string name="onfailure">onfailure</string>
+    <string name="offer_img">تحميل صورة العرض ...</string>
+    <string name="offer_imgs">صورة العرض</string>
+    <string name="photos">الصور</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="upload_multi_imgs">تحميل الصور</string>
+    <string name="lists">قوائم</string>
+    <string name="timestamp">timestamp</string>
+    <string name="title_activity_maps">خريطة</string>
+    <string name="error_hotelname">خطأ في اسم الفندق</string>
+    <string name="error_deals">خطأ في الاتفاق</string>
+    <string name="error_price">خطأ في السعر</string>
+    <string name="error_chairCount">خطأ في عدد الكراسي</string>
+    <string name="error_hotelLevel">خطأ في مستوى الفندق</string>
+    <string name="error_busLevel">خطأ في نوع الباص</string>
+    <string name="error_profileImg">خطأ في صورة العرض</string>
+    <string name="title_activity_company_offer_detail">عمرتي</string>
+    <string name="your_location">موقعك</string>
+    <string name="title_activity_user_login">عمرتي</string>
+    <string name="loading">جارى التحميل</string>
+    <string name="web_client_id">888906199724-jqmmk6b5opp3r0i11q7h2a6uv1pmq67i.apps.googleusercontent.com</string>
+    <string name="Search">بحث</string>
+    <string name="Omera_Company_Touries_and_more"> شركات لحجز العمره والفنادق  ...</string>
+    <string name="check_in">وقت المغادرة</string>
+    <string name="check_out">وقت الوصول</string>
+    <string name="type_hotel">مستوى الفندق</string>
+    <string name="Enter_Distination">ادخل الوجهه</string>
+    <string name="Number_seat">عدد المقاعد</string>
+    <string name="title_activity_offers">عمرتي</string>
+    <string name="title_activity_offer_detail">عمرتي</string>
+    <string name="font_path">fonts/Raleway-ExtraBold.ttf</string>
+    <string name="slogan">احجز رحلتك في دقائق واستمتع بالعروض</string>
+    <string name="adding_fav">اضافه  للمفضلة</string>
+    <string name="adding_book">اضافة للحجوزات</string>
+    <string name="error">خطأ</string>
+    <string name="add_fav">تمت الاضافه للمفضلة</string>
+    <string name="add_book">تمت الاضافه للحجوزات</string>
+    <string name="type_bus">نوع الباص</string>
+    <string name="company_email">البريد الإلكتروني للشركة</string>
+    <string name="Reservations">الحجوزات</string>
+    <string name="Favorite_Companies">الشركات المفصلة</string>
+    <string name="Service_Provider">مقدم خدمة</string>
+    <string name="Languages">اللغة</string>
+    <string name="Share_Application">مشاركة عمرتي</string>
+    <string name="add_phote">اضافة صوره</string>
+    <string name="Offer_Detail">تفاصيل العرض</string>
+    <string name="Type_Food">نوع الوجبات</string>
+    <string name="choose_lang"> اختر لغة : </string>
+
+
+    <string-array name="types_hotel">
+
+        <item>5 نجوم</item>
+        <item>4 نجوم</item>
+        <item>3 نجوم</item>
+        <item>نجمتان</item>
+        <item>نجمة</item>
+    </string-array>
+
+    <string-array name="types_bus">
+        <item>بعد 2017 \n</item>
+        <item>2010-2017 \n</item>
+        <item>2000-2010 \n</item>
+        <item>قبل 2000 \n</item>
+
+    </string-array>
+
+
+
+</resources>

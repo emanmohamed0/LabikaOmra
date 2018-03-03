@@ -8,10 +8,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -158,6 +164,13 @@ public class OfferDetailActivity extends AppCompatActivity
         }
 
 
+//        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//
+//        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            Toast.makeText(this, R.string.gps_enable, Toast.LENGTH_SHORT).show();
+//        } else {
+//            showGPSDisabledAlertToUser();
+//        }
         if ((googleApiClient == null)) {
             googleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -165,6 +178,8 @@ public class OfferDetailActivity extends AppCompatActivity
                     .addApi(LocationServices.API).build();
         }
     }
+
+
 
     private void DemoSliderM() {
         //add banner using image url
@@ -201,12 +216,23 @@ public class OfferDetailActivity extends AppCompatActivity
 
             startActivityForResult(new Intent(com.apps.labikaomra.activities.OfferDetailActivity.this, UserLoginActivity.class), 1);
         } else if (id == R.id.menu_favorite) {
-            addToFavorite();
+            if (auth.getCurrentUser() != null) {
+                addToFavorite();
+            }
+            else{
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Toast.makeText(getBaseContext(), "You must login before submit", Toast.LENGTH_SHORT).show();
+                Intent intentLogin = new Intent(OfferDetailActivity.this,UserLoginActivity.class);
+                startActivity(intentLogin);
+
+            }
+
         }
     }
 
     private void addToFavorite() {
-        progressDialog = new ProgressDialog(com.apps.labikaomra.activities.OfferDetailActivity.this);
+        progressDialog = new ProgressDialog(OfferDetailActivity.this);
         progressDialog.setMessage(getString(R.string.adding_fav));
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -233,9 +259,9 @@ public class OfferDetailActivity extends AppCompatActivity
 //            Toast.makeText(getBaseContext(), R.string.error +"\n Please Login Before Add Favorite", Toast.LENGTH_LONG).show();
 //        }
 
-        if (auth.getCurrentUser() != null) {
             DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_FAVORITE)
                     .child(auth.getCurrentUser().getUid());
+
             String clientId = mPharmacy.getKeyId();
             Favorite favorite = new Favorite(mPharmacy.getKeyId(), timestampJoined);
             client_database.child(clientId).setValue(favorite)
@@ -258,15 +284,31 @@ public class OfferDetailActivity extends AppCompatActivity
                     progressDialog.dismiss();
                 }
             });
-        }
-        else{
-            Toast.makeText(getBaseContext(), "You must login before submit", Toast.LENGTH_SHORT).show();
 
-        }
 
     }
 
-
+    private void showGPSDisabledAlertToUser() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.gps_disable)
+                .setCancelable(false)
+                .setPositiveButton(R.string.enable_gps,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent callGPSSettingIntent = new Intent(
+                                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(callGPSSettingIntent);
+                            }
+                        });
+        alertDialogBuilder.setNegativeButton(R.string.cancel,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        android.app.AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
     public FABRevealMenu getFabMenu() {
         return fabMenu;
     }
@@ -407,6 +449,7 @@ public class OfferDetailActivity extends AppCompatActivity
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -415,7 +458,6 @@ public class OfferDetailActivity extends AppCompatActivity
                 final String name = data.getStringExtra("name");
                 final String email = data.getStringExtra("email");
                 final EditText edtText = new EditText(this);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Prompt dialog demo !");
                 builder.setMessage("What is your name?");
@@ -435,6 +477,7 @@ public class OfferDetailActivity extends AppCompatActivity
                 //Write your code if there's no result
             }
         }
+
     }//onActivityResult
 
     private void completeBooking(String name, String email, String phoneNum) {
@@ -445,9 +488,11 @@ public class OfferDetailActivity extends AppCompatActivity
 
         HashMap<String, Object> timestampJoined = new HashMap<>();
         timestampJoined.put(getString(R.string.timestamp), ServerValue.TIMESTAMP);
-        DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING).child(mPharmacy.getKeyId());
+
+        DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING).child(auth.getCurrentUser().getUid());
         String clientId = mPharmacy.getKeyId();
-        Booking booking = new Booking(auth.getCurrentUser().getUid(), name, email, phoneNum, timestampJoined);
+        Booking booking = new Booking(mPharmacy.getKeyId(), name, email, phoneNum, timestampJoined);
+
         client_database.child(clientId).setValue(booking)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

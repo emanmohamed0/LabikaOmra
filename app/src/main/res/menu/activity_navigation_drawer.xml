@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_reservations"
+            android:icon="@drawable/ic_assignment_black_24dp"
+            android:title="@string/Reservations" />
+        <item
+            android:id="@+id/nav_Favorite_Companies"
+            android:icon="@drawable/ic_favorite_pry"
+            android:title="@string/Favorite_Companies" />
+        <item
+            android:id="@+id/nav_Service_Provider"
+            android:icon="@drawable/ic_company"
+            android:title="@string/Service_Provider" />
+        <item
+            android:id="@+id/nav_Languages"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/Languages" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/Share_Application" />
+
+        </menu>
+    </item>
+
+</menu>

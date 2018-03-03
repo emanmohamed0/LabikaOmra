@@ -33,7 +33,7 @@
     <application
         android:name=".Application_config.myApplication"
         android:allowBackup="true"
-        android:icon="@drawable/leader"
+        android:icon="@drawable/loog"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -57,21 +57,24 @@
         <activity
             android:name="com.gun0912.tedpicker.ImagePickerActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme" />
+        <!-- <activity -->
+        <!-- android:name=".activities.MainActivity" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:theme="@style/AppTheme" /> -->
+
         <activity android:name=".activities.ChooseLocationActivity" />
         <activity android:name=".activities.ChoiceActivity" />
-
+        <activity
+            android:name=".activities.Home"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.CompanyRegisterActivity"
             android:label="@string/title_activity_company_register"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.CompanyLoginActivity"
-            android:theme="@style/AppTheme" >
-      </activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.CompanyOffersActivity"
             android:label="@string/title_activity_company_offers"
@@ -98,14 +101,11 @@
         <activity
             android:name=".activities.CompanyOfferDetailActivity"
             android:label="@string/title_activity_company_offer_detail"
-            android:theme="@style/AppTheme" >
-            </activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.UserLoginActivity"
             android:label="@string/title_activity_user_login"
-            android:theme="@style/AppTheme"></activity>
-
-
+            android:theme="@style/AppTheme" />
         <activity android:name=".activities.BaseActivity" />
         <activity
             android:name=".activities.OffersActivity"
@@ -114,15 +114,18 @@
         <activity
             android:name=".activities.OfferDetailActivity"
             android:label="@string/title_activity_offer_detail"
-            android:theme="@style/AppTheme"></activity>
-        <activity
-            android:name=".activities.SplachActivity">
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activities.SplachActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.FavoriteActivity" />
+        <activity android:name=".activities.BookingActivity" />
+        <activity android:name=".activities.SearchCompanyActivity"></activity>
+        <activity android:name=".activities.ChooseLanguageActivity"></activity>
 
     </application>
 

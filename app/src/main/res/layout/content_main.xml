@@ -30,10 +30,10 @@
 
         <TextView
             android:id="@+id/searchText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:text="@string/Search"
             android:textColor="@android:color/black"
             android:textSize="24sp"
@@ -41,13 +41,14 @@
 
         <TextView
             android:id="@+id/perisent"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:paddingBottom="15dp"
             android:paddingLeft="15dp"
+            android:textSize="@dimen/sp18"
             android:paddingTop="10dp"
             android:text="@string/Omera_Company_Touries_and_more" />
 
@@ -55,18 +56,16 @@
             android:id="@+id/choice_place"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
             android:layout_marginBottom="@dimen/pad_10dp"
             android:background="@drawable/shapetext"
             android:drawableRight="@drawable/ic_search_black_24dp"
             android:paddingBottom="@dimen/pad_10dp"
+            android:textColor="@android:color/black"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:paddingTop="@dimen/pad_10dp"
-            android:text="@string/Enter_Distination"
-            android:textSize="15sp" />
+            android:hint="@string/Enter_Distination"
+            android:textSize="22sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,9 +76,7 @@
                 android:id="@+id/check_in"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+
                 android:layout_marginRight="@dimen/pad_10dp"
                 android:layout_weight="1"
                 android:background="@drawable/shapetext"
@@ -94,9 +91,6 @@
                 android:id="@+id/check_out"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/search"
-                android:layout_alignRight="@+id/search"
-                android:layout_alignTop="@+id/check_in"
                 android:layout_weight="1"
                 android:background="@drawable/shapetext"
                 android:gravity="center"

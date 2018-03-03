@@ -29,7 +29,8 @@ public class CompanyLoginActivity extends AppCompatActivity {
     FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseAuth myAuth;
     private EditText inputEmail, inputPassword;
-String company_user_id ;
+    String company_user_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +72,7 @@ String company_user_id ;
                 if (user != null) {
                     user.getUid();
                     Intent start = new Intent(CompanyLoginActivity.this, CompanyOffersActivity.class);
-                    start.putExtra("company_user_id",user.getUid()) ;
+                    start.putExtra("company_user_id", user.getUid());
                     startActivity(start);
                     finish();
                     Toast.makeText(CompanyLoginActivity.this, R.string.userin, Toast.LENGTH_SHORT).show();
@@ -138,7 +139,7 @@ String company_user_id ;
                             spe.commit();
                             progressDialog.dismiss();
                             Intent intent = new Intent(CompanyLoginActivity.this, CompanyOffersActivity.class);
-                            intent.putExtra("company_user_id",myAuth.getCurrentUser().getUid());
+                            intent.putExtra("company_user_id", myAuth.getCurrentUser().getUid());
                             startActivity(intent);
                             finish();
                         }

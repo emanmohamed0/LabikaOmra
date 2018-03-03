@@ -39,12 +39,12 @@ public class ChoiceActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (myAuth.getCurrentUser() != null) {
                     mUser_Id = myAuth.getCurrentUser().getUid();
-                    Intent searchIntent = new Intent(ChoiceActivity.this, MainActivity.class);
+                    Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
                     searchIntent.putExtra("mUser_Id", mUser_Id);
                     startActivity(searchIntent);
                     finish();
                 } else {
-                    Intent searchIntent = new Intent(ChoiceActivity.this, MainActivity.class);
+                    Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
                     searchIntent.putExtra("mUser_Id", mUser_Id);
                     startActivity(searchIntent);
                     finish();

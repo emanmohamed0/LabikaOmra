@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -66,6 +67,10 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("User LogIn");
+        setSupportActionBar(toolbar);
+
         myDatabase = FirebaseDatabase.getInstance().getReference();
         mSignInButton = (SignInButton) findViewById(R.id.signin_google_btn);
         mSignInButton.setSize(SignInButton.SIZE_WIDE);
@@ -266,10 +271,10 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
                             createUserInFirebaseHelper();
 //                            Toast.makeText(UserLoginActivity.this, "Login successful",
 //                                    Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(UserLoginActivity.this, OffersActivity.class);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                            startActivity(intent);
-//                            finish();
+                            Intent intent = new Intent(UserLoginActivity.this, OffersActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
                         }
                         hideProgressDialog();
                     }
