@@ -191,7 +191,7 @@ public class OfferDetailActivity extends AppCompatActivity
         Button mWordBtn = (Button) findViewById(R.id.about_button);
         final View mWordTxt = findViewById(R.id.detailOffer);
 
-        mTxtName.setText(nameCompany);
+        mTxtName.setText(mPharmacy.getHotelName());
 
 //        mRatingBar.setRating(Float.parseFloat(String.valueOf(mPharmacy.getRate() / mPharmacy.getNumOfRaters())));
         mWordBtn.setOnClickListener(new View.OnClickListener() {
@@ -288,27 +288,6 @@ public class OfferDetailActivity extends AppCompatActivity
 
     }
 
-    private void showGPSDisabledAlertToUser() {
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage(R.string.gps_disable)
-                .setCancelable(false)
-                .setPositiveButton(R.string.enable_gps,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent callGPSSettingIntent = new Intent(
-                                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                startActivity(callGPSSettingIntent);
-                            }
-                        });
-        alertDialogBuilder.setNegativeButton(R.string.cancel,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        android.app.AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
-    }
     public FABRevealMenu getFabMenu() {
         return fabMenu;
     }

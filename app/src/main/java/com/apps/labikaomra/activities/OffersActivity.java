@@ -63,10 +63,13 @@ public class OffersActivity extends AppCompatActivity implements
     private static final int REQUEST_APP_SETTINGS = 168;
 
     private static final String[] requiredPermissions = new String[]{
-            Manifest.permission.WRITE_CALENDAR,
-            Manifest.permission.WRITE_CONTACTS
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
             /* ETC.. */
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,7 @@ public class OffersActivity extends AppCompatActivity implements
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.title_activity_offers));
         mcontext = getBaseContext();
 
         mUser_Id = getIntent().getStringExtra("mUser_Id");
@@ -105,18 +109,19 @@ public class OffersActivity extends AppCompatActivity implements
         setMainList();
     }
 
-    public void dialog(){
+    public void dialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(OffersActivity.this);
         dialog.setCancelable(false);
-        dialog.setTitle("Go To Setting App");
-        dialog.setMessage("Need to open Permission Location and Storage" );
-        dialog.setPositiveButton("Yes,Go Setting", new DialogInterface.OnClickListener() {
+        dialog.setTitle("Allow Omrati \n to access your Loaction and Storage");
+        dialog.setIcon(R.drawable.ic_location_on_black_24dp);
+//        dialog.setMessage("Need to open Permission Location and Storage" );
+        dialog.setPositiveButton("Allow", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 goToSettings();
             }
         })
-                .setNegativeButton("Cancel ", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Deny ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Action for "Cancel".
@@ -126,6 +131,7 @@ public class OffersActivity extends AppCompatActivity implements
         final AlertDialog alert = dialog.create();
         alert.show();
     }
+
     private void goToSettings() {
         Intent myAppSettings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
         myAppSettings.addCategory(Intent.CATEGORY_DEFAULT);
@@ -155,7 +161,7 @@ public class OffersActivity extends AppCompatActivity implements
                     if (checkOutDate != 0l && checkInDate != 01) {
                         if ((offer.getBackDay() <= checkOutDate && checkInDate <= offer.getStartDay())
                                 || (offer.getNumOfChairs() == numseat) || (offer.getBusLevel() == txtbus
-                        ||(offer.getHotelLevel() == txthotel ))) {
+                                || (offer.getHotelLevel() == txthotel))) {
                             clientList.add(offer);
                         } else {
                             Toast.makeText(mcontext, "No Data Match this Date", Toast.LENGTH_LONG).show();
@@ -247,6 +253,7 @@ public class OffersActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
 
     }//onActivityResult
+
     @Override
     public void onResume() {
         super.onResume();

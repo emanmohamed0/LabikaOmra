@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.apps.labikaomra.NothingSelectedSpinnerAdapter;
 import com.apps.labikaomra.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -86,6 +87,9 @@ public class Home extends AppCompatActivity
 
         numseat = (EditText) findViewById(R.id.num_seat);
         final Spinner spinnerhotel = (Spinner) findViewById(R.id.type_hotel);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.types_hotel, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerhotel.setPrompt("Type Of Hotels!");
         spinnerhotel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -100,10 +104,10 @@ public class Home extends AppCompatActivity
             }
         });
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.types_hotel, android.R.layout.simple_spinner_item);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                R.array.types_hotel, android.R.layout.simple_spinner_item);
+//
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerhotel.setAdapter(adapter);
 
 
@@ -112,6 +116,7 @@ public class Home extends AppCompatActivity
                 R.array.types_bus, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerbus.setPrompt("Type Of Bus!");
         spinnerbus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -127,6 +132,20 @@ public class Home extends AppCompatActivity
             }
         });
         spinnerbus.setAdapter(adapter2);
+//////////////////////////////////////////////////////////////////////
+//        Spinner spinner = (Spinner) findViewById(R.id.type_bus);
+//        ArrayAdapter<CharSequence> adapterbus = ArrayAdapter.createFromResource(this, R.array.types_bus, android.R.layout.simple_spinner_item);
+//        adapterbus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setPrompt("Select Type of Bus!");
+//
+//        spinner.setAdapter(
+//                new NothingSelectedSpinnerAdapter(
+//                        adapterbus,
+//                        R.layout.contact_spinner_row_nothing_selected,
+//                        // R.layout.contact_spinner_nothing_selected_dropdown, // Optional
+//                        this));
+
+
 
 
         from = Calendar.getInstance();
@@ -263,7 +282,7 @@ public class Home extends AppCompatActivity
                 + (DateUtils.DAY_IN_MILLIS - currentTime % DateUtils.DAY_IN_MILLIS);
 
         to.setTimeInMillis(endOfTomorrow);
-        check_out.setText("check_out \n" + sdf.format(to.getTime()));
+        check_out.setText(getString(R.string.check_out)+"\n" + sdf.format(to.getTime()));
 
     }
 
@@ -275,7 +294,7 @@ public class Home extends AppCompatActivity
 //         checkInDate = from.getTime().getTime();
 //        from.getTimeInMillis();
 //        OffersActivity.checkInDate = checkInDate;
-        check_in.setText("check_in \n" + sdf.format(from.getTime()));
+        check_in.setText(getString(R.string.check_in)+"\n" + sdf.format(from.getTime()));
 
     }
 
@@ -288,7 +307,7 @@ public class Home extends AppCompatActivity
 //        checkOutDate = to.getTime().getTime();
 //        OffersActivity.checkOutDate = checkOutDate;
 
-        check_out.setText("check_out \n" + sdf.format(to.getTime()));
+        check_out.setText(getString(R.string.check_out)+"\n" + sdf.format(to.getTime()));
     }
 
     @Override

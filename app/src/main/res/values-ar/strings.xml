@@ -7,7 +7,6 @@
     <string name="completeaction">تم</string>
     <string name="creat_acount">انشاء حساب ..</string>
     <string name="somewrong">Something went wrong</string>
-    <string name="useuproimg">صور المستخدمين الشخصية</string>
     <string name="profress">Progress</string>
     <string name="onProgress">onProgress: %5.2f MB transferred</string>
     <string name="error_notadd">\"Error : not add \"</string>
@@ -74,9 +73,6 @@
     <string name="image">image/*</string>
     <string name="onfailure">onfailure</string>
     <string name="offer_img">تحميل صورة العرض ...</string>
-    <string name="offer_imgs">صورة العرض</string>
-    <string name="photos">الصور</string>
-    <string name="profile">الملف الشخصي</string>
     <string name="upload_multi_imgs">تحميل الصور</string>
     <string name="lists">قوائم</string>
     <string name="timestamp">timestamp</string>
@@ -100,7 +96,7 @@
     <string name="type_hotel">مستوى الفندق</string>
     <string name="Enter_Distination">ادخل الوجهه</string>
     <string name="Number_seat">عدد المقاعد</string>
-    <string name="title_activity_offers">عمرتي</string>
+    <string name="title_activity_offers">عروض</string>
     <string name="title_activity_offer_detail">عمرتي</string>
     <string name="font_path">fonts/Raleway-ExtraBold.ttf</string>
     <string name="slogan">احجز رحلتك في دقائق واستمتع بالعروض</string>
@@ -132,10 +128,10 @@
     </string-array>
 
     <string-array name="types_bus">
-        <item>بعد 2017 \n</item>
-        <item>2010-2017 \n</item>
-        <item>2000-2010 \n</item>
-        <item>قبل 2000 \n</item>
+        <item>بعد 2017 </item>
+        <item>2010-2017 </item>
+        <item>2000-2010 </item>
+        <item>قبل 2000 </item>
 
     </string-array>
 

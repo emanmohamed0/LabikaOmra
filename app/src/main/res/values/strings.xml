@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Omrati</string>
+    <string name="app_name" >Omrati</string>
     <string name="action_settings">LogOut</string>
     <string name="errorapp">\"Error is in application \"</string>
     <string name="title_activity_company_register">CompanyRegisterActivity</string>
@@ -13,6 +13,7 @@
     <string name="error_notadd">\"Error : not add \"</string>
     <string name="welcome">Welcome</string>
     <string name="data">data</string>
+    <string name="Offer_Detail">Offer Detail</string>
     <string name="error_num">Error number seat</string>
     <string name="register">Register</string>
     <string name="confpassword_hint">Confirm Password</string>
@@ -72,6 +73,7 @@
     <string name="offer_img">Upload Offer Image ...</string>
     <string name="offer_imgs">OfferImgs</string>
     <string name="photos">Photos</string>
+    <string name="access">"Allow Omrati \n to access your Loaction and Storage"</string>
     <string name="profile">profile</string>
     <string name="upload_multi_imgs">Upload Multi Image</string>
     <string name="lists">Lists</string>
@@ -96,7 +98,7 @@
     <string name="type_hotel">type hotel</string>
     <string name="Enter_Distination">Enter Distination</string>
     <string name="Number_seat">Number seat</string>
-    <string name="title_activity_offers">OffersActivity</string>
+    <string name="title_activity_offers">Offers</string>
     <string name="title_activity_offer_detail">OfferDetailActivity</string>
     <string name="font_path">fonts/Raleway-ExtraBold.ttf</string>
     <string name="slogan">Your Offer\'s Here</string>
@@ -105,6 +107,7 @@
     <string name="error">error</string>
     <string name="add_fav">Success to Favorite</string>
     <string name="add_book">Success to Booking</string>
+    <string name="add_phote">Add Photo</string>
     <string name="type_bus">Type bus</string>
     <string name="company_email">Email Company</string>
     <string name="choose_lang">Choose Language</string>
@@ -120,10 +123,15 @@
     </string-array>
 
     <string-array name="types_bus">
+        <item> </item>
         <item>after 2017 \n</item>
+        <item> </item>
         <item>2010-2017 \n</item>
+        <item> </item>
         <item>2000-2010 \n</item>
+        <item> </item>
         <item>Before 2000 \n</item>
+        <item> </item>
 
     </string-array>
     <string name="title_activity_navigation">NavigationActivity</string>

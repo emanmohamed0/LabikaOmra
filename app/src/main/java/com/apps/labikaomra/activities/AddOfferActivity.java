@@ -109,51 +109,51 @@ public class AddOfferActivity extends AppCompatActivity {
 ////            }
 //        }
 
-    DatePickerDialog.OnDateSetListener date_listener = new DatePickerDialog.OnDateSetListener() {
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // store the data in one string and set it to text
-            String date1 = String.valueOf(month) + "/" + String.valueOf(day)
-                    + "/" + String.valueOf(year);
-            if (dialogFlag == 0) {
-                long diffInSec = c.getTimeInMillis();
-                Long startDayLong = c.getTime().getTime();
-
-                startDay = diffInSec;
-                btnStartDay.setText(date1);
-            } else if (dialogFlag == 1) {
-                long diffInSec = c.getTimeInMillis();
-
-                Long backDayLong = c.getTime().getTime();
-
-                backDay = diffInSec;
-                btnBackDay.setText(date1);
-            }
-        }
-
-    };
-    TimePickerDialog.OnTimeSetListener time_listener = new TimePickerDialog.OnTimeSetListener() {
-
-        @Override
-        public void onTimeSet(TimePicker view, int hour, int minute) {
-            // store the data in one string and set it to text
-            String time1 = String.valueOf(hour) + ":" + String.valueOf(minute);
-            if (dialogFlag == 2) {
-                attendStartTime = time1;
-                btnAttendStartTime.setText(time1);
-            } else if (dialogFlag == 3) {
-                startTime = time1;
-                btnStartTime.setText(time1);
-            } else if (dialogFlag == 4) {
-                attendEndTime = time1;
-                btnAttendEndTime.setText(time1);
-            } else if (dialogFlag == 5) {
-                endTime = time1;
-                btnEndTime.setText(time1);
-            }
-        }
-    };
+//    DatePickerDialog.OnDateSetListener date_listener = new DatePickerDialog.OnDateSetListener() {
+//
+//        @Override
+//        public void onDateSet(DatePicker view, int year, int month, int day) {
+//            // store the data in one string and set it to text
+//            String date1 = String.valueOf(month) + "/" + String.valueOf(day)
+//                    + "/" + String.valueOf(year);
+//            if (dialogFlag == 0) {
+//                long diffInSec = c.getTimeInMillis();
+//                Long startDayLong = c.getTime().getTime();
+//
+//                startDay = diffInSec;
+//                btnStartDay.setText(date1);
+//            } else if (dialogFlag == 1) {
+//                long diffInSec = c.getTimeInMillis();
+//
+//                Long backDayLong = c.getTime().getTime();
+//
+//                backDay = diffInSec;
+//                btnBackDay.setText(date1);
+//            }
+//        }
+//
+//    };
+//    TimePickerDialog.OnTimeSetListener time_listener = new TimePickerDialog.OnTimeSetListener() {
+//
+//        @Override
+//        public void onTimeSet(TimePicker view, int hour, int minute) {
+//            // store the data in one string and set it to text
+//            String time1 = String.valueOf(hour) + ":" + String.valueOf(minute);
+//            if (dialogFlag == 2) {
+//                attendStartTime = time1;
+//                btnAttendStartTime.setText(time1);
+//            } else if (dialogFlag == 3) {
+//                startTime = time1;
+//                btnStartTime.setText(time1);
+//            } else if (dialogFlag == 4) {
+//                attendEndTime = time1;
+//                btnAttendEndTime.setText(time1);
+//            } else if (dialogFlag == 5) {
+//                endTime = time1;
+//                btnEndTime.setText(time1);
+//            }
+//        }
+//    };
     private FirebaseAuth myAuth;
     private EditText inputHotelName, inputDeals, inputPrice, inputChairCount;
 
@@ -338,10 +338,6 @@ public class AddOfferActivity extends AppCompatActivity {
         String myFormat = "EEE, MMM d"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-//        checkOutDate = TimeUnit.MILLISECONDS.toSeconds(to.getTime().getTime());
-//        checkOutDate = to.getTime().getTime();
-//        OffersActivity.checkOutDate = checkOutDate;
-
         btnBackDay.setText(sdf.format(to.getTime()));
     }
     private void getImages() {
@@ -492,7 +488,7 @@ public class AddOfferActivity extends AppCompatActivity {
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 Log.i(getString(R.string.profress), String.format(getString(R.string.onProgress),
                         taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0));
-                progressDialog.setTitle(taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0 + "");
+                progressDialog.setTitle(getString(R.string.upload_multi_imgs)+taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0 + "");
             }
         });
     }
@@ -573,38 +569,38 @@ public class AddOfferActivity extends AppCompatActivity {
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 Log.i(getString(R.string.profress), String.format(getString(R.string.onProgress),
                         taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0));
-                progressDialog.setTitle(taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0 + "");
+                progressDialog.setTitle(getString(R.string.offer_img)+taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0 + "");
             }
         });
     }
 
-    protected Dialog onCreateDialog(int id) {
-
-        // Get the calander
-        c = Calendar.getInstance();
-
-        // From calander get the year, month, day, hour, minute
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-
-        switch (id) {
-            case Date_id:
-
-                // Open the datepicker dialog
-                return new DatePickerDialog(com.apps.labikaomra.activities.AddOfferActivity.this, date_listener, year,
-                        month, day);
-            case Time_id:
-
-                // Open the timepicker dialog
-                return new TimePickerDialog(com.apps.labikaomra.activities.AddOfferActivity.this, time_listener, hour,
-                        minute, false);
-
-        }
-        return null;
-    }
+//    protected Dialog onCreateDialog(int id) {
+//
+//        // Get the calander
+//        c = Calendar.getInstance();
+//
+//        // From calander get the year, month, day, hour, minute
+//        int year = c.get(Calendar.YEAR);
+//        int month = c.get(Calendar.MONTH);
+//        int day = c.get(Calendar.DAY_OF_MONTH);
+//        int hour = c.get(Calendar.HOUR_OF_DAY);
+//        int minute = c.get(Calendar.MINUTE);
+//
+//        switch (id) {
+//            case Date_id:
+//
+//                // Open the datepicker dialog
+//                return new DatePickerDialog(com.apps.labikaomra.activities.AddOfferActivity.this, date_listener, year,
+//                        month, day);
+//            case Time_id:
+//
+//                // Open the timepicker dialog
+//                return new TimePickerDialog(com.apps.labikaomra.activities.AddOfferActivity.this, time_listener, hour,
+//                        minute, false);
+//
+//        }
+//        return null;
+//    }
 
     public String getAddress(double lat, double lng) {
         Geocoder geocoder = new Geocoder(com.apps.labikaomra.activities.AddOfferActivity.this, Locale.getDefault());

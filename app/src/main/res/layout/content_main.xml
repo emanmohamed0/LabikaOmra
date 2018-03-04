@@ -136,6 +136,7 @@
                 android:paddingTop="10dp">
 
                 <Spinner
+
                     android:id="@+id/type_hotel"
                     android:layout_width="0dp"
                     android:layout_weight="1"
