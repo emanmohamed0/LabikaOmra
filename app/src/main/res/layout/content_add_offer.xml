@@ -161,6 +161,7 @@
                     android:layout_marginTop="@dimen/pad_10dp"
                     android:background="@drawable/button_style2"
                     android:orientation="vertical"
+                    android:padding="@dimen/pad_5dp"
                     android:text="@string/end_time"
                     android:textColor="@color/colorPrimary">
 
@@ -207,6 +208,7 @@
                     android:layout_marginTop="@dimen/pad_10dp"
                     android:background="@drawable/button_style2"
                     android:orientation="vertical"
+                    android:padding="@dimen/pad_5dp"
                     android:text="@string/end_time"
                     android:textColor="@color/colorPrimary">
 
@@ -250,6 +252,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
+                    android:padding="@dimen/pad_5dp"
                     android:layout_marginTop="@dimen/pad_10dp"
                     android:background="@drawable/button_style2"
                     android:orientation="vertical"
