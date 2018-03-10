@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="المخزن "
+        android:id="@+id/textView17"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout1"
+        android:layout_below="@+id/textView17"
+        android:layout_centerHorizontal="true">
+        <!--  username Label -->
+
+        <!--  spinner name -->
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="3dp"
+            android:layout_weight=".28"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spr_input2"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+
+                android:background="@android:color/transparent"
+                android:spinnerMode="dropdown"
+                android:outlineProvider="none" />
+
+        </RelativeLayout>
+        <TextView android:id="@+id/text_store"
+            android:gravity="center"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="tysjslkv"
+            android:inputType="textPersonName"
+            />
+
+    </LinearLayout>
+</LinearLayout>

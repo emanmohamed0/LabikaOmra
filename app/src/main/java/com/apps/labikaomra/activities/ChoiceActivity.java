@@ -1,8 +1,14 @@
 package com.apps.labikaomra.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.apps.labikaomra.Application_config.myApplication;
@@ -16,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Locale;
+
 public class ChoiceActivity extends AppCompatActivity {
     View linleader, lincustomer;
     private FirebaseAuth myAuth;
@@ -23,11 +31,16 @@ public class ChoiceActivity extends AppCompatActivity {
     String mUser_Id;
     private DatabaseReference myDatabase;
     public static Query myPharmacyDatabase;
+    Locale myLocale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Omrati");
+        setSupportActionBar(toolbar);
+
         lincustomer = (View) findViewById(R.id.lincustomer);
         linleader = (View) findViewById(R.id.linleader);
         myAuth = FirebaseAuth.getInstance();
@@ -71,5 +84,37 @@ public class ChoiceActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_language, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.language_en) {
+            setLocale("en");
+            Intent loginIntent = new Intent(ChoiceActivity.this, SplachActivity.class);
+            startActivity(loginIntent);
+        }
+        else if(item.getItemId() == R.id.language_ar){
+            setLocale("ar");
+            Intent loginIntent = new Intent(ChoiceActivity.this, SplachActivity.class);
+            startActivity(loginIntent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setLocale(String language) {
+        myLocale = new Locale(language);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 }

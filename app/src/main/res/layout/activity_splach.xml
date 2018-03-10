@@ -3,49 +3,47 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:gravity="center" >
+    android:background="@drawable/photo"
+    android:gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center" >
+        android:layout_marginTop="100dp"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/logo_img"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_toRightOf="@+id/pro_txt"
-            android:src="@drawable/loog"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/pro_txt"
             style="@style/TextAppearance.AppCompat.Display1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:shadowColor="#000"
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="1.0"
             android:text="@string/app_name"
-            android:textColor="#fff"
+            android:textColor="#111"
             android:textSize="40sp"
-            android:textStyle="bold"
-           />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/track_txt"
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           android:gravity="center"
             android:layout_marginTop="5dp"
+            android:gravity="center"
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="1.0"
             android:text="@string/slogan"
-            android:textColor="#FFF"
+            android:textColor="#111"
             android:textSize="25sp"
             android:textStyle="bold"
             android:typeface="serif" />

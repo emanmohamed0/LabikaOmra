@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" >Omrati</string>
+    <string name="app_name">Omrati</string>
     <string name="action_settings">LogOut</string>
     <string name="errorapp">\"Error is in application \"</string>
     <string name="title_activity_company_register">CompanyRegisterActivity</string>
@@ -56,17 +56,19 @@
     <string name="price_hint">Price</string>
     <string name="add_offer">Add Offer</string>
     <!--//add doctor-->
-    <string-array name="sub_level_array" translatable="false">
+    <string-array name="sub_level_array">
         <item>First class</item>
         <item>Second Class</item>
         <item>Third Class</item>
     </string-array>
-    <string name="bus_level_spinner" translatable="false">Bus Level</string>
-    <string name="hotel_level_spinner" translatable="false">Hotel Level</string>
+    <string name="bus_level_spinner">Bus Level</string>
+    <string name="hotel_level_spinner">Hotel Level</string>
     <string name="choose_multi_imgs">Choose Multi Image</string>
     <string name="return_data">return-data</string>
     <string name="aspc_y">aspectY</string>
     <string name="aspc_x">aspectX</string>
+    <string name="Type_Food">Type_Food</string>
+    <string name="residence">Residence</string>
     <string name="crop">crop</string>
     <string name="image">image/*</string>
     <string name="onfailure">onfailure</string>
@@ -92,11 +94,15 @@
     <string name="loading">Loading</string>
     <string name="web_client_id">888906199724-jqmmk6b5opp3r0i11q7h2a6uv1pmq67i.apps.googleusercontent.com</string>
     <string name="Search">Search</string>
+    <string name="next">Next</string>
     <string name="Omera_Company_Touries_and_more">Omera Company Touries and more...</string>
     <string name="check_in">check in</string>
     <string name="check_out">check out</string>
     <string name="type_hotel">type hotel</string>
+    <string name="type_status">Status</string>
     <string name="Enter_Distination">Enter Distination</string>
+    <string name="Enter_Transportation">Enter Transport</string>
+    <string name="Transportation">Transport</string>
     <string name="Number_seat">Number seat</string>
     <string name="title_activity_offers">Offers</string>
     <string name="title_activity_offer_detail">OfferDetailActivity</string>
@@ -122,18 +128,26 @@
         <item>1 stars</item>
     </string-array>
 
-    <string-array name="types_bus">
-        <item> </item>
-        <item>after 2017 \n</item>
-        <item> </item>
-        <item>2010-2017 \n</item>
-        <item> </item>
-        <item>2000-2010 \n</item>
-        <item> </item>
-        <item>Before 2000 \n</item>
-        <item> </item>
-
+    <string-array name="type_places">
+        <item>Makkah</item>
+        <item>Madina</item>
+        <item>Makkah,Madina</item>
+        <item>Madina,Makkah</item>
     </string-array>
+
+    <string-array name="type_transport">
+        <item>Go and Back</item>
+        <item>Go</item>
+        <item>Back</item>
+    </string-array>
+
+    <string-array name="types_bus">
+        <item>after 2017 \n</item>
+        <item>2010-2017 \n</item>
+        <item>2000-2010 \n</item>
+        <item>Before 2000 \n</item>
+    </string-array>
+
     <string name="title_activity_navigation">NavigationActivity</string>
 
     <string name="nav_header_title">Android Studio</string>
@@ -146,4 +160,10 @@
     <string name="Service_Provider">Services</string>
     <string name="Languages">Languages</string>
     <string name="Share_Application">Share Application</string>
+    <string name="without_housing">Without housing</string>
+    <string name="housing">housing</string>
+    <string name="normal">Normal</string>
+    <string name="vip">VIp</string>
+    <string name="single">Single</string>
+    <string name="families">Families</string>
 </resources>

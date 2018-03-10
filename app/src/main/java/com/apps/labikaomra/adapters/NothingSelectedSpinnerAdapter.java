@@ -1,4 +1,4 @@
-package com.apps.labikaomra;
+package com.apps.labikaomra.adapters;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.view.LayoutInflater;

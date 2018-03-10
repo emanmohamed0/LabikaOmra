@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorback">
+    android:background="@drawable/photo">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -48,35 +47,86 @@
             android:layout_alignParentTop="true"
             android:paddingBottom="15dp"
             android:paddingLeft="15dp"
-            android:textSize="@dimen/sp18"
             android:paddingTop="10dp"
-            android:text="@string/Omera_Company_Touries_and_more" />
+            android:text="@string/Omera_Company_Touries_and_more"
+            android:textSize="@dimen/sp18" />
 
-        <TextView
-            android:id="@+id/choice_place"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/pad_10dp"
-            android:background="@drawable/shapetext"
-            android:drawableRight="@drawable/ic_search_black_24dp"
-            android:paddingBottom="@dimen/pad_10dp"
-            android:textColor="@android:color/black"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="@dimen/pad_10dp"
-            android:hint="@string/Enter_Distination"
-            android:textSize="22sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/pad_10dp"
+                android:layout_weight="1"
+                android:background="@drawable/shapetext"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/Enter_Transportation"
+                    android:paddingTop="@dimen/pad_10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+
+                <Spinner
+                    android:id="@+id/type_dest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pad_10dp"
+                    android:entries="@array/type_transport"
+                    android:padding="10dp"
+                    android:verticalScrollbarPosition="defaultPosition" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/shapetext"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/Enter_Distination"
+                    android:textColor="@android:color/black"
+                    android:paddingTop="@dimen/pad_10dp"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/type_trans"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pad_10dp"
+                    android:entries="@array/type_places"
+                    android:padding="10dp"
+                    android:verticalScrollbarPosition="defaultPosition" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/check_in"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-
                 android:layout_marginRight="@dimen/pad_10dp"
                 android:layout_weight="1"
                 android:background="@drawable/shapetext"
@@ -101,51 +151,6 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shapetext"
-                android:layout_marginRight="@dimen/pad_10dp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-
-                <Spinner
-                    android:id="@+id/type_bus"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="@dimen/pad_10dp"
-                    android:text="@string/type_hotel"></Spinner>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/shapetext"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-
-                <Spinner
-
-                    android:id="@+id/type_hotel"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:text="@string/type_hotel"></Spinner>
-            </LinearLayout>
-
-        </LinearLayout>
-
         <EditText
             android:id="@+id/num_seat"
             android:layout_width="wrap_content"
@@ -167,12 +172,11 @@
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/type_bus"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="50dp"
             android:background="@drawable/button_style"
-            android:text="@string/Search"
+            android:text="@string/next"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

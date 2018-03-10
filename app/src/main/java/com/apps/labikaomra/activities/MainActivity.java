@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //        txthotel = (TextView) findViewById(R.id.txthotel);
 
         numseat = (EditText)findViewById(R.id.num_seat);
-        Spinner spinnerhotel = (Spinner) findViewById(R.id.type_hotel);
+        Spinner spinnerhotel = (Spinner) findViewById(R.id.type_dest);
         spinnerhotel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerhotel.setAdapter(adapter);
 
 
-        Spinner spinnerbus = (Spinner) findViewById(R.id.type_bus);
+        Spinner spinnerbus = (Spinner) findViewById(R.id.type_trans);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
                 R.array.types_bus, android.R.layout.simple_spinner_item);
 
@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         to.add(Calendar.DATE, 1);
 
         searchtxt = (TextView) findViewById(R.id.searchText);
-        choice_place = (TextView) findViewById(R.id.choice_place);
         check_out = (TextView) findViewById(R.id.check_out);
         check_in = (TextView) findViewById(R.id.check_in);
         searchnow_btn = (Button) findViewById(R.id.search);

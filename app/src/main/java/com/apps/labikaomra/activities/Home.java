@@ -25,7 +25,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.apps.labikaomra.NothingSelectedSpinnerAdapter;
+import com.apps.labikaomra.CompleteSearchActivity;
 import com.apps.labikaomra.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -86,10 +86,10 @@ public class Home extends AppCompatActivity
         mUser_Id = getIntent().getStringExtra("mUser_Id");
 
         numseat = (EditText) findViewById(R.id.num_seat);
-        final Spinner spinnerhotel = (Spinner) findViewById(R.id.type_hotel);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.types_hotel, android.R.layout.simple_spinner_item);
+        final Spinner spinnerhotel = (Spinner) findViewById(R.id.type_dest);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_places, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerhotel.setPrompt("Type Of Hotels!");
+        spinnerhotel.setPrompt("Type Of Places!");
         spinnerhotel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -111,12 +111,12 @@ public class Home extends AppCompatActivity
         spinnerhotel.setAdapter(adapter);
 
 
-        final Spinner spinnerbus = (Spinner) findViewById(R.id.type_bus);
+        final Spinner spinnerbus = (Spinner) findViewById(R.id.type_trans);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
-                R.array.types_bus, android.R.layout.simple_spinner_item);
+                R.array.type_transport, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerbus.setPrompt("Type Of Bus!");
+        spinnerbus.setPrompt("Type Of Transport!");
         spinnerbus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -133,7 +133,7 @@ public class Home extends AppCompatActivity
         });
         spinnerbus.setAdapter(adapter2);
 //////////////////////////////////////////////////////////////////////
-//        Spinner spinner = (Spinner) findViewById(R.id.type_bus);
+//        Spinner spinner = (Spinner) findViewById(R.meid.type_bus);
 //        ArrayAdapter<CharSequence> adapterbus = ArrayAdapter.createFromResource(this, R.array.types_bus, android.R.layout.simple_spinner_item);
 //        adapterbus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        spinner.setPrompt("Select Type of Bus!");
@@ -153,7 +153,6 @@ public class Home extends AppCompatActivity
         to.add(Calendar.DATE, 1);
 
         searchtxt = (TextView) findViewById(R.id.searchText);
-        choice_place = (TextView) findViewById(R.id.choice_place);
         check_out = (TextView) findViewById(R.id.check_out);
         check_in = (TextView) findViewById(R.id.check_in);
         searchnow_btn = (Button) findViewById(R.id.search);
@@ -172,10 +171,10 @@ public class Home extends AppCompatActivity
             public void onClick(View view) {
                 hotelLevel = spinnerhotel.getSelectedItem().toString().trim();
                 buslevel = spinnerbus.getSelectedItem().toString().trim();
-                if(choice_place.getText().toString().isEmpty()){
-                }else{
-                    OffersActivity.txtplace = choice_place.getText().toString();
-                }
+//                if(choice_place.getText().toString().isEmpty()){
+//                }else{
+//                    OffersActivity.txtplace = choice_place.getText().toString();
+//                }
                 OffersActivity.txtbus = buslevel;
                 OffersActivity.txthotel = hotelLevel;
                 OffersActivity.checkOutDate = to.getTimeInMillis();
@@ -187,23 +186,23 @@ public class Home extends AppCompatActivity
                     OffersActivity.numseat = Integer.parseInt(numseat.getText().toString());
                 }
 
-                Intent homeIntent = new Intent(Home.this, OffersActivity.class);
+                Intent homeIntent = new Intent(Home.this, CompleteSearchActivity.class);
                 homeIntent.putExtra("mUser_Id", mUser_Id);
                 startActivity(homeIntent);
             }
         });
 
-        choice_place.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent homeIntent = new Intent(Home.this, SearchCompanyActivity.class);
-                startActivity(homeIntent);
-            }
-        });
-        if (nameCompany == null) {
-        } else {
-            choice_place.setText(nameCompany + "");
-        }
+//        choice_place.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent homeIntent = new Intent(Home.this, SearchCompanyActivity.class);
+//                startActivity(homeIntent);
+//            }
+//        });
+//        if (nameCompany == null) {
+//        } else {
+//            choice_place.setText(nameCompany + "");
+//        }
         final DatePickerDialog.OnDateSetListener datefrom = new DatePickerDialog.OnDateSetListener() {
 
 
@@ -314,25 +313,25 @@ public class Home extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.navigation, menu);
-        getMenuInflater().inflate(R.menu.menu_language, menu);
+//        getMenuInflater().inflate(R.menu.menu_language, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.language_en) {
-            setLocale("en");
-            Intent loginIntent = new Intent(Home.this, SplachActivity.class);
-            startActivity(loginIntent);
-        }
-        else if(item.getItemId() == R.id.language_ar){
-            setLocale("ar");
-            Intent loginIntent = new Intent(Home.this, SplachActivity.class);
-            startActivity(loginIntent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        if (item.getItemId() == R.id.language_en) {
+//            setLocale("en");
+//            Intent loginIntent = new Intent(Home.this, SplachActivity.class);
+//            startActivity(loginIntent);
+//        }
+//        else if(item.getItemId() == R.id.language_ar){
+//            setLocale("ar");
+//            Intent loginIntent = new Intent(Home.this, SplachActivity.class);
+//            startActivity(loginIntent);
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void setLocale(String language) {
         myLocale = new Locale(language);

@@ -14,7 +14,7 @@
     </item>
     <item android:state_enabled="true" android:state_focused="false">
         <shape android:shape="rectangle">
-            <gradient android:angle="270" android:endColor="@color/colorPrimary" android:startColor="@color/colorPrimaryDark" />
+            <gradient android:angle="270" android:endColor="@color/colorPrimary" android:startColor="@color/colorPrimary" />
             <corners android:radius="@dimen/corner_radios"></corners>
             <stroke android:width="@dimen/stroke_width" android:color="@color/white" />
         </shape>

@@ -12,6 +12,7 @@
     <string name="error_notadd">\"Error : not add \"</string>
     <string name="welcome">مرحبا</string>
     <string name="data">بيانات</string>
+    <string name="type_status">نوع الحالة</string>
     <string name="error_num">خطأ في عندد المقاعد</string>
     <string name="register">تسجيل</string>
     <string name="confpassword_hint">تأكيد كلمة السر</string>
@@ -53,9 +54,9 @@
     <string name="chairs_count_hint">عدد الكراسي</string>
     <string name="price_hint">السعر</string>
     <string name="add_offer">اضافه عرض</string>
-    <string name="customer">العميل</string>
+    <string name="customer">المعتمر</string>
     <!--//add doctor-->
-    <string-array name="sub_level_array" translatable="false">
+    <string-array name="sub_level_array">
         <item>نوع الباص</item>
         <item>بعد2017</item>
         <item>2010-2017</item>
@@ -63,8 +64,8 @@
         <item>قبل 2000</item>
 
     </string-array>
-    <string name="bus_level_spinner" translatable="false">نوع الباص</string>
-    <string name="hotel_level_spinner" translatable="false">مستوى الفندق</string>
+    <string name="bus_level_spinner">نوع الباص</string>
+    <string name="hotel_level_spinner" >مستوى الفندق</string>
     <string name="choose_multi_imgs">اختر اكثر من صوره</string>
     <string name="return_data">ارجاع البيانات</string>
     <string name="aspc_y">aspectY</string>
@@ -87,9 +88,17 @@
     <string name="title_activity_company_offer_detail">عمرتي</string>
     <string name="your_location">موقعك</string>
     <string name="title_activity_user_login">عمرتي</string>
+    <string name="residence">سكن</string>
+    <string name="without_housing">بدون سكن</string>
+    <string name="housing">سكن</string>
+    <string name="Transportation">نوع المواصلات</string>
+    <string name="Enter_Transportation">المواصلات</string>
     <string name="loading">جارى التحميل</string>
     <string name="web_client_id">888906199724-jqmmk6b5opp3r0i11q7h2a6uv1pmq67i.apps.googleusercontent.com</string>
     <string name="Search">بحث</string>
+    <string name="next">التالي</string>
+    <string name="single">عزاب</string>
+    <string name="families">عوائل</string>
     <string name="Omera_Company_Touries_and_more"> شركات لحجز العمره والفنادق  ...</string>
     <string name="check_in">وقت المغادرة</string>
     <string name="check_out">وقت الوصول</string>
@@ -109,7 +118,7 @@
     <string name="company_email">البريد الإلكتروني للشركة</string>
     <string name="Reservations">الحجوزات</string>
     <string name="Favorite_Companies">الشركات المفصلة</string>
-    <string name="Service_Provider">مقدم خدمة</string>
+    <string name="Service_Provider">مكتب عمرة</string>
     <string name="Languages">اللغة</string>
     <string name="Share_Application">مشاركة عمرتي</string>
     <string name="add_phote">اضافة صوره</string>
@@ -127,6 +136,18 @@
         <item>نجمة</item>
     </string-array>
 
+    <string-array name="type_places">
+        <item>مكة</item>
+        <item>المدينة</item>
+        <item>مكة المدينة</item>
+        <item>المدينة مكة</item>
+    </string-array>
+
+    <string-array name="type_transport">
+        <item>ذهاب وعودة</item>
+        <item>ذهاب</item>
+        <item>عودة</item>
+    </string-array>
     <string-array name="types_bus">
         <item>بعد 2017 </item>
         <item>2010-2017 </item>
@@ -134,7 +155,6 @@
         <item>قبل 2000 </item>
 
     </string-array>
-
 
 
 </resources>

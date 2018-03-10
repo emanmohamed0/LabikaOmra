@@ -5,6 +5,7 @@
     android:id="@+id/content_add_offer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/photo"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.apps.labikaomra.activities.AddOfferActivity"
     tools:showIn="@layout/activity_add_offer">
@@ -151,6 +152,144 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/sp18" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="26dp"
+                    android:layout_marginRight="26dp"
+                    android:layout_marginTop="@dimen/pad_10dp"
+                    android:background="@drawable/button_style2"
+                    android:orientation="vertical"
+                    android:text="@string/end_time"
+                    android:textColor="@color/colorPrimary">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="@dimen/pad_5dp"
+                        android:background="@drawable/shap_back"
+                        android:text="@string/type_status"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@android:color/black" />
+
+                    <RadioGroup
+                        android:id="@+id/rBGPoly3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioButton3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="@string/families"
+
+                            />
+
+                        <RadioButton
+                            android:id="@+id/radioButton32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/single" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="26dp"
+                    android:layout_marginRight="26dp"
+                    android:layout_marginTop="@dimen/pad_10dp"
+                    android:background="@drawable/button_style2"
+                    android:orientation="vertical"
+                    android:text="@string/end_time"
+                    android:textColor="@color/colorPrimary">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shap_back"
+                        android:text="@string/Transportation"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="@dimen/pad_5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@android:color/black" />
+
+                    <RadioGroup
+                        android:id="@+id/rBGPoly1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="@string/normal"
+
+                            />
+
+                        <RadioButton
+                            android:id="@+id/radioButton22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/vip" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="26dp"
+                    android:layout_marginRight="26dp"
+                    android:layout_marginTop="@dimen/pad_10dp"
+                    android:background="@drawable/button_style2"
+                    android:orientation="vertical"
+                    android:text="@string/end_time"
+                    android:textColor="@color/colorPrimary">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shap_back"
+                        android:text="@string/residence"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="@dimen/pad_5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@android:color/black" />
+
+                    <RadioGroup
+                        android:id="@+id/rBGPoly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioButton1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="@string/without_housing"
+
+                            />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/housing" />
+                    </RadioGroup>
+                </LinearLayout>
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -201,6 +340,7 @@
                         android:inputType="number"></EditText>
                 </android.support.design.widget.TextInputLayout>
 
+
                 <Spinner
                     android:id="@+id/spinner_hotel_level"
                     android:layout_width="match_parent"
@@ -225,6 +365,30 @@
                     android:entries="@array/types_bus"
                     android:padding="10dp"
                     android:prompt="@string/bus_level_spinner" />
+
+                <Spinner
+                    android:id="@+id/spinner_trans"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginTop="@dimen/pad_10dp"
+                    android:background="@color/colorPrimary"
+                    android:entries="@array/type_transport"
+                    android:padding="10dp"
+                    android:prompt="@string/Enter_Transportation" />
+
+                <Spinner
+                    android:id="@+id/spinner_dest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginTop="@dimen/pad_10dp"
+                    android:background="@color/colorPrimary"
+                    android:entries="@array/type_places"
+                    android:padding="10dp"
+                    android:prompt="@string/Enter_Distination" />
             </LinearLayout>
 
             <android.support.v7.widget.AppCompatButton
