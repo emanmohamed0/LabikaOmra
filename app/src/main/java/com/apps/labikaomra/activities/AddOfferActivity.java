@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,6 +24,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -55,7 +58,12 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddOfferActivity extends AppCompatActivity {
+    String Value_one;
+    String Value_two;
+    String Value_three;
 
+    private RadioGroup radio_group_one, radio_group_two, radio_group_three;
+    private RadioButton radioButtonOne, radioButtonTwo, radioButtonThree;
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int Date_id = 0;
@@ -65,7 +73,7 @@ public class AddOfferActivity extends AppCompatActivity {
     static int GALARY_REQUEST1 = 2;
     DatabaseReference mClientsDatabase;
     StorageReference mystorage;
-    Spinner spinnerHotelLevel, spinnerBusLevel;
+    Spinner spinnerHotelLevel, spinnerBusLevel ,spinnerDestLevel ,spinnerTransLevel;
     Button btnStartDay, btnAttendStartTime, btnStartTime, btnBackDay, btnAttendEndTime, btnEndTime, btnLocation, btnChooseMultiImage;
     ImageView imgProfile;
     Uri image_uri = null;
@@ -180,8 +188,11 @@ public class AddOfferActivity extends AppCompatActivity {
         inputDeals = (EditText) findViewById(R.id.dealsField);
         inputPrice = (EditText) findViewById(R.id.priceField);
         inputChairCount = (EditText) findViewById(R.id.chairsNumField);
-        spinnerHotelLevel = (Spinner) findViewById(R.id.spinner_hotel_level);
-        spinnerBusLevel = (Spinner) findViewById(R.id.spinner_bus_level);
+//        spinnerHotelLevel = (Spinner) findViewById(R.id.spinner_hotel_level);
+//        spinnerBusLevel = (Spinner) findViewById(R.id.spinner_bus_level);
+        spinnerDestLevel =(Spinner)findViewById(R.id.spinner_dest);
+        spinnerTransLevel =(Spinner)findViewById(R.id.spinner_trans);
+
         btnStartDay = (Button) findViewById(R.id.btnStartDay);
         btnAttendStartTime = (Button) findViewById(R.id.btnAttendStartTime);
         btnStartTime = (Button) findViewById(R.id.btnStartTime);
@@ -190,6 +201,9 @@ public class AddOfferActivity extends AppCompatActivity {
         btnEndTime = (Button) findViewById(R.id.btnEndTime);
         btnLocation = (Button) findViewById(R.id.btnLocation);
         progressDialog = new ProgressDialog(com.apps.labikaomra.activities.AddOfferActivity.this);
+        radio_group_one = (RadioGroup) findViewById(R.id.radio_group_one);
+        radio_group_two = (RadioGroup) findViewById(R.id.radio_group_two);
+        radio_group_three = (RadioGroup) findViewById(R.id.radio_group_three);
 
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,7 +330,7 @@ public class AddOfferActivity extends AppCompatActivity {
         addOfferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addClientList();
+                addClientList(view);
             }
         });
     }
@@ -353,7 +367,7 @@ public class AddOfferActivity extends AppCompatActivity {
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
 
-    public void addClientList() {
+    public void addClientList(View v) {
         if (!Validate()) {
             Toast.makeText(mContext, R.string.error_notadd, Toast.LENGTH_SHORT).show();
             return;
@@ -365,9 +379,45 @@ public class AddOfferActivity extends AppCompatActivity {
         final String deals = inputDeals.getText().toString().trim();
         final String price = inputPrice.getText().toString().trim();
         final String chairCount = inputChairCount.getText().toString().trim();
-        final String hotelLevel = spinnerHotelLevel.getSelectedItem().toString().trim();
-        final String busLevel = spinnerBusLevel.getSelectedItem().toString().trim();
-        AddOffer(hotelName, busLevel, hotelLevel, deals, price, Integer.parseInt(chairCount));
+//        final String hotelLevel = spinnerHotelLevel.getSelectedItem().toString().trim();
+//        final String busLevel = spinnerBusLevel.getSelectedItem().toString().trim();
+        final String destLevel = spinnerDestLevel.getSelectedItem().toString().trim();
+        final String transLevel = spinnerTransLevel.getSelectedItem().toString().trim();
+
+        // get selected radio button from radioGroup
+        int selectedIdOne = radio_group_one.getCheckedRadioButtonId();
+        // find the radiobutton by returned id
+        radioButtonOne = (RadioButton) findViewById(selectedIdOne);
+        if (radioButtonOne.getText()==null) {
+            Snackbar.make(v, "Please Choice One", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } else {
+            Value_one = radioButtonOne.getText().toString();
+        }
+
+        // get selected radio button from radioGroup
+        int selectedIdTwo = radio_group_two.getCheckedRadioButtonId();
+        // find the radiobutton by returned id
+        radioButtonTwo = (RadioButton) findViewById(selectedIdTwo);
+        if (radioButtonTwo.getText()==null) {
+            Snackbar.make(v, "Please Choice One", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } else {
+            Value_two = radioButtonTwo.getText().toString();
+        }
+
+        // get selected radio button from radioGroup
+        int selectedIdThree = radio_group_three.getCheckedRadioButtonId();
+        // find the radiobutton by returned id
+        radioButtonThree = (RadioButton) findViewById(selectedIdThree);
+        if (radioButtonThree.getText()== null) {
+            Snackbar.make(v, "Please Choice One", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } else {
+            Value_three = radioButtonThree.getText().toString();
+        }
+        AddOffer(hotelName, deals, price, Integer.parseInt(chairCount),
+        Value_one  ,Value_three ,Value_two ,transLevel,destLevel);
 
     }
 
@@ -377,8 +427,8 @@ public class AddOfferActivity extends AppCompatActivity {
         String deals = inputDeals.getText().toString().trim();
         String price = inputPrice.getText().toString().trim();
         String chairCount = inputChairCount.getText().toString().trim();
-        String hotelLevel = spinnerHotelLevel.getSelectedItem().toString().trim();
-        String busLevel = spinnerBusLevel.getSelectedItem().toString().trim();
+        String destLevel = spinnerDestLevel.getSelectedItem().toString().trim();
+        String transLevel = spinnerTransLevel.getSelectedItem().toString().trim();
 
 
         if (hotelName.isEmpty()) {
@@ -409,11 +459,11 @@ public class AddOfferActivity extends AppCompatActivity {
         } else {
             inputChairCount.setError(null);
         }
-        if (hotelLevel.isEmpty()) {
+        if (destLevel.isEmpty()) {
             Toast.makeText(mContext, R.string.error_hotelLevel, Toast.LENGTH_SHORT).show();
             valid = false;
         }
-        if (busLevel.isEmpty()) {
+        if (transLevel.isEmpty()) {
             Toast.makeText(mContext, R.string.error_busLevel, Toast.LENGTH_SHORT).show();
             valid = false;
         }
@@ -431,13 +481,19 @@ public class AddOfferActivity extends AppCompatActivity {
         return valid;
     }
 
-    private void AddOffer(String hotelName, String busLevel, String hotelLevel, String deals, String price, int numOfChairs) {
+    private void AddOffer(String hotelName, String deals, String price, int numOfChairs,
+    String value_onehouse ,String value_threestatus, String value_twotrans  ,String transLevel ,String destLevel) {
+
         HashMap<String, Object> timestampJoined = new HashMap<>();
         timestampJoined.put(getString(R.string.timestamp), ServerValue.TIMESTAMP);
 
         DatabaseReference client_database = mClientsDatabase.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS);
         String clientId = client_database.push().getKey();
-        Offer client = new Offer(hotelName, startDay, attendStartTime, startTime, busLevel, hotelLevel, backDay, attendEndTime, endTime, deals, price, location, numOfChairs, timestampJoined, lat, lang, profileImg, contentImgsArrayList, myAuth.getCurrentUser().getUid().toString(), clientId);
+        Offer client = new Offer(hotelName, startDay, attendStartTime, startTime, backDay, attendEndTime,
+                endTime, deals, price, location, numOfChairs, timestampJoined, lat, lang, profileImg,
+                contentImgsArrayList, myAuth.getCurrentUser().getUid().toString(), clientId,
+                value_onehouse ,value_threestatus,value_twotrans ,transLevel ,destLevel
+        );
         client_database.child(clientId).setValue(client)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

@@ -176,7 +176,7 @@
                         android:textColor="@android:color/black" />
 
                     <RadioGroup
-                        android:id="@+id/rBGPoly3"
+                        android:id="@+id/radio_group_one"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -195,6 +195,7 @@
                             android:id="@+id/radioButton32"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:checked="true"
                             android:text="@string/single" />
                     </RadioGroup>
                 </LinearLayout>
@@ -223,7 +224,7 @@
                         android:textColor="@android:color/black" />
 
                     <RadioGroup
-                        android:id="@+id/rBGPoly1"
+                        android:id="@+id/radio_group_two"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -234,6 +235,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
+                            android:checked="true"
                             android:text="@string/normal"
 
                             />
@@ -270,7 +272,7 @@
                         android:textColor="@android:color/black" />
 
                     <RadioGroup
-                        android:id="@+id/rBGPoly"
+                        android:id="@+id/radio_group_three"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -287,6 +289,7 @@
 
                         <RadioButton
                             android:id="@+id/radioButton2"
+                            android:checked="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/housing" />
@@ -344,30 +347,30 @@
                 </android.support.design.widget.TextInputLayout>
 
 
-                <Spinner
-                    android:id="@+id/spinner_hotel_level"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginRight="35dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:background="@color/colorPrimary"
-                    android:entries="@array/types_hotel"
-                    android:padding="10dp"
-                    android:prompt="@string/hotel_level_spinner"
-                    android:verticalScrollbarPosition="defaultPosition" />
+                <!--<Spinner-->
+                    <!--android:id="@+id/spinner_hotel_level"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="22dp"-->
+                    <!--android:layout_marginRight="35dp"-->
+                    <!--android:layout_marginTop="@dimen/pad_10dp"-->
+                    <!--android:background="@color/colorPrimary"-->
+                    <!--android:entries="@array/types_hotel"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:prompt="@string/hotel_level_spinner"-->
+                    <!--android:verticalScrollbarPosition="defaultPosition" />-->
 
-                <Spinner
-                    android:id="@+id/spinner_bus_level"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginRight="35dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:background="@color/colorPrimary"
-                    android:entries="@array/types_bus"
-                    android:padding="10dp"
-                    android:prompt="@string/bus_level_spinner" />
+                <!--<Spinner-->
+                    <!--android:id="@+id/spinner_bus_level"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="22dp"-->
+                    <!--android:layout_marginRight="35dp"-->
+                    <!--android:layout_marginTop="@dimen/pad_10dp"-->
+                    <!--android:background="@color/colorPrimary"-->
+                    <!--android:entries="@array/types_bus"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:prompt="@string/bus_level_spinner" />-->
 
                 <Spinner
                     android:id="@+id/spinner_trans"

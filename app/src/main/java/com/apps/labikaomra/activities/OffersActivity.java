@@ -52,7 +52,7 @@ public class OffersActivity extends AppCompatActivity implements
     public static Context mcontext;
     public static Long checkOutDate = 0l;
     public static Long checkInDate = 0l;
-    public static String txtbus, txthotel, txtplace;
+    public static String txtplace, txttrans, value_one, value_two, value_three;
     public static int numseat;
     private DatabaseReference myDatabase, mDataCompany;
     private GoogleApiClient mGoogleApiClient;
@@ -159,12 +159,13 @@ public class OffersActivity extends AppCompatActivity implements
                     Offer offer = postSnapshot.getValue(Offer.class);
 
                     if (checkOutDate != 0l && checkInDate != 01) {
-                        if ((offer.getBackDay() <= checkOutDate && checkInDate <= offer.getStartDay())
-                                || (offer.getNumOfChairs() == numseat) || (offer.getBusLevel() == txtbus
-                                || (offer.getHotelLevel() == txthotel))) {
+                        if ((offer.getBackDay() <= checkOutDate || checkInDate <= offer.getStartDay()) ||
+                                (offer.getValueonehouse()==value_one) || (offer.getValuetwotrans()==value_two)
+                                ||(offer.getValuethreestatus() == value_three)) {
+
                             clientList.add(offer);
                         } else {
-                            Toast.makeText(mcontext, "No Data Match this Date", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(mcontext, "No Data Match this Date", Toast.LENGTH_LONG).show();
 
                         }
 //                        clientList.add(offer);

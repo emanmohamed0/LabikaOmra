@@ -96,8 +96,8 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
         });
 
         setAnimation(viewHolder.myView, position);
-        viewHolder.setNameHotel(model.get(position).getHotelLevel());
-        viewHolder.setBus(model.get(position).getBusLevel());
+        viewHolder.setNameHotel(model.get(position).getTransLevel());
+        viewHolder.setBus(model.get(position).getDestLevel());
         viewHolder.setFood(model.get(position).getDeals());
         viewHolder.setPrice(model.get(position).getPrice());
         if(model.get(position).getOfferImage() !=null){

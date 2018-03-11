@@ -86,7 +86,7 @@
     <string name="error_price">Error Price</string>
     <string name="error_chairCount">Error Chair Count</string>
     <string name="error_hotelLevel">Error hotel Level</string>
-    <string name="error_busLevel">Error busLevel</string>
+    <string name="error_busLevel">Error TransPortLevel</string>
     <string name="error_profileImg">Error Offer Image</string>
     <string name="title_activity_company_offer_detail">CompanyOfferDetailActivity</string>
     <string name="your_location">Your Location</string>

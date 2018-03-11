@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String sSelected = adapterView.getItemAtPosition(i).toString();
-                OffersActivity.txthotel = sSelected;
+//                OffersActivity.txthotel = sSelected;
 //                Toast.makeText(MainActivity.this, "type hotel"+sSelected, Toast.LENGTH_SHORT).show();
             }
 
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String sSelected = adapterView.getItemAtPosition(i).toString();
-                OffersActivity.txtbus = sSelected;
+//                OffersActivity.txtbus = sSelected;
 
 //                Toast.makeText(MainActivity.this, sSelected, Toast.LENGTH_SHORT).show();
             }
@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         searchnow_btn = (Button) findViewById(R.id.search);
         hotelLevel = spinnerhotel.getSelectedItem().toString().trim();
         buslevel = spinnerbus.getSelectedItem().toString().trim();
-        OffersActivity.txtbus = buslevel;
-        OffersActivity.txthotel = hotelLevel;
+//        OffersActivity.txtbus = buslevel;
+//        OffersActivity.txthotel = hotelLevel;
         updateLabelfrom();
         updateLabelto();
 

@@ -13,6 +13,7 @@
     <string name="welcome">مرحبا</string>
     <string name="data">بيانات</string>
     <string name="type_status">نوع الحالة</string>
+    <string name="normal">عادي</string>
     <string name="error_num">خطأ في عندد المقاعد</string>
     <string name="register">تسجيل</string>
     <string name="confpassword_hint">تأكيد كلمة السر</string>
@@ -82,8 +83,8 @@
     <string name="error_deals">خطأ في الاتفاق</string>
     <string name="error_price">خطأ في السعر</string>
     <string name="error_chairCount">خطأ في عدد الكراسي</string>
-    <string name="error_hotelLevel">خطأ في مستوى الفندق</string>
-    <string name="error_busLevel">خطأ في نوع الباص</string>
+    <string name="error_hotelLevel">خطأ في اختيار المكان</string>
+    <string name="error_busLevel">خطأ في اختر المواصلات</string>
     <string name="error_profileImg">خطأ في صورة العرض</string>
     <string name="title_activity_company_offer_detail">عمرتي</string>
     <string name="your_location">موقعك</string>

@@ -11,23 +11,29 @@ import java.util.HashMap;
  */
 
 public class Offer {
-    String hotelName, attendStartTime, startTime, busLevel, hotelLevel, attendEndTime, endTime, deals, price, offerImage, companyKeyId, location, keyId;
+    String hotelName, attendStartTime, startTime, attendEndTime, endTime,
+            deals, price, offerImage, companyKeyId, location, keyId, valueonehouse, valuetwotrans, valuethreestatus, transLevel, destLevel;
     int numOfChairs;
     private HashMap<String, Object> timestampLastChanged;
     private HashMap<String, Object> timestampCreated;
     double lat, lng;
     ArrayList<String> contentImagesList;
     Long startDay, backDay;
+
     public Offer() {
     }
 
-    public Offer(String hotelName, Long startDay, String attendStartTime, String startTime, String busLevel, String hotelLevel, Long backDay, String attendEndTime, String endTime, String deals, String price, String location, int numOfChairs, HashMap<String, Object> timestampCreated, double lat, double lng, String offerImage, ArrayList<String> contentImagesList, String companyKeyId, String keyId) {
+    public Offer(String hotelName, Long startDay, String attendStartTime, String startTime,
+                 Long backDay, String attendEndTime,
+                 String endTime, String deals, String price, String location, int numOfChairs,
+                 HashMap<String, Object> timestampCreated, double lat, double lng, String offerImage,
+                 ArrayList<String> contentImagesList, String companyKeyId, String keyId,
+                 String valueonehouse, String valuethreestaus, String valuetwotrans, String transLevel, String destLevel) {
         this.hotelName = hotelName;
         this.startDay = startDay;
         this.attendStartTime = attendStartTime;
         this.startTime = startTime;
-        this.busLevel = busLevel;
-        this.hotelLevel = hotelLevel;
+
         this.backDay = backDay;
         this.attendEndTime = attendEndTime;
         this.endTime = endTime;
@@ -37,6 +43,11 @@ public class Offer {
         this.numOfChairs = numOfChairs;
         this.lat = lat;
         this.lng = lng;
+        this.valueonehouse = valueonehouse;
+        this.valuetwotrans = valuetwotrans;
+        this.valuethreestatus = valuethreestaus;
+        this.transLevel = transLevel;
+        this.destLevel = destLevel;
         this.keyId = keyId;
         this.companyKeyId = companyKeyId;
         this.contentImagesList = contentImagesList;
@@ -67,12 +78,24 @@ public class Offer {
         return startTime;
     }
 
-    public String getBusLevel() {
-        return busLevel;
+    public String getValueonehouse() {
+        return valueonehouse;
     }
 
-    public String getHotelLevel() {
-        return hotelLevel;
+    public String getValuetwotrans() {
+        return valuetwotrans;
+    }
+
+    public String getValuethreestatus() {
+        return valuethreestatus;
+    }
+
+    public String getTransLevel() {
+        return transLevel;
+    }
+
+    public String getDestLevel() {
+        return destLevel;
     }
 
     public Long getBackDay() {

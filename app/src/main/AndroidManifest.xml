@@ -138,7 +138,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".CompleteSearchActivity"></activity>
+        <activity android:name=".activities.CompleteSearchActivity"></activity>
     </application>
 
 </manifest>

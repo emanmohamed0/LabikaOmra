@@ -123,9 +123,9 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
 
         mTxtPlace.setText(mPharmacy.getLocation());
         mTxtPrice.setText(mPharmacy.getPrice());
-        mTxtHotel.setText(mPharmacy.getHotelLevel());
+        mTxtHotel.setText(mPharmacy.getTransLevel());
         mTxtFood.setText(mPharmacy.getDeals());
-        mTxtBus.setText(mPharmacy.getBusLevel());
+        mTxtBus.setText(mPharmacy.getDestLevel());
         name.setText(nameCompany);
 
         if (mPharmacy.getOfferImage() != null) {

@@ -25,7 +25,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.apps.labikaomra.CompleteSearchActivity;
 import com.apps.labikaomra.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -41,12 +40,12 @@ public class Home extends AppCompatActivity
     DatabaseReference cateagory;
 
     TextView searchtxt, choice_place, check_out, check_in, txtFullName, txtEmail;
-    Button searchnow_btn;
+    Button next_btn;
     Calendar from, to;
     EditText numseat;
     Long checkOutDate, checkInDate;
     String mUser_Id;
-    String hotelLevel, buslevel, nameCompany;
+    String placeLevel, transLevel, nameCompany;
     Locale myLocale;
 
     @Override
@@ -86,15 +85,15 @@ public class Home extends AppCompatActivity
         mUser_Id = getIntent().getStringExtra("mUser_Id");
 
         numseat = (EditText) findViewById(R.id.num_seat);
-        final Spinner spinnerhotel = (Spinner) findViewById(R.id.type_dest);
+        final Spinner spinnerPlace = (Spinner) findViewById(R.id.type_dest);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_places, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerhotel.setPrompt("Type Of Places!");
-        spinnerhotel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerPlace.setPrompt("Type Of Places!");
+        spinnerPlace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String sSelected = adapterView.getItemAtPosition(i).toString();
-                OffersActivity.txthotel = sSelected;
+                OffersActivity.txtplace = sSelected;
 //                Toast.makeText(MainActivity.this, "type hotel"+sSelected, Toast.LENGTH_SHORT).show();
             }
 
@@ -108,20 +107,20 @@ public class Home extends AppCompatActivity
 //                R.array.types_hotel, android.R.layout.simple_spinner_item);
 //
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerhotel.setAdapter(adapter);
+        spinnerPlace.setAdapter(adapter);
 
 
-        final Spinner spinnerbus = (Spinner) findViewById(R.id.type_trans);
+        final Spinner spinnerTrans = (Spinner) findViewById(R.id.type_trans);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
                 R.array.type_transport, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerbus.setPrompt("Type Of Transport!");
-        spinnerbus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerTrans.setPrompt("Type Of Transport!");
+        spinnerTrans.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String sSelected = adapterView.getItemAtPosition(i).toString();
-                OffersActivity.txtbus = sSelected;
+                OffersActivity.txttrans = sSelected;
 
 //                Toast.makeText(MainActivity.this, sSelected, Toast.LENGTH_SHORT).show();
             }
@@ -131,7 +130,7 @@ public class Home extends AppCompatActivity
 
             }
         });
-        spinnerbus.setAdapter(adapter2);
+        spinnerTrans.setAdapter(adapter2);
 //////////////////////////////////////////////////////////////////////
 //        Spinner spinner = (Spinner) findViewById(R.meid.type_bus);
 //        ArrayAdapter<CharSequence> adapterbus = ArrayAdapter.createFromResource(this, R.array.types_bus, android.R.layout.simple_spinner_item);
@@ -146,8 +145,6 @@ public class Home extends AppCompatActivity
 //                        this));
 
 
-
-
         from = Calendar.getInstance();
         to = Calendar.getInstance();
         to.add(Calendar.DATE, 1);
@@ -155,28 +152,28 @@ public class Home extends AppCompatActivity
         searchtxt = (TextView) findViewById(R.id.searchText);
         check_out = (TextView) findViewById(R.id.check_out);
         check_in = (TextView) findViewById(R.id.check_in);
-        searchnow_btn = (Button) findViewById(R.id.search);
-        hotelLevel = spinnerhotel.getSelectedItem().toString().trim();
-        buslevel = spinnerbus.getSelectedItem().toString().trim();
-        OffersActivity.txtbus = buslevel;
-        OffersActivity.txthotel = hotelLevel;
+        next_btn = (Button) findViewById(R.id.next);
+        placeLevel = spinnerPlace.getSelectedItem().toString().trim();
+        transLevel = spinnerTrans.getSelectedItem().toString().trim();
+        OffersActivity.txttrans = transLevel;
+        OffersActivity.txtplace = placeLevel;
         updateLabelfrom();
         updateLabelto();
 
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/NABILA.TTF");
         searchtxt.setTypeface(face);
 
-        searchnow_btn.setOnClickListener(new View.OnClickListener() {
+        next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hotelLevel = spinnerhotel.getSelectedItem().toString().trim();
-                buslevel = spinnerbus.getSelectedItem().toString().trim();
+                placeLevel = spinnerPlace.getSelectedItem().toString().trim();
+                transLevel = spinnerTrans.getSelectedItem().toString().trim();
 //                if(choice_place.getText().toString().isEmpty()){
 //                }else{
 //                    OffersActivity.txtplace = choice_place.getText().toString();
 //                }
-                OffersActivity.txtbus = buslevel;
-                OffersActivity.txthotel = hotelLevel;
+                OffersActivity.txtplace = placeLevel;
+                OffersActivity.txttrans = transLevel;
                 OffersActivity.checkOutDate = to.getTimeInMillis();
                 OffersActivity.checkInDate = from.getTimeInMillis();
                 if (numseat.getText().toString().isEmpty()) {
@@ -203,6 +200,7 @@ public class Home extends AppCompatActivity
 //        } else {
 //            choice_place.setText(nameCompany + "");
 //        }
+
         final DatePickerDialog.OnDateSetListener datefrom = new DatePickerDialog.OnDateSetListener() {
 
 

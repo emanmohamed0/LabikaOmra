@@ -90,7 +90,7 @@ public class OfferDetailActivity extends AppCompatActivity
     CircleImageView profilrImg;
     ImageView imgOffer;
     String nameCompany, mUser_Id;
-    TextView mTxtPlace, mTxtPrice, mTxtHotel, mTxtFood, mTxtBus;
+    TextView mTxtPlace, mTxtPrice, mTxtHotel, mTxtFood, mTxtBus ,mTxtSeat;
 
     @Override
     public void onBackPressed() {
@@ -143,6 +143,7 @@ public class OfferDetailActivity extends AppCompatActivity
         imgOffer = (ImageView) findViewById(R.id.imageCompany);
         mTxtPlace = (TextView) findViewById(R.id.locationTxt);
         mTxtPrice = (TextView) findViewById(R.id.price);
+        mTxtSeat = (TextView) findViewById(R.id.seat);
         mTxtHotel = (TextView) findViewById(R.id.hotels);
         mTxtFood = (TextView) findViewById(R.id.food);
         mTxtBus = (TextView) findViewById(R.id.bus);
@@ -150,10 +151,11 @@ public class OfferDetailActivity extends AppCompatActivity
         profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
 
         mTxtPlace.setText(mPharmacy.getLocation());
-        mTxtPrice.setText(mPharmacy.getPrice());
-        mTxtHotel.setText(mPharmacy.getHotelLevel());
+        mTxtPrice.setText("EGP "+mPharmacy.getPrice());
+        mTxtHotel.setText(mPharmacy.getTransLevel());
         mTxtFood.setText(mPharmacy.getDeals());
-        mTxtBus.setText(mPharmacy.getBusLevel());
+        mTxtBus.setText(mPharmacy.getDestLevel());
+        mTxtSeat.setText(getString(R.string.chairs_count_hint)+" "+mPharmacy.getNumOfChairs());
         name.setText(nameCompany);
 //        Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
 
@@ -162,7 +164,6 @@ public class OfferDetailActivity extends AppCompatActivity
             Picasso.with(com.apps.labikaomra.activities.OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
 
         }
-
 
 //        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 //
