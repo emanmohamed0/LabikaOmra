@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/photo"
     android:orientation="vertical"
+    android:layoutDirection="ltr"
     tools:context=".activities.ChoiceActivity">
 
     <include
@@ -36,7 +37,7 @@
         android:layout_height="170dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
         <LinearLayout

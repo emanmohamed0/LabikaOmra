@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/photo"
     android:layout_height="match_parent"
+    android:layoutDirection="ltr"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.apps.labikaomra.activities.CompanyLoginActivity"
     tools:showIn="@layout/activity_company_login">

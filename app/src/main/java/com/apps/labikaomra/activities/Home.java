@@ -39,14 +39,13 @@ public class Home extends AppCompatActivity
     FirebaseDatabase firebaseDatabase;
     DatabaseReference cateagory;
 
-    TextView searchtxt, choice_place, check_out, check_in, txtFullName, txtEmail;
+    TextView searchtxt, check_out, check_in, txtFullName, txtEmail;
     Button next_btn;
     Calendar from, to;
     EditText numseat;
-    Long checkOutDate, checkInDate;
-    String mUser_Id;
+    String mUser_Id, local;
     String placeLevel, transLevel, nameCompany;
-    Locale myLocale;
+    Locale myLocale, locale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,7 @@ public class Home extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Omrati");
         setSupportActionBar(toolbar);
-
+        local = getIntent().getStringExtra("locale");
         //init firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         cateagory = firebaseDatabase.getReference("Cateagory");
@@ -201,6 +200,8 @@ public class Home extends AppCompatActivity
 //            choice_place.setText(nameCompany + "");
 //        }
 
+        locale = getResources().getConfiguration().locale;
+        Locale.setDefault(locale);
         final DatePickerDialog.OnDateSetListener datefrom = new DatePickerDialog.OnDateSetListener() {
 
 
@@ -272,64 +273,60 @@ public class Home extends AppCompatActivity
 
     public void getDate() {
         String myFormat = "EEE, MMM d"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
 
         Long currentTime = from.getTimeInMillis();
         long endOfTomorrow = currentTime + DateUtils.DAY_IN_MILLIS
                 + (DateUtils.DAY_IN_MILLIS - currentTime % DateUtils.DAY_IN_MILLIS);
 
         to.setTimeInMillis(endOfTomorrow);
-        check_out.setText(getString(R.string.check_out)+"\n" + sdf.format(to.getTime()));
+        String date_Out = sdf.format(to.getTime());
+        check_out.setText(getString(R.string.check_out) + "\n" + date_Out);
 
     }
 
     private void updateLabelfrom() {
 
         String myFormat = "EEE, MMM d"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//        checkInDate = TimeUnit.MILLISECONDS.toSeconds(from.getTime().getTime());
-//         checkInDate = from.getTime().getTime();
-//        from.getTimeInMillis();
-//        OffersActivity.checkInDate = checkInDate;
-        check_in.setText(getString(R.string.check_in)+"\n" + sdf.format(from.getTime()));
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+        String date_In = sdf.format(from.getTime());
+        check_in.setText(getString(R.string.check_in) + "\n" + date_In);
 
     }
 
+//     if (local == "en") {
+//        String myFormat = "EEE, MMM d"; //In which you need put here
+//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//
+////        checkOutDate = TimeUnit.MILLISECONDS.toSeconds(to.getTime().getTime());
+////        checkOutDate = to.getTime().getTime();
+////        OffersActivity.checkOutDate = checkOutDate;
+//
+//        check_out.setText(getString(R.string.check_out) + "\n" + sdf.format(to.getTime()));
+//    } else {
+//        String myFormat = "EEE, MMM d"; //In which you need put here
+//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, new Locale("ar"));
+//
+////        checkOutDate = TimeUnit.MILLISECONDS.toSeconds(to.getTime().getTime());
+////        checkOutDate = to.getTime().getTime();
+////        OffersActivity.checkOutDate = checkOutDate;
+//
+//        check_out.setText(getString(R.string.check_out) + "\n" + sdf.format(to.getTime()));
+//    }
     private void updateLabelto() {
 
         String myFormat = "EEE, MMM d"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-//        checkOutDate = TimeUnit.MILLISECONDS.toSeconds(to.getTime().getTime());
-//        checkOutDate = to.getTime().getTime();
-//        OffersActivity.checkOutDate = checkOutDate;
-
-        check_out.setText(getString(R.string.check_out)+"\n" + sdf.format(to.getTime()));
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+        check_out.setText(getString(R.string.check_out) + "\n" + sdf.format(to.getTime()));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.navigation, menu);
-//        getMenuInflater().inflate(R.menu.menu_language, menu);
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        if (item.getItemId() == R.id.language_en) {
-//            setLocale("en");
-//            Intent loginIntent = new Intent(Home.this, SplachActivity.class);
-//            startActivity(loginIntent);
-//        }
-//        else if(item.getItemId() == R.id.language_ar){
-//            setLocale("ar");
-//            Intent loginIntent = new Intent(Home.this, SplachActivity.class);
-//            startActivity(loginIntent);
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     private void setLocale(String language) {
         myLocale = new Locale(language);
@@ -339,42 +336,6 @@ public class Home extends AppCompatActivity
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
-//    @Override
-//    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//        String sSelected = adapterView.getItemAtPosition(i).toString();
-//
-//        Toast.makeText(this, sSelected, Toast.LENGTH_SHORT).show();
-//
-//    }
-//
-//    @Override
-//    public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//    }
-
 
     @Override
     public void onBackPressed() {
@@ -417,9 +378,9 @@ public class Home extends AppCompatActivity
 
         } else if (id == R.id.nav_Service_Provider) {
 
-                Intent searchIntent = new Intent(Home.this, CompanyLoginActivity.class);
-                startActivity(searchIntent);
-                finish();
+            Intent searchIntent = new Intent(Home.this, CompanyLoginActivity.class);
+            startActivity(searchIntent);
+            finish();
 
         } else if (id == R.id.nav_share) {
             Intent shareIntent = new Intent();

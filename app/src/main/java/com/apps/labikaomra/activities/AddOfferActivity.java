@@ -338,11 +338,8 @@ public class AddOfferActivity extends AppCompatActivity {
     private void updateLabelfrom() {
 
         String myFormat = "EEE, MMM d"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//        checkInDate = TimeUnit.MILLISECONDS.toSeconds(from.getTime().getTime());
-//         checkInDate = from.getTime().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat,Locale.getDefault());
         from.getTimeInMillis();
-//        OffersActivity.checkInDate = checkInDate;
         btnStartDay.setText(sdf.format(from.getTime()));
 
     }
@@ -350,7 +347,7 @@ public class AddOfferActivity extends AppCompatActivity {
     private void updateLabelto() {
 
         String myFormat = "EEE, MMM d"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
 
         btnBackDay.setText(sdf.format(to.getTime()));
     }

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_company_offer_detail"
     android:layout_width="match_parent"
+    android:layoutDirection="ltr"
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -138,7 +139,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:orientation="vertical"
-                            android:paddingRight="@dimen/pad_10dp">
+                            android:layout_marginRight="@dimen/pad_10dp">
 
                             <TextView
                                 android:id="@+id/dispaly_nameCompany"
@@ -155,6 +156,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingTop="@dimen/pad_10dp"
                                 android:text="@string/type_bus"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
                                 android:textStyle="italic" />
@@ -164,6 +166,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="@dimen/pad_10dp"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:text="@string/Type_Food"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
@@ -174,6 +177,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="10dp"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:text="@string/type_hotel"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
@@ -184,6 +188,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="10dp"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:text="@string/Number_seat"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
@@ -194,6 +199,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingTop="@dimen/pad_10dp"
                                 android:text="@string/price_hint"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:textColor="@android:color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold|italic" />

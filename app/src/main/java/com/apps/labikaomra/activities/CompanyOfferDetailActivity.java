@@ -76,7 +76,7 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
     MapView mapView;
     private GoogleApiClient googleApiClient;
     CircleImageView profilrImg;
-    TextView mTxtPlace, mTxtPrice, mTxtHotel, mTxtFood, mTxtBus;
+    TextView mTxtPlace, mTxtPrice, mTxtHotel, mTxtFood, mTxtBus,mTxtSeat;
     String nameCompany;
 
     @Override
@@ -121,11 +121,13 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         TextView name = (TextView) findViewById(R.id.dispaly_nameCompany);
         profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
 
-        mTxtPlace.setText(mPharmacy.getLocation());
+        mTxtPlace.setText("EGP "+mPharmacy.getLocation());
         mTxtPrice.setText(mPharmacy.getPrice());
         mTxtHotel.setText(mPharmacy.getTransLevel());
         mTxtFood.setText(mPharmacy.getDeals());
         mTxtBus.setText(mPharmacy.getDestLevel());
+        mTxtSeat.setText(getString(R.string.chairs_count_hint)+" "+mPharmacy.getNumOfChairs());
+
         name.setText(nameCompany);
 
         if (mPharmacy.getOfferImage() != null) {

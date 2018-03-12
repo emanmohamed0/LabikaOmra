@@ -157,13 +157,18 @@ public class OffersActivity extends AppCompatActivity implements
                 clientList = new ArrayList<Offer>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Offer offer = postSnapshot.getValue(Offer.class);
-
                     if (checkOutDate != 0l && checkInDate != 01) {
-                        if ((offer.getBackDay() <= checkOutDate || checkInDate <= offer.getStartDay()) ||
-                                (offer.getValueonehouse()==value_one) || (offer.getValuetwotrans()==value_two)
-                                ||(offer.getValuethreestatus() == value_three)) {
+                        long diff = checkInDate - offer.getStartDay();
+                        long days = diff / (24 * 60 * 60 * 1000);
 
-                            clientList.add(offer);
+                        long diff1 = offer.getBackDay() - checkOutDate;
+                        long day = diff1 / (24 * 60 * 60 * 1000);
+
+                            if ((day <= 0 && days == 0) ||
+                                    (offer.getValueonehouse() == value_one) || (offer.getValuetwotrans() == value_two)
+                                    || (offer.getValuethreestatus() == value_three)) {
+
+                                clientList.add(offer);
                         } else {
 //                            Toast.makeText(mcontext, "No Data Match this Date", Toast.LENGTH_LONG).show();
 

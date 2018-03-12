@@ -1,7 +1,12 @@
 package com.apps.labikaomra.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Locale;
+
 
 public class SplachActivity extends FragmentActivity {
     private Animation animation;
@@ -23,20 +30,33 @@ public class SplachActivity extends FragmentActivity {
     private TextView appTitle;
     private TextView appSlogan;
     private FirebaseAuth auth;
+    public String language;
     private DatabaseReference myCompanyDatabase;
-
+    public SharedPreferences sharedPreferences;
+    public SharedPreferences.Editor editor;
+String locale;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.animation1, R.anim.animation2);
         setContentView(R.layout.activity_splach);
+        sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
+        locale = getIntent().getStringExtra("locale");
         logo = (ImageView) findViewById(R.id.logo_img);
         appTitle = (TextView) findViewById(R.id.track_txt);
         appSlogan = (TextView) findViewById(R.id.pro_txt);
-
         myCompanyDatabase = FirebaseDatabase.getInstance().getReference();
 
+//        language = sharedPreferences.getString("LANGUAGE", Locale.getDefault().getDisplayLanguage().toLowerCase().substring(0,2));
+//
+//        if (language.equals("en")) {
+//            forceLocale(getApplicationContext(), "en");
+//        }else if(language.equals("ال") || language.equals("ar")){
+//            forceLocale(getApplicationContext(), "ar");
+//            language = "ar";
+//        }
 
         // Font path
         String fontPath = getString(R.string.font_path);
@@ -95,6 +115,7 @@ public class SplachActivity extends FragmentActivity {
                                                    String uid = auth.getCurrentUser().getUid();
                                                    Intent start =new Intent(SplachActivity.this, ChoiceActivity.class);
                                                    start.putExtra("company_user_id",uid);
+                                                   start.putExtra("locale",locale);
                                                    SplachActivity.this.startActivity(start);
 //                                                   SplachActivity.this.startActivity(new Intent(SplachActivity.this, ChoiceActivity.class));
                                                    SplachActivity.this.finish();
@@ -103,6 +124,7 @@ public class SplachActivity extends FragmentActivity {
 //                                                   String uid = auth.getCurrentUser().getUid();
                                                    Intent start =new Intent(SplachActivity.this, ChoiceActivity.class);
 //                                                   start.putExtra("company_user_id",key);
+                                                   start.putExtra("locale",locale);
                                                    SplachActivity.this.startActivity(start);
 //                                                   SplachActivity.this.startActivity(new Intent(SplachActivity.this, ChoiceActivity.class));
                                                    SplachActivity.this.finish();
@@ -121,6 +143,27 @@ public class SplachActivity extends FragmentActivity {
 
         );
 
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void forceLocale(Context context, String localeCode) {
+        String localeCodeLowerCase = localeCode.toLowerCase();
+
+        Resources resources = context.getApplicationContext().getResources();
+        Configuration overrideConfiguration = resources.getConfiguration();
+        Locale overrideLocale = new Locale(localeCodeLowerCase);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            overrideConfiguration.setLocale(overrideLocale);
+        } else {
+            overrideConfiguration.locale = overrideLocale;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            context.getApplicationContext().createConfigurationContext(overrideConfiguration);
+        } else {
+            resources.updateConfiguration(overrideConfiguration, null);
+        }
     }
 
     @Override

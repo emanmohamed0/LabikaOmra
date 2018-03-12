@@ -100,9 +100,14 @@ public class CompanyOffersActivity extends AppCompatActivity implements
                     mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).child(pharmacy.getKeyId()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                        String companyKeyId = dataSnapshot.child("companyKeyId").getValue().toString();
+                            if(dataSnapshot.child("companyKeyId").getValue() ==null){
 
-                            Toast.makeText(mcontext, "companyKeyId" + companyKeyId, Toast.LENGTH_SHORT).show();
+                            }else{
+                                String companyKeyId = dataSnapshot.child("companyKeyId").getValue().toString();
+
+                                Toast.makeText(mcontext, "companyKeyId" + companyKeyId, Toast.LENGTH_SHORT).show();
+
+                            }
 
                         }
 

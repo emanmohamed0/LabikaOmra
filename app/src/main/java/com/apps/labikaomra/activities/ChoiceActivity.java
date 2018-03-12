@@ -41,6 +41,7 @@ public class ChoiceActivity extends AppCompatActivity {
         toolbar.setTitle("Omrati");
         setSupportActionBar(toolbar);
 
+       final String locale= getIntent().getStringExtra("locale");
         lincustomer = (View) findViewById(R.id.lincustomer);
         linleader = (View) findViewById(R.id.linleader);
         myAuth = FirebaseAuth.getInstance();
@@ -54,13 +55,13 @@ public class ChoiceActivity extends AppCompatActivity {
                     mUser_Id = myAuth.getCurrentUser().getUid();
                     Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
                     searchIntent.putExtra("mUser_Id", mUser_Id);
+                    searchIntent.putExtra("locale", locale);
                     startActivity(searchIntent);
-                    finish();
                 } else {
                     Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
                     searchIntent.putExtra("mUser_Id", mUser_Id);
+                    searchIntent.putExtra("locale", locale);
                     startActivity(searchIntent);
-                    finish();
                 }
 
             }
@@ -73,13 +74,13 @@ public class ChoiceActivity extends AppCompatActivity {
                     company_user_id = myAuth.getCurrentUser().getUid();
                     Intent searchIntent = new Intent(ChoiceActivity.this, CompanyOffersActivity.class);
                     searchIntent.putExtra("company_user_id", company_user_id);
+                    searchIntent.putExtra("locale", locale);
                     startActivity(searchIntent);
-                    finish();
                 } else {
                     Intent searchIntent = new Intent(ChoiceActivity.this, CompanyLoginActivity.class);
                     searchIntent.putExtra("company_user_id", company_user_id);
+                    searchIntent.putExtra("locale", locale);
                     startActivity(searchIntent);
-                    finish();
                 }
 
             }
@@ -99,12 +100,16 @@ public class ChoiceActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.language_en) {
             setLocale("en");
             Intent loginIntent = new Intent(ChoiceActivity.this, SplachActivity.class);
+            loginIntent.putExtra("locale","en");
             startActivity(loginIntent);
+            finish();
         }
         else if(item.getItemId() == R.id.language_ar){
             setLocale("ar");
             Intent loginIntent = new Intent(ChoiceActivity.this, SplachActivity.class);
+            loginIntent.putExtra("locale","ar");
             startActivity(loginIntent);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

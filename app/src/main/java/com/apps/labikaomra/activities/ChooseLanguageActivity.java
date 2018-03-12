@@ -43,10 +43,12 @@ public class ChooseLanguageActivity extends AppCompatActivity {
                         setLocale("en");
                         Intent loginIntent = new Intent(ChooseLanguageActivity.this, SplachActivity.class);
                         startActivity(loginIntent);
+                        finish();
                     }else {
                         setLocale("ar");
                         Intent loginIntent = new Intent(ChooseLanguageActivity.this, SplachActivity.class);
                         startActivity(loginIntent);
+                        finish();
                     }
 
                     // Changes the textview's text to "Checked: example radiobutton text"

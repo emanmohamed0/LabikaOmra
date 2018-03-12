@@ -52,7 +52,7 @@
     <string name="attend_end_time">وقت التجمع للعودة</string>
     <string name="end_time">وقت الانطلاق للعودة</string>
     <string name="deals_hint">الوجبات</string>
-    <string name="chairs_count_hint">عدد الكراسي</string>
+    <string name="chairs_count_hint">عدد المقاعد</string>
     <string name="price_hint">السعر</string>
     <string name="add_offer">اضافه عرض</string>
     <string name="customer">المعتمر</string>
@@ -101,8 +101,8 @@
     <string name="single">عزاب</string>
     <string name="families">عوائل</string>
     <string name="Omera_Company_Touries_and_more"> شركات لحجز العمره والفنادق  ...</string>
-    <string name="check_in">وقت المغادرة</string>
-    <string name="check_out">وقت الوصول</string>
+    <string name="check_in">وقت الوصول</string>
+    <string name="check_out">وقت المغادرة</string>
     <string name="type_hotel">مستوى الفندق</string>
     <string name="Enter_Distination">ادخل الوجهه</string>
     <string name="Number_seat">عدد المقاعد</string>
