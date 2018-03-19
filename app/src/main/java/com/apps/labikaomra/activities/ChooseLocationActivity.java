@@ -35,7 +35,8 @@ public class ChooseLocationActivity extends FragmentActivity implements OnMapRea
 
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
-    static Double lat = 0.0, lang = 0.0;
+    public static Double lat = 0.0;
+    public static Double lang = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

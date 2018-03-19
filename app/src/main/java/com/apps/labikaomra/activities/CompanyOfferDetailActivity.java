@@ -31,6 +31,7 @@ import com.apps.labikaomra.ConstantsLabika;
 import com.apps.labikaomra.R;
 import com.apps.labikaomra.models.Company;
 import com.apps.labikaomra.models.Offer;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -118,6 +119,7 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         mTxtHotel = (TextView) findViewById(R.id.hotels);
         mTxtFood = (TextView) findViewById(R.id.food);
         mTxtBus = (TextView) findViewById(R.id.bus);
+        mTxtSeat = (TextView) findViewById(R.id.seat);
         TextView name = (TextView) findViewById(R.id.dispaly_nameCompany);
         profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
 
@@ -126,13 +128,17 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         mTxtHotel.setText(mPharmacy.getTransLevel());
         mTxtFood.setText(mPharmacy.getDeals());
         mTxtBus.setText(mPharmacy.getDestLevel());
-        mTxtSeat.setText(getString(R.string.chairs_count_hint)+" "+mPharmacy.getNumOfChairs());
+
+        mTxtSeat.setText(getString(R.string.chairs_count_hint)+" "+ mPharmacy.getNumOfChairs());
 
         name.setText(nameCompany);
 
         if (mPharmacy.getOfferImage() != null) {
-            Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
-            Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
+            Glide.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
+            Glide.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
+
+//            Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
+//            Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
         }
 
         bannerSlider = (BannerSlider) findViewById(R.id.slider);

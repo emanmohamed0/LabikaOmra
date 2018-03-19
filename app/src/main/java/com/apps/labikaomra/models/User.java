@@ -1,14 +1,9 @@
 package com.apps.labikaomra.models;
 
-/**
- * Created by Mahmoud Sadek on 2/13/2018.
- */
+
 
 import java.util.HashMap;
 
-/**
- * Created by Gino Osahon on 04/03/2017.
- */
 
 public class User {
 

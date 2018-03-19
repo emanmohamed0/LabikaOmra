@@ -3,7 +3,7 @@
     <string name="app_name">عمرتي</string>
     <string name="action_settings">خروج</string>
     <string name="errorapp">\"خطأ في التطبيق \"</string>
-    <string name="title_activity_company_register">عمرتي</string>
+    <string name="title_activity_company_register">تسجيل بيانات شركة</string>
     <string name="completeaction">تم</string>
     <string name="creat_acount">انشاء حساب ..</string>
     <string name="somewrong">Something went wrong</string>
@@ -31,7 +31,7 @@
     <string name="gps_disable">GPS is disabled in your device. Would you like to enable it?</string>
     <string name="cancel">إلغاء</string>
     <string name="enable_gps">Goto Settings Page To Enable GPS</string>
-    <string name="title_activity_company_login">عمرتي</string>
+    <string name="title_activity_company_login">تسجيل دخول لشركة</string>
     <string name="login_account">الدخول للحساب ..</string>
     <string name="faild">فشل</string>
     <string name="less6">اقل من 6</string>
@@ -80,15 +80,15 @@
     <string name="timestamp">timestamp</string>
     <string name="title_activity_maps">خريطة</string>
     <string name="error_hotelname">خطأ في اسم الفندق</string>
-    <string name="error_deals">خطأ في الاتفاق</string>
+    <string name="error_deals">خطأ في الوجبات</string>
     <string name="error_price">خطأ في السعر</string>
     <string name="error_chairCount">خطأ في عدد الكراسي</string>
     <string name="error_hotelLevel">خطأ في اختيار المكان</string>
     <string name="error_busLevel">خطأ في اختر المواصلات</string>
     <string name="error_profileImg">خطأ في صورة العرض</string>
-    <string name="title_activity_company_offer_detail">عمرتي</string>
+    <string name="title_activity_company_offer_detail">تفاصيل عروضك</string>
     <string name="your_location">موقعك</string>
-    <string name="title_activity_user_login">عمرتي</string>
+    <string name="title_activity_user_login">تسجيل الدخول</string>
     <string name="residence">سكن</string>
     <string name="without_housing">بدون سكن</string>
     <string name="housing">سكن</string>
@@ -106,8 +106,8 @@
     <string name="type_hotel">مستوى الفندق</string>
     <string name="Enter_Distination">ادخل الوجهه</string>
     <string name="Number_seat">عدد المقاعد</string>
-    <string name="title_activity_offers">عروض</string>
-    <string name="title_activity_offer_detail">عمرتي</string>
+    <string name="title_activity_offers">العروض</string>
+    <string name="title_activity_offer_detail">تفاصيل العرض </string>
     <string name="font_path">fonts/Raleway-ExtraBold.ttf</string>
     <string name="slogan">احجز رحلتك في دقائق واستمتع بالعروض</string>
     <string name="adding_fav">اضافه  للمفضلة</string>
@@ -125,8 +125,10 @@
     <string name="add_phote">اضافة صوره</string>
     <string name="Offer_Detail">تفاصيل العرض</string>
     <string name="Type_Food">نوع الوجبات</string>
-    <string name="choose_lang"> اختر لغة : </string>
-
+    <string name="choose_lang"> اختر اللغة : </string>
+    <string name="go">ذهاب فقط </string>
+    <string name="back">عودة فقط</string>
+    <string name="goback">ذهاب وعودة</string>
 
     <string-array name="types_hotel">
 

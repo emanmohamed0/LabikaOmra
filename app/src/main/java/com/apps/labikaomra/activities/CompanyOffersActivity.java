@@ -86,51 +86,18 @@ public class CompanyOffersActivity extends AppCompatActivity implements
         qmyDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                HashMap<String, Doctor> results = dataSnapshot.getValue(new GenericTypeIndicator<HashMap<String, Doctor>>() {
-//                });
-//                if (results != null) {
-//                Toast.makeText(mcontext, "data"+dataSnapshot.getValue(), Toast.LENGTH_SHORT).show();
+
                 clientList = new ArrayList<Offer>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                    Toast.makeText(mcontext, "count"+postSnapshot.getValue(), Toast.LENGTH_LONG).show();
                     Offer pharmacy = postSnapshot.getValue(Offer.class);
-//                    if (search == null) {
                     pharmacy.getCompanyKeyId();
                     clientList.add(pharmacy);
-                    mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).child(pharmacy.getKeyId()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.child("companyKeyId").getValue() ==null){
 
-                            }else{
-                                String companyKeyId = dataSnapshot.child("companyKeyId").getValue().toString();
 
-                                Toast.makeText(mcontext, "companyKeyId" + companyKeyId, Toast.LENGTH_SHORT).show();
-
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-//                    } else {
-//                        if (pharmacy.getName().contains(search) || pharmacy.getPhoneNumber().contains(search) ||
-//                                pharmacy.getStreet().contains(search) ||
-//                                pharmacy.getLocation().contains(search) ||
-//                                pharmacy.getLocationPlace().contains(search))
-//                            clientList.add(pharmacy);
-//                    }
                 }
                 Toast.makeText(mcontext, "list count" + clientList.size(), Toast.LENGTH_SHORT).show();
                 adapter = new CompanyOfferAdapter(mcontext, clientList);
                 mCategoriesRecyclerView.setAdapter(adapter);
-//                } else {
-//                    Toast.makeText(mcontext, R.string.nodataload, Toast.LENGTH_SHORT).show();
-//                }
             }
 
             @Override
@@ -157,7 +124,8 @@ public class CompanyOffersActivity extends AppCompatActivity implements
 
     private void firebaseCode() {
         myDatabase = myApplication.getDatabaseReference();
-        myPharmacyDatabase = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).orderByChild("companyKeyId").equalTo(company_user_id);
+        myPharmacyDatabase = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).orderByChild("companyKeyId").
+                equalTo(company_user_id);
 //        Toast.makeText(mcontext, "list "+myPharmacyDatabase.getRef(), Toast.LENGTH_SHORT).show();
         myPharmacyDatabase.keepSynced(true);
         adapter = new CompanyOfferAdapter(getBaseContext(), null);

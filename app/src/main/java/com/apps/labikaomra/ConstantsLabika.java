@@ -1,8 +1,5 @@
 package com.apps.labikaomra;
 
-/**
- * Created by Mahmoud Sadek on 2/12/2018.
- */
 
 public class ConstantsLabika {
     public static final String USER_ID = "user_id";

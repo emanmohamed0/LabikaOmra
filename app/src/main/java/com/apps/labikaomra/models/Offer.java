@@ -6,9 +6,6 @@ import com.google.firebase.database.ServerValue;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Mahmoud Sadek on 2/12/2018.
- */
 
 public class Offer {
     String hotelName, attendStartTime, startTime, attendEndTime, endTime,
@@ -52,6 +49,40 @@ public class Offer {
         this.companyKeyId = companyKeyId;
         this.contentImagesList = contentImagesList;
         this.offerImage = offerImage;
+        this.timestampCreated = timestampCreated;
+        HashMap<String, Object> timestampNowObject = new HashMap<String, Object>();
+        timestampNowObject.put(ConstantsLabika.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
+        this.timestampLastChanged = timestampNowObject;
+    }
+
+    public Offer(String hotelName, Long startDay, String attendStartTime, String startTime,
+                 Long backDay, String attendEndTime,
+                 String endTime, String deals, String price, String location, int numOfChairs,
+                 HashMap<String, Object> timestampCreated, double lat, double lng,
+                 ArrayList<String> contentImagesList, String companyKeyId, String keyId,
+                 String valueonehouse, String valuethreestaus, String valuetwotrans, String transLevel, String destLevel) {
+        this.hotelName = hotelName;
+        this.startDay = startDay;
+        this.attendStartTime = attendStartTime;
+        this.startTime = startTime;
+
+        this.backDay = backDay;
+        this.attendEndTime = attendEndTime;
+        this.endTime = endTime;
+        this.deals = deals;
+        this.price = price;
+        this.location = location;
+        this.numOfChairs = numOfChairs;
+        this.lat = lat;
+        this.lng = lng;
+        this.valueonehouse = valueonehouse;
+        this.valuetwotrans = valuetwotrans;
+        this.valuethreestatus = valuethreestaus;
+        this.transLevel = transLevel;
+        this.destLevel = destLevel;
+        this.keyId = keyId;
+        this.companyKeyId = companyKeyId;
+        this.contentImagesList = contentImagesList;
         this.timestampCreated = timestampCreated;
         HashMap<String, Object> timestampNowObject = new HashMap<String, Object>();
         timestampNowObject.put(ConstantsLabika.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
@@ -140,6 +171,10 @@ public class Offer {
 
     public String getOfferImage() {
         return offerImage;
+    }
+
+    public void setOfferImage(String offerImage) {
+        this.offerImage = offerImage;
     }
 
     public String getKeyId() {

@@ -40,6 +40,7 @@ import com.apps.labikaomra.R;
 import com.apps.labikaomra.models.Booking;
 import com.apps.labikaomra.models.Favorite;
 import com.apps.labikaomra.models.Offer;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -57,10 +58,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.squareup.picasso.Picasso;
@@ -90,7 +93,7 @@ public class OfferDetailActivity extends AppCompatActivity
     CircleImageView profilrImg;
     ImageView imgOffer;
     String nameCompany, mUser_Id;
-    TextView mTxtPlace, mTxtPrice, mTxtHotel, mTxtFood, mTxtBus ,mTxtSeat;
+    TextView mTxtPlace, mTxtPrice, mTxtHotel, mTxtFood, mTxtBus, mTxtSeat;
 
     @Override
     public void onBackPressed() {
@@ -151,17 +154,20 @@ public class OfferDetailActivity extends AppCompatActivity
         profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
 
         mTxtPlace.setText(mPharmacy.getLocation());
-        mTxtPrice.setText("EGP "+mPharmacy.getPrice());
+        mTxtPrice.setText("EGP " + mPharmacy.getPrice());
         mTxtHotel.setText(mPharmacy.getTransLevel());
         mTxtFood.setText(mPharmacy.getDeals());
         mTxtBus.setText(mPharmacy.getDestLevel());
-        mTxtSeat.setText(getString(R.string.chairs_count_hint)+" "+mPharmacy.getNumOfChairs());
+        mTxtSeat.setText(getString(R.string.chairs_count_hint) + " " + mPharmacy.getNumOfChairs());
         name.setText(nameCompany);
 //        Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
 
         if (mPharmacy.getOfferImage() != null) {
-            Picasso.with(com.apps.labikaomra.activities.OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
-            Picasso.with(com.apps.labikaomra.activities.OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
+            Glide.with(OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
+            Glide.with(OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
+
+//            Picasso.with(com.apps.labikaomra.activities.OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
+//            Picasso.with(com.apps.labikaomra.activities.OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
 
         }
 
@@ -179,7 +185,6 @@ public class OfferDetailActivity extends AppCompatActivity
                     .addApi(LocationServices.API).build();
         }
     }
-
 
 
     private void DemoSliderM() {
@@ -214,17 +219,20 @@ public class OfferDetailActivity extends AppCompatActivity
     public void onMenuItemSelected(View view) {
         int id = (int) view.getTag();
         if (id == R.id.menu_book) {
+            if (mUser_Id != null) {
+                completeBooking();
+            } else {
+                startActivityForResult(new Intent(OfferDetailActivity.this, UserLoginActivity.class), 1);
 
-            startActivityForResult(new Intent(com.apps.labikaomra.activities.OfferDetailActivity.this, UserLoginActivity.class), 1);
+            }
         } else if (id == R.id.menu_favorite) {
             if (auth.getCurrentUser() != null) {
                 addToFavorite();
-            }
-            else{
+            } else {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 Toast.makeText(getBaseContext(), "You must login before submit", Toast.LENGTH_SHORT).show();
-                Intent intentLogin = new Intent(OfferDetailActivity.this,UserLoginActivity.class);
+                Intent intentLogin = new Intent(OfferDetailActivity.this, UserLoginActivity.class);
                 startActivity(intentLogin);
 
             }
@@ -260,31 +268,31 @@ public class OfferDetailActivity extends AppCompatActivity
 //            Toast.makeText(getBaseContext(), R.string.error +"\n Please Login Before Add Favorite", Toast.LENGTH_LONG).show();
 //        }
 
-            DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_FAVORITE)
-                    .child(auth.getCurrentUser().getUid());
+        DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_FAVORITE)
+                .child(auth.getCurrentUser().getUid());
 
-            String clientId = mPharmacy.getKeyId();
-            Favorite favorite = new Favorite(mPharmacy.getKeyId(), timestampJoined);
-            client_database.child(clientId).setValue(favorite)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getBaseContext(), R.string.add_fav, Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
-                            } else {
-                                Toast.makeText(getBaseContext(), R.string.error_notadd, Toast.LENGTH_SHORT).show();
-                            }
+        String clientId = mPharmacy.getKeyId();
+        Favorite favorite = new Favorite(mPharmacy.getKeyId(), timestampJoined);
+        client_database.child(clientId).setValue(favorite)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getBaseContext(), R.string.add_fav, Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
+                        } else {
+                            Toast.makeText(getBaseContext(), R.string.error_notadd, Toast.LENGTH_SHORT).show();
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e("TAG", "onFailure: Not add to fav: " + e.getMessage());
-                    Toast.makeText(getBaseContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                }
-            });
+                        progressDialog.dismiss();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("TAG", "onFailure: Not add to fav: " + e.getMessage());
+                Toast.makeText(getBaseContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
 
 
     }
@@ -465,13 +473,80 @@ public class OfferDetailActivity extends AppCompatActivity
         progressDialog.setMessage(getString(R.string.adding_book));
         progressDialog.setCancelable(false);
         progressDialog.show();
-
         HashMap<String, Object> timestampJoined = new HashMap<>();
         timestampJoined.put(getString(R.string.timestamp), ServerValue.TIMESTAMP);
 
         DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING).child(auth.getCurrentUser().getUid());
         String clientId = mPharmacy.getKeyId();
         Booking booking = new Booking(mPharmacy.getKeyId(), name, email, phoneNum, timestampJoined);
+
+        client_database.child(clientId).setValue(booking)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getBaseContext(), R.string.add_book, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getBaseContext(), R.string.error_notadd, Toast.LENGTH_SHORT).show();
+                        }
+                        progressDialog.dismiss();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("TAG", "onFailure: Not add to fav: " + e.getMessage());
+                Toast.makeText(getBaseContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    private void completeBooking() {
+        progressDialog = new ProgressDialog(com.apps.labikaomra.activities.OfferDetailActivity.this);
+        progressDialog.setMessage(getString(R.string.adding_book));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        final String[] email1 = new String[1];
+        final String[] name1 = new String[1];
+
+        String phoneNum = null;
+        myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_USERS).child(mUser_Id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String email = dataSnapshot.child("email").getValue().toString();
+                email1[0] = email;
+                String name = dataSnapshot.child("fullName").getValue().toString();
+                name1[0] = name;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        HashMap<String, Object> timestampJoined = new HashMap<>();
+        timestampJoined.put(getString(R.string.timestamp), ServerValue.TIMESTAMP);
+
+        DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING).child(mUser_Id);
+        String clientId = mPharmacy.getKeyId();
+
+        final EditText edtText = new EditText(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Prompt dialog demo !");
+        builder.setMessage("What is your name?");
+        builder.setCancelable(false);
+        builder.setView(edtText);
+        builder.setNeutralButton("Prompt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String phoneNum = edtText.getText().toString();
+                Toast.makeText(com.apps.labikaomra.activities.OfferDetailActivity.this, "Hello " + edtText.getText() + " ! how are you?", Toast.LENGTH_LONG).show();
+            }
+        });
+        builder.show();
+        Booking booking = new Booking(mPharmacy.getKeyId(), name1[0], email1[0], phoneNum, timestampJoined);
 
         client_database.child(clientId).setValue(booking)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

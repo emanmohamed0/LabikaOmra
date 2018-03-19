@@ -24,8 +24,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.apps.labikaomra.R;
+import com.apps.labikaomra.adapters.CustomAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,7 +36,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener ,
+        AdapterView.OnItemSelectedListener {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference cateagory;
@@ -46,6 +49,7 @@ public class Home extends AppCompatActivity
     String mUser_Id, local;
     String placeLevel, transLevel, nameCompany;
     Locale myLocale, locale;
+    String[] countryNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,7 @@ public class Home extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Omrati");
         setSupportActionBar(toolbar);
+        countryNames  =new String[]{getString(R.string.go),getString(R.string.back),getString(R.string.goback)};
         local = getIntent().getStringExtra("locale");
         //init firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -70,57 +75,23 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-//        Booking booking = new Booking();
-//        //set Full Name
-//        View headerView = navigationView.getHeaderView(0);
-//        txtFullName = (TextView) headerView.findViewById(R.id.full_name);
-//        txtFullName.setText(booking.getFirstName());
-//
-//        txtEmail = (TextView) headerView.findViewById(R.id.email);
-//        txtEmail.setText(booking.getEmail());
-//        txtbus = (TextView) findViewById(R.id.txtbus);
-//        txthotel = (TextView) findViewById(R.id.txthotel);
+
 
         mUser_Id = getIntent().getStringExtra("mUser_Id");
 
         numseat = (EditText) findViewById(R.id.num_seat);
+
         final Spinner spinnerPlace = (Spinner) findViewById(R.id.type_dest);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_places, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
+                R.array.type_places, android.R.layout.simple_spinner_item);
+
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPlace.setPrompt("Type Of Places!");
         spinnerPlace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String sSelected = adapterView.getItemAtPosition(i).toString();
                 OffersActivity.txtplace = sSelected;
-//                Toast.makeText(MainActivity.this, "type hotel"+sSelected, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                R.array.types_hotel, android.R.layout.simple_spinner_item);
-//
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPlace.setAdapter(adapter);
-
-
-        final Spinner spinnerTrans = (Spinner) findViewById(R.id.type_trans);
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
-                R.array.type_transport, android.R.layout.simple_spinner_item);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTrans.setPrompt("Type Of Transport!");
-        spinnerTrans.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String sSelected = adapterView.getItemAtPosition(i).toString();
-                OffersActivity.txttrans = sSelected;
-
 //                Toast.makeText(MainActivity.this, sSelected, Toast.LENGTH_SHORT).show();
             }
 
@@ -129,20 +100,12 @@ public class Home extends AppCompatActivity
 
             }
         });
-        spinnerTrans.setAdapter(adapter2);
-//////////////////////////////////////////////////////////////////////
-//        Spinner spinner = (Spinner) findViewById(R.meid.type_bus);
-//        ArrayAdapter<CharSequence> adapterbus = ArrayAdapter.createFromResource(this, R.array.types_bus, android.R.layout.simple_spinner_item);
-//        adapterbus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setPrompt("Select Type of Bus!");
-//
-//        spinner.setAdapter(
-//                new NothingSelectedSpinnerAdapter(
-//                        adapterbus,
-//                        R.layout.contact_spinner_row_nothing_selected,
-//                        // R.layout.contact_spinner_nothing_selected_dropdown, // Optional
-//                        this));
+        spinnerPlace.setAdapter(adapter2);
 
+        final Spinner spinnerTrans = (Spinner) findViewById(R.id.type_trans);
+        CustomAdapter customAdapter=new CustomAdapter(getApplicationContext(),countryNames);
+        spinnerTrans.setAdapter(customAdapter);
+        spinnerTrans.setOnItemSelectedListener(this) ;
 
         from = Calendar.getInstance();
         to = Calendar.getInstance();
@@ -152,8 +115,8 @@ public class Home extends AppCompatActivity
         check_out = (TextView) findViewById(R.id.check_out);
         check_in = (TextView) findViewById(R.id.check_in);
         next_btn = (Button) findViewById(R.id.next);
+//        transLevel = spinnerTrans.getSelectedItem().toString().trim();
         placeLevel = spinnerPlace.getSelectedItem().toString().trim();
-        transLevel = spinnerTrans.getSelectedItem().toString().trim();
         OffersActivity.txttrans = transLevel;
         OffersActivity.txtplace = placeLevel;
         updateLabelfrom();
@@ -166,18 +129,16 @@ public class Home extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 placeLevel = spinnerPlace.getSelectedItem().toString().trim();
-                transLevel = spinnerTrans.getSelectedItem().toString().trim();
+//                transLevel = spinnerTrans.getSelectedItem().toString().trim();
 //                if(choice_place.getText().toString().isEmpty()){
 //                }else{
 //                    OffersActivity.txtplace = choice_place.getText().toString();
 //                }
                 OffersActivity.txtplace = placeLevel;
-                OffersActivity.txttrans = transLevel;
                 OffersActivity.checkOutDate = to.getTimeInMillis();
                 OffersActivity.checkInDate = from.getTimeInMillis();
                 if (numseat.getText().toString().isEmpty()) {
-//                    numseat.setError(getString(R.string.error_num));
-//                    Toast.makeText(MainActivity.this, R.string.error_num, Toast.LENGTH_SHORT).show();
+
                 } else {
                     OffersActivity.numseat = Integer.parseInt(numseat.getText().toString());
                 }
@@ -188,17 +149,6 @@ public class Home extends AppCompatActivity
             }
         });
 
-//        choice_place.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent homeIntent = new Intent(Home.this, SearchCompanyActivity.class);
-//                startActivity(homeIntent);
-//            }
-//        });
-//        if (nameCompany == null) {
-//        } else {
-//            choice_place.setText(nameCompany + "");
-//        }
 
         locale = getResources().getConfiguration().locale;
         Locale.setDefault(locale);
@@ -294,25 +244,7 @@ public class Home extends AppCompatActivity
 
     }
 
-//     if (local == "en") {
-//        String myFormat = "EEE, MMM d"; //In which you need put here
-//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//
-////        checkOutDate = TimeUnit.MILLISECONDS.toSeconds(to.getTime().getTime());
-////        checkOutDate = to.getTime().getTime();
-////        OffersActivity.checkOutDate = checkOutDate;
-//
-//        check_out.setText(getString(R.string.check_out) + "\n" + sdf.format(to.getTime()));
-//    } else {
-//        String myFormat = "EEE, MMM d"; //In which you need put here
-//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, new Locale("ar"));
-//
-////        checkOutDate = TimeUnit.MILLISECONDS.toSeconds(to.getTime().getTime());
-////        checkOutDate = to.getTime().getTime();
-////        OffersActivity.checkOutDate = checkOutDate;
-//
-//        check_out.setText(getString(R.string.check_out) + "\n" + sdf.format(to.getTime()));
-//    }
+
     private void updateLabelto() {
 
         String myFormat = "EEE, MMM d"; //In which you need put here
@@ -383,17 +315,28 @@ public class Home extends AppCompatActivity
             finish();
 
         } else if (id == R.id.nav_share) {
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.setType("Text/plain");
-            String msg = String.format("%s: %s", "حمل تطبيق لبيك عمرة الان واحجز رحلتك في دقائق", "https://play.google.com/store");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, msg);
-            startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share)+" \n https://play.google.com/store");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        OffersActivity.txttrans = countryNames[position];
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

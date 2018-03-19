@@ -2,7 +2,7 @@
     <string name="app_name">Omrati</string>
     <string name="action_settings">LogOut</string>
     <string name="errorapp">\"Error is in application \"</string>
-    <string name="title_activity_company_register">CompanyRegisterActivity</string>
+    <string name="title_activity_company_register">Company Register</string>
     <string name="completeaction">Complete action using</string>
     <string name="creat_acount">Creating Account...</string>
     <string name="customer">Customer</string>
@@ -31,7 +31,7 @@
     <string name="gps_disable">GPS is disabled in your device. Would you like to enable it?</string>
     <string name="cancel">Cancel</string>
     <string name="enable_gps">Goto Settings Page To Enable GPS</string>
-    <string name="title_activity_company_login">CompanyLoginActivity</string>
+    <string name="title_activity_company_login">Company Login</string>
     <string name="login_account">Login Account...</string>
     <string name="faild">Failed</string>
     <string name="less6">less than 6</string>
@@ -40,10 +40,10 @@
     <string name="enter_pass">Enter password!</string>
     <string name="userin">u are in</string>
     <string name="login">Log In</string>
-    <string name="title_activity_company_offers">CompanyOffersActivity</string>
+    <string name="title_activity_company_offers">Company Offers </string>
     <string name="fi" />
     <string name="nodataload">No Data Loaded</string>
-    <string name="title_activity_add_offer">AddOfferActivity</string>
+    <string name="title_activity_add_offer">Add Offer</string>
     <string name="hotelname_hint">Hotel Name</string>
     <string name="startday">Start Day</string>
     <string name="attend_start_time">Attend Start Time</string>
@@ -79,6 +79,7 @@
     <string name="profile">profile</string>
     <string name="upload_multi_imgs">Upload Multi Image</string>
     <string name="lists">Lists</string>
+    <string name="share">حمل تطبيق عمرتي الان واحجز رحلتك في دقائق</string>
     <string name="timestamp">timestamp</string>
     <string name="title_activity_maps">Map</string>
     <string name="error_hotelname">Error Hotel Name</string>
@@ -88,9 +89,9 @@
     <string name="error_hotelLevel">Error hotel Level</string>
     <string name="error_busLevel">Error TransPortLevel</string>
     <string name="error_profileImg">Error Offer Image</string>
-    <string name="title_activity_company_offer_detail">CompanyOfferDetailActivity</string>
+    <string name="title_activity_company_offer_detail">Company Offer Detail</string>
     <string name="your_location">Your Location</string>
-    <string name="title_activity_user_login">UserLoginActivity</string>
+    <string name="title_activity_user_login">User Login</string>
     <string name="loading">Loading</string>
     <string name="web_client_id">888906199724-jqmmk6b5opp3r0i11q7h2a6uv1pmq67i.apps.googleusercontent.com</string>
     <string name="Search">Search</string>
@@ -105,7 +106,7 @@
     <string name="Transportation">Transport</string>
     <string name="Number_seat">Number seat</string>
     <string name="title_activity_offers">Offers</string>
-    <string name="title_activity_offer_detail">OfferDetailActivity</string>
+    <string name="title_activity_offer_detail">Offer Detail</string>
     <string name="font_path">fonts/Raleway-ExtraBold.ttf</string>
     <string name="slogan">Your Offer\'s Here</string>
     <string name="adding_fav">Add to Favorite</string>
@@ -117,8 +118,15 @@
     <string name="type_bus">Type bus</string>
     <string name="company_email">Email Company</string>
     <string name="choose_lang">Choose Language</string>
+    <string name="go">Go</string>
+    <string name="back">Back</string>
+    <string name="goback">Go and Back</string>
 
-
+    <string-array name="type_transport">
+        <item>Go and Back</item>
+        <item>Go</item>
+        <item>Back</item>
+    </string-array>
     <string-array name="types_hotel">
 
         <item>5 stars</item>
@@ -135,11 +143,6 @@
         <item>Madina,Makkah</item>
     </string-array>
 
-    <string-array name="type_transport">
-        <item>Go and Back</item>
-        <item>Go</item>
-        <item>Back</item>
-    </string-array>
 
     <string-array name="types_bus">
         <item>after 2017 \n</item>
@@ -148,7 +151,7 @@
         <item>Before 2000 \n</item>
     </string-array>
 
-    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_activity_navigation">Navigation Activity</string>
 
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>

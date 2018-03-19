@@ -5,10 +5,6 @@ import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
 
-/**
- * Created by Mahmoud Sadek on 2/12/2018.
- */
-
 public class Company {
     String firstName, email, profileImage, phone, mobile, location;
     private HashMap<String, Object> timestampLastChanged;

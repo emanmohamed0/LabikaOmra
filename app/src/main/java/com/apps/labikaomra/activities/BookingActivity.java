@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.apps.labikaomra.ConstantsLabika;
 import com.apps.labikaomra.R;
 import com.apps.labikaomra.models.Offer;
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -75,8 +76,9 @@ public class BookingActivity extends AppCompatActivity {
                 mOfferRefData.child(list_UserID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         final String hotelname = dataSnapshot.child("hotelName").getValue().toString();
-                        final String busLevel = dataSnapshot.child("busLevel").getValue().toString();
+                        final String busLevel = dataSnapshot.child("destLevel").getValue().toString();
                         final String deals =dataSnapshot.child("deals").getValue().toString();
                         final String price = dataSnapshot.child("price").getValue().toString();
                         final String offerImage = dataSnapshot.child("offerImage").getValue().toString();
@@ -93,55 +95,12 @@ public class BookingActivity extends AppCompatActivity {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String firstName = dataSnapshot.child("firstName").getValue().toString();
                                 viewHolder.setName(firstName);
-//                                Toast.makeText(BookingActivity.this, firstName, Toast.LENGTH_SHORT).show();
                             }
-
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
-
                             }
                         });
-//                        Toast.makeText(BookingActivity.this, dataSnapshot.child("companyKeyId").getValue().toString(), Toast.LENGTH_SHORT).show();
-//                        viewHolder.myView.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                Intent openDetail = new Intent(BookingActivity.this,BookingDetailActivity.class);
-//                                openDetail.putExtra("hotelname",hotelname);
-//                                openDetail.putExtra("busLevel",busLevel);
-//                                openDetail.putExtra("deals",deals);
-//                                openDetail.putExtra("price",price);
-//                                openDetail.putExtra("location",location);
-//                                startActivity(openDetail);
-//                            }
-//                        });
 
-                        //                        mOfferRefData.child(keyId).addValueEventListener(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                Offer offer = dataSnapshot.getValue(Offer.class);
-//                                viewHolder.setBus(offer.getBusLevel());
-//                                viewHolder.setFood(offer.getDeals());
-//                                viewHolder.setHotels(offer.getHotelLevel());
-//                                viewHolder.setPrice(offer.getPrice());
-//                                viewHolder.setImage(offer.getOfferImage());
-//
-////                                mCompanyRefData.child(offer.getCompanyKeyId()).addValueEventListener(new ValueEventListener() {
-////                                    @Override
-////                                    public void onDataChange(DataSnapshot dataSnapshot) {
-////                                        String  name = dataSnapshot.child("firstName").getValue().toString();
-////                                        viewHolder.setName(name);
-////                                    }
-////
-////                                    @Override
-////                                    public void onCancelled(DatabaseError databaseError) {
-////
-////                                    }
-////                                });
-//                            }
-//                            @Override
-//                            public void onCancelled(DatabaseError databaseError) {
-//                            }
-//                        });
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -162,23 +121,13 @@ public class BookingActivity extends AppCompatActivity {
             myView = itemView;
         }
 
-        public void setImage(final String profile) {
-            final ImageView userProfile = (ImageView) myView.findViewById(R.id.imageCompany);
-//            Picasso.with(c).load(profile).placeholder(R.drawable.com_facebook_profile_picture_blank_portrait).into(userProfile);
+        void setImage(String image) {
+            ImageView txt_image = (ImageView) myView.findViewById(R.id.imageCompany);
+            Glide.with(c).load(image).into(txt_image);
 
-            Picasso.with(c).load(profile).networkPolicy(NetworkPolicy.OFFLINE).into(userProfile, new Callback() {
-                @Override
-                public void onSuccess() {
-                }
 
-                @Override
-                public void onError() {
-                    //in case online
-                    Picasso.with(c).load(profile).into(userProfile);
-
-                }
-            });
         }
+
         void setNameHotel(String Title) {
             TextView txt_hotel = (TextView) myView.findViewById(R.id.hotels);
             txt_hotel.setText(Title);

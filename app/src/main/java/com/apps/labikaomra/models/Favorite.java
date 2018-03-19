@@ -2,9 +2,6 @@ package com.apps.labikaomra.models;
 
 import java.util.HashMap;
 
-/**
- * Created by Mahmoud Sadek on 9/19/2017.
- */
 public class Favorite {
     String keyId;
     HashMap<String, Object> timestampJoined;

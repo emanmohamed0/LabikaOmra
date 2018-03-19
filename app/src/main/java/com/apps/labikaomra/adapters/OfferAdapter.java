@@ -17,6 +17,7 @@ import com.apps.labikaomra.ConstantsLabika;
 import com.apps.labikaomra.R;
 import com.apps.labikaomra.activities.OfferDetailActivity;
 import com.apps.labikaomra.models.Offer;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,9 +32,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-/**
- * Created by Mahmoud Sadek on 2/12/2018.
- */
 public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapters.OfferAdapter.postViewHolder> {
 
     Context mContext;
@@ -207,7 +205,9 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
 */
         void setImage(String image) {
             ImageView txt_image = (ImageView) myView.findViewById(R.id.imageCompany);
-            Picasso.with(mContext).load(image).into(txt_image);
+            Glide.with(mContext).load(image).into(txt_image);
+
+//            Picasso.with(mContext).load(image).into(txt_image);
 
         }
 //        void setofferImage(String image){

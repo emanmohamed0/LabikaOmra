@@ -47,8 +47,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.gun0912.tedpicker.Config;
 import com.gun0912.tedpicker.ImagePickerActivity;
+import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class AddOfferActivity extends AppCompatActivity {
     static int GALARY_REQUEST1 = 2;
     DatabaseReference mClientsDatabase;
     StorageReference mystorage;
-    Spinner spinnerHotelLevel, spinnerBusLevel ,spinnerDestLevel ,spinnerTransLevel;
+    Spinner spinnerHotelLevel, spinnerBusLevel, spinnerDestLevel, spinnerTransLevel;
     Button btnStartDay, btnAttendStartTime, btnStartTime, btnBackDay, btnAttendEndTime, btnEndTime, btnLocation, btnChooseMultiImage;
     ImageView imgProfile;
     Uri image_uri = null;
@@ -83,39 +84,10 @@ public class AddOfferActivity extends AppCompatActivity {
     ArrayList<String> contentImgsArrayList;
     int dialogFlag = 0;
     Calendar c, b;
+     Uri resultUri;
+    Offer offerimage;
     Calendar from, to;
     String company_user_id;
-    // Date picker dialog
-//    DatePickerDialog.OnDateSetListener date_listener = new DatePickerDialog.OnDateSetListener() {
-//
-//        @Override
-//        public void onDateSet(DatePicker view, int year, int month, int day) {
-//            view.setMinDate(System.currentTimeMillis() - 1000);
-//
-////            // store the data in one string and set it to text
-//////             date1 = String.valueOf(month) + "/" + String.valueOf(day)
-//////                    + "/" + String.valueOf(year);
-////            String myFormat = "EEE, MMM d"; //In which you need put here
-////
-////             c.get(year);
-////             c.get(month);
-////            int day = c.get(Calendar.DAY_OF_MONTH);
-////            int hour = c.get(Calendar.HOUR_OF_DAY);
-////            int minute = c.get(Calendar.MINUTE);
-////
-////            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-////            Long date1 = c.getTime().getTime();
-////
-////            if (dialogFlag == 0) {
-////
-////                startDay = date1;
-////                btnStartDay.setText(sdf.format(c.getTime()));
-////
-////            } else if (dialogFlag == 1) {
-////                backDay = date1;
-////                btnBackDay.setText(sdf.format(c.getTime()));
-////            }
-//        }
 
     DatePickerDialog.OnDateSetListener date_listener = new DatePickerDialog.OnDateSetListener() {
 
@@ -178,7 +150,7 @@ public class AddOfferActivity extends AppCompatActivity {
         c = Calendar.getInstance();
         from = Calendar.getInstance();
         to = Calendar.getInstance();
-
+        offerimage = new Offer();
         company_user_id = getIntent().getStringExtra("company_user_id");
         mClientsDatabase = FirebaseDatabase.getInstance().getReference();
         mystorage = FirebaseStorage.getInstance().getReference();
@@ -190,8 +162,8 @@ public class AddOfferActivity extends AppCompatActivity {
         inputChairCount = (EditText) findViewById(R.id.chairsNumField);
 //        spinnerHotelLevel = (Spinner) findViewById(R.id.spinner_hotel_level);
 //        spinnerBusLevel = (Spinner) findViewById(R.id.spinner_bus_level);
-        spinnerDestLevel =(Spinner)findViewById(R.id.spinner_dest);
-        spinnerTransLevel =(Spinner)findViewById(R.id.spinner_trans);
+        spinnerDestLevel = (Spinner) findViewById(R.id.spinner_dest);
+        spinnerTransLevel = (Spinner) findViewById(R.id.spinner_trans);
 
         btnStartDay = (Button) findViewById(R.id.btnStartDay);
         btnAttendStartTime = (Button) findViewById(R.id.btnAttendStartTime);
@@ -311,18 +283,11 @@ public class AddOfferActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent galaryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                galaryIntent.setType(getString(R.string.image));
-                galaryIntent.putExtra(getString(R.string.crop), "true");
-                galaryIntent.putExtra(getString(R.string.aspc_x), 0);
-                galaryIntent.putExtra(getString(R.string.aspc_y), 0);
-                try {
-                    galaryIntent.putExtra(getString(R.string.return_data), true);
-                    startActivityForResult(Intent.createChooser(galaryIntent, getString(R.string.completeaction)), GALARY_REQUEST1);
+                Intent gallaryIntent = new Intent();
+                gallaryIntent.setType("image/*");
+                gallaryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(gallaryIntent, "Select Image"), GALARY_REQUEST1);
 
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(com.apps.labikaomra.activities.AddOfferActivity.this, "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -338,7 +303,7 @@ public class AddOfferActivity extends AppCompatActivity {
     private void updateLabelfrom() {
 
         String myFormat = "EEE, MMM d"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat,Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
         from.getTimeInMillis();
         btnStartDay.setText(sdf.format(from.getTime()));
 
@@ -351,6 +316,7 @@ public class AddOfferActivity extends AppCompatActivity {
 
         btnBackDay.setText(sdf.format(to.getTime()));
     }
+
     private void getImages() {
         Config config = new Config();
 //        config.setCameraHeight(R.dimen.app_camera_height);
@@ -385,7 +351,7 @@ public class AddOfferActivity extends AppCompatActivity {
         int selectedIdOne = radio_group_one.getCheckedRadioButtonId();
         // find the radiobutton by returned id
         radioButtonOne = (RadioButton) findViewById(selectedIdOne);
-        if (radioButtonOne.getText()==null) {
+        if (radioButtonOne.getText() == null) {
             Snackbar.make(v, "Please Choice One", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         } else {
@@ -396,7 +362,7 @@ public class AddOfferActivity extends AppCompatActivity {
         int selectedIdTwo = radio_group_two.getCheckedRadioButtonId();
         // find the radiobutton by returned id
         radioButtonTwo = (RadioButton) findViewById(selectedIdTwo);
-        if (radioButtonTwo.getText()==null) {
+        if (radioButtonTwo.getText() == null) {
             Snackbar.make(v, "Please Choice One", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         } else {
@@ -407,14 +373,38 @@ public class AddOfferActivity extends AppCompatActivity {
         int selectedIdThree = radio_group_three.getCheckedRadioButtonId();
         // find the radiobutton by returned id
         radioButtonThree = (RadioButton) findViewById(selectedIdThree);
-        if (radioButtonThree.getText()== null) {
+        if (radioButtonThree.getText() == null) {
             Snackbar.make(v, "Please Choice One", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         } else {
             Value_three = radioButtonThree.getText().toString();
         }
-        AddOffer(hotelName, deals, price, Integer.parseInt(chairCount),
-        Value_one  ,Value_three ,Value_two ,transLevel,destLevel);
+
+        StorageReference filepath = mystorage.child(getString(R.string.offer_imgs)).child(getString(R.string.photos) + myAuth.getCurrentUser().getUid().toString() + getString(R.string.profile));
+
+
+        filepath.putFile(resultUri).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddOfferActivity.this, "Fail to UpLoading", Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                String name = taskSnapshot.getMetadata().getName();
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                String downLoad_Url = downloadUrl.toString();
+
+                profileImg = downLoad_Url;
+                offerimage.setOfferImage(profileImg);
+                progressDialog.dismiss();
+                AddOffer(hotelName, deals, price, Integer.parseInt(chairCount),profileImg,
+                        Value_one, Value_three, Value_two, transLevel, destLevel);
+            }
+        });
+
+
 
     }
 
@@ -478,41 +468,46 @@ public class AddOfferActivity extends AppCompatActivity {
         return valid;
     }
 
-    private void AddOffer(String hotelName, String deals, String price, int numOfChairs,
-    String value_onehouse ,String value_threestatus, String value_twotrans  ,String transLevel ,String destLevel) {
-
+    private void AddOffer(String hotelName, String deals, String price, int numOfChairs,String profileImg,
+                          String value_onehouse, String value_threestatus, String value_twotrans, String transLevel, String destLevel) {
         HashMap<String, Object> timestampJoined = new HashMap<>();
         timestampJoined.put(getString(R.string.timestamp), ServerValue.TIMESTAMP);
 
         DatabaseReference client_database = mClientsDatabase.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS);
         String clientId = client_database.push().getKey();
-        Offer client = new Offer(hotelName, startDay, attendStartTime, startTime, backDay, attendEndTime,
-                endTime, deals, price, location, numOfChairs, timestampJoined, lat, lang, profileImg,
-                contentImgsArrayList, myAuth.getCurrentUser().getUid().toString(), clientId,
-                value_onehouse ,value_threestatus,value_twotrans ,transLevel ,destLevel
-        );
-        client_database.child(clientId).setValue(client)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(mContext, R.string.done, Toast.LENGTH_SHORT).show();
-                            Intent mainIntent = new Intent(com.apps.labikaomra.activities.AddOfferActivity.this, CompanyOffersActivity.class);
-                            mainIntent.putExtra("company_user_id",company_user_id);
-                            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(mainIntent);
-                        } else {
-                            Toast.makeText(mContext, R.string.error_notadd, Toast.LENGTH_SHORT).show();
-                        }
-                        progressDialog.dismiss();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(mContext, R.string.error_notadd, Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-            }
-        });
+        DatabaseReference offerDb = client_database.push();
+        offerDb.child("attendStartTime").setValue(attendStartTime);
+        offerDb.child("attendEndTime").setValue(attendEndTime);
+        offerDb.child("startDay").setValue(startDay);
+        offerDb.child("backDay").setValue(backDay);
+        offerDb.child("offerImage").setValue(profileImg);
+        offerDb.child("hotelName").setValue(hotelName);
+        offerDb.child("companyKeyId").setValue(myAuth.getCurrentUser().getUid().toString());
+        offerDb.child("deals").setValue(deals);
+        offerDb.child("keyId").setValue(offerDb.getKey());
+        offerDb.child("numOfChairs").setValue(numOfChairs);
+        offerDb.child("lat").setValue(lat);
+        offerDb.child("lang").setValue(lang);
+        offerDb.child("location").setValue(location);
+        offerDb.child("price").setValue(price);
+        offerDb.child("contentImagesList").setValue(contentImgsArrayList);
+        offerDb.child("startTime").setValue(startTime);
+        offerDb.child("endTime").setValue(endTime);
+        offerDb.child("destLevel").setValue(destLevel);
+        offerDb.child("transLevel").setValue(transLevel);
+        offerDb.child("value_onehouse").setValue(value_onehouse);
+        offerDb.child("value_twotrans").setValue(value_twotrans);
+        offerDb.child("value_threestatus").setValue(value_threestatus);
+        offerDb.child("timestampJoined").setValue(timestampJoined);
+
+        Intent mainIntent = new Intent(com.apps.labikaomra.activities.AddOfferActivity.this, CompanyOffersActivity.class);
+        mainIntent.putExtra("company_user_id", company_user_id);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(mainIntent);
+        progressDialog.dismiss();
+
+        String img = offerimage.getOfferImage();
+
     }
 
     private void AddClientData(Uri uri, int position) {
@@ -541,7 +536,7 @@ public class AddOfferActivity extends AppCompatActivity {
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 Log.i(getString(R.string.profress), String.format(getString(R.string.onProgress),
                         taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0));
-                progressDialog.setTitle(getString(R.string.upload_multi_imgs)+taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0 + "");
+                progressDialog.setTitle(getString(R.string.upload_multi_imgs) + taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0 + "");
             }
         });
     }
@@ -553,24 +548,36 @@ public class AddOfferActivity extends AppCompatActivity {
             location = getAddress(ChooseLocationActivity.lat, ChooseLocationActivity.lang);
             btnLocation.setText(location);
         }
-        if (requestCode == GALARY_REQUEST1 && resultCode == Activity.RESULT_OK) {
-            image_uri = data.getData();
-            imgProfile.setImageURI(image_uri);
-            image_uri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), image_uri);
-                imgProfile.setImageBitmap(bitmap);
-                uploadProfileImg(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (requestCode == GALARY_REQUEST1 && resultCode == RESULT_OK) {
+            Uri resultUri = data.getData();
+            CropImage.activity(resultUri).
+                    setAspectRatio(1, 1).
+                    setMinCropResultSize(20, 200)
+                    .start(this);
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-//            Bundle extras2 = getIntent().getExtras();
-//            if (extras2 != null) {
-//                Bitmap photo = extras2.getParcelable(getString(R.string.data));
-////                imgProfile.setImageBitmap(photo);
-//                uploadProfileImg(photo);
-//            }
+            if (resultCode == RESULT_OK) {
+                progressDialog = new ProgressDialog(AddOfferActivity.this);
+                progressDialog.setTitle("Uploading Image");
+                progressDialog.setMessage("Please Wait for UpLoading....");
+                progressDialog.show();
+
+                 resultUri = result.getUri();
+                File thumbin_path = new File(resultUri.getPath());
+                imgProfile.setImageURI(resultUri);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), resultUri);
+                    imgProfile.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
         }
         if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
             image_uri = null;
@@ -583,48 +590,6 @@ public class AddOfferActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    private void uploadProfileImg(final Bitmap photo) {
-        progressDialog.setTitle(getString(R.string.offer_img));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        StorageReference filepath = mystorage.child(getString(R.string.offer_imgs)).child(getString(R.string.photos) + myAuth.getCurrentUser().getUid().toString() + getString(R.string.profile));
-        // Get the data from an ImageView as bytes
-//        imgProfile.setDrawingCacheEnabled(true);
-//        imgProfile.buildDrawingCache();
-//        Bitmap bitmap = imgProfile.getDrawingCache();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        byte[] data = baos.toByteArray();
-
-        UploadTask uploadTask = filepath.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-//                Toast.makeText(AddOfferActivity.this, R.string.error_notadd + exception.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e(getString(R.string.error_notadd), getString(R.string.onfailure) + exception.getMessage());
-                progressDialog.dismiss();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                profileImg = downloadUrl.toString();
-
-                imgProfile.setImageBitmap(photo);
-                progressDialog.dismiss();
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.i(getString(R.string.profress), String.format(getString(R.string.onProgress),
-                        taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0));
-                progressDialog.setTitle(getString(R.string.offer_img)+taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0 + "");
-            }
-        });
     }
 
     protected Dialog onCreateDialog(int id) {
@@ -683,3 +648,5 @@ public class AddOfferActivity extends AppCompatActivity {
         return "f";
     }
 }
+
+

@@ -15,6 +15,7 @@ import com.apps.labikaomra.ConstantsLabika;
 import com.apps.labikaomra.R;
 import com.apps.labikaomra.models.Favorite;
 import com.apps.labikaomra.models.Offer;
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -60,23 +61,6 @@ public class FavoriteActivity extends AppCompatActivity {
         mOfferRefData = FirebaseDatabase.getInstance().getReference().child(ConstantsLabika.FIREBASE_LOCATION_OFFERS);
         mCompanyRefData = FirebaseDatabase.getInstance().getReference().child(ConstantsLabika.FIREBASE_LOCATION_COMPANY);
 
-//        mChatRefData.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//             Favorite favorite =dataSnapshot.getValue(Favorite.class);
-//                favorite.getKeyId();
-////                String keyId = dataSnapshot.child("keyId").getValue().toString();
-//
-//                Toast.makeText(FavoriteActivity.this, favorite.getKeyId(), Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
     }
 
     @Override
@@ -112,7 +96,6 @@ public class FavoriteActivity extends AppCompatActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         String firstName = dataSnapshot.child("firstName").getValue().toString();
                                         viewHolder.setName(firstName);
-//                                Toast.makeText(BookingActivity.this, firstName, Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -148,20 +131,10 @@ public class FavoriteActivity extends AppCompatActivity {
 
         public void setImage(final String profile) {
             final ImageView userProfile = (ImageView) myView.findViewById(R.id.imageCompany);
-//            Picasso.with(c).load(profile).placeholder(R.drawable.com_facebook_profile_picture_blank_portrait).into(userProfile);
 
-            Picasso.with(c).load(profile).networkPolicy(NetworkPolicy.OFFLINE).into(userProfile, new Callback() {
-                @Override
-                public void onSuccess() {
-                }
+            Glide.with(c).load(profile).into(userProfile);
 
-                @Override
-                public void onError() {
-                    //in case online
-                    Picasso.with(c).load(profile).into(userProfile);
 
-                }
-            });
         }
         void setNameHotel(String Title) {
             TextView txt_hotel = (TextView) myView.findViewById(R.id.hotels);
