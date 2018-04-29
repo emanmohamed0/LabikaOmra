@@ -29,7 +29,6 @@
     <string name="tabed_loc">Taped Location</string>
     <string name="no_permission">No Permissions Granted</string>
     <string name="gps_disable">GPS is disabled in your device. Would you like to enable it?</string>
-    <string name="cancel">Cancel</string>
     <string name="enable_gps">Goto Settings Page To Enable GPS</string>
     <string name="title_activity_company_login">Company Login</string>
     <string name="login_account">Login Account...</string>
@@ -42,6 +41,7 @@
     <string name="login">Log In</string>
     <string name="title_activity_company_offers">Company Offers </string>
     <string name="fi" />
+    <string name="singleandfamily">Single,Family</string>
     <string name="nodataload">No Data Loaded</string>
     <string name="title_activity_add_offer">Add Offer</string>
     <string name="hotelname_hint">Hotel Name</string>
@@ -68,11 +68,16 @@
     <string name="aspc_y">aspectY</string>
     <string name="aspc_x">aspectX</string>
     <string name="Type_Food">Type_Food</string>
-    <string name="residence">Residence</string>
+    <string name="residence">Type Trip</string>
     <string name="crop">crop</string>
     <string name="image">image/*</string>
     <string name="onfailure">onfailure</string>
     <string name="offer_img">Upload Offer Image ...</string>
+    <string name="highprice">High Price</string>
+    <string name="lowprice">Low Price</string>
+    <string name="dialog">Please Logout from other choice before</string>
+    <string name="dialogactive">Please Contact this number to Activate your account</string>
+    <string name="highrate">High Rate</string>
     <string name="offer_imgs">OfferImgs</string>
     <string name="photos">Photos</string>
     <string name="access">"Allow Omrati \n to access your Loaction and Storage"</string>
@@ -113,6 +118,7 @@
     <string name="adding_book">Add to Booking</string>
     <string name="error">error</string>
     <string name="add_fav">Success to Favorite</string>
+    <string name="favorite">Favorite</string>
     <string name="add_book">Success to Booking</string>
     <string name="add_phote">Add Photo</string>
     <string name="type_bus">Type bus</string>
@@ -121,6 +127,26 @@
     <string name="go">Go</string>
     <string name="back">Back</string>
     <string name="goback">Go and Back</string>
+    <string name="enterdata">Enter Your Data</string>
+    <string name="booking">Booking</string>
+    <string name="morafiq">Morafiq</string>
+    <string name="staying">Place of residence</string>
+    <string name="bank">Bank account</string>
+    <string name="done">Done</string>
+    <string name="pls">Please Choose</string>
+    <string name="titleconfirm">Confirm Booking</string>
+    <string name="conbook">Confirm Booking</string>
+    <string name="Copyofreceipt">Copy of receipt</string>
+    <string name="enter">Enter data Morafkin</string>
+    <string name="enterseat">Enter Number Seat</string>
+    <string name="cancel">Cancel</string>
+    <string name="send">Send Mail</string>
+    <string name="passport">Passport</string>
+    <string name="detail">Detail Booking</string>
+    <string name="Communicate">Communicate</string>
+    <string name="transonly">Residence</string>
+    <string name="transonly2">Transport</string>
+    <string name="transonly3">Residence+Transport</string>
 
     <string-array name="type_transport">
         <item>Go and Back</item>
@@ -167,6 +193,27 @@
     <string name="housing">housing</string>
     <string name="normal">Normal</string>
     <string name="vip">VIp</string>
-    <string name="single">Single</string>
+    <string name="single">Singles</string>
     <string name="families">Families</string>
+    <string name="alert">Alert</string>
+    <string name="OK">OK</string>
+    <string name="net">Check Internet</string>
+    <string name="descripe">Description</string>
+    <string name="best">Popular destination</string>
+    <string name="dialogoffer">You Must choose BackDay after StartDay</string>
+    <string name="listbooking">List Booking</string>
+    <string name="persondata">Personal Data</string>
+    <string name="firstname">FirstName</string>
+    <string name="name">Name</string>
+    <string name="lastname">LastName</string>
+    <string name="addresshint">Address</string>
+    <string name="idCard">ID Card/Staying</string>
+    <string name="dataMorafiq">Enter data facilities</string>
+    <string name="forexample">For Example</string>
+    <string name="total">Total Amount for Offer</string>
+    <string name="priceplace">Price of Residence</string>
+    <string name="pricebus">Price of Transportation</string>
+    <string name="pricetotal">Price Total(Residence+Transport)</string>
+    <string name="pricetotalchair">Price Total with Number Seat</string>
+
 </resources>

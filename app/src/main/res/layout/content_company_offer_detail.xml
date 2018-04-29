@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layoutDirection="ltr"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.apps.labikaomra.activities.CompanyOfferDetailActivity"
     tools:showIn="@layout/activity_company_offer_detail">
@@ -69,22 +68,22 @@
                             android:layout_gravity="bottom"
                             android:layout_marginBottom="20dp"
                             android:layout_marginLeft="20dp"
+                            android:background="@drawable/button_style"
                             app:civ_border_color="@color/colorAccent"
-                            app:civ_border_width="3dp"
-                            android:background="@drawable/button_style"/>
+                            app:civ_border_width="3dp" />
 
                         <!--<RatingBar-->
-                            <!--android:id="@+id/profile_pharmacy_rate"-->
-                            <!--style="@style/Base.Widget.AppCompat.RatingBar.Small"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_gravity="bottom"-->
-                            <!--android:layout_marginLeft="20dp"-->
-                            <!--android:numStars="5"-->
-                            <!--android:paddingTop="3dp"-->
-                            <!--android:rating="4"-->
-                            <!--android:stepSize=".1"-->
-                            <!--android:theme="@style/RatingBar" />-->
+                        <!--android:id="@+id/profile_pharmacy_rate"-->
+                        <!--style="@style/Base.Widget.AppCompat.RatingBar.Small"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_gravity="bottom"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:numStars="5"-->
+                        <!--android:paddingTop="3dp"-->
+                        <!--android:rating="4"-->
+                        <!--android:stepSize=".1"-->
+                        <!--android:theme="@style/RatingBar" />-->
 
                         <TextView
                             android:id="@+id/hotelNameTxt"
@@ -136,28 +135,28 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_marginRight="@dimen/pad_10dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:orientation="vertical"
-                            android:layout_marginRight="@dimen/pad_10dp">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/dispaly_nameCompany"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:text="@string/companyname_hint"
                                 android:textColor="@android:color/black"
                                 android:textSize="20sp"
-                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/bus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="@dimen/pad_10dp"
                                 android:text="@string/type_bus"
-                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
                                 android:textStyle="italic" />
@@ -166,9 +165,9 @@
                                 android:id="@+id/food"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="@dimen/pad_10dp"
                                 android:text="Type_Food"
-                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
                                 android:textStyle="italic" />
@@ -177,9 +176,9 @@
                                 android:id="@+id/hotels"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="10dp"
                                 android:text="Type_Hotels"
-                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
                                 android:textStyle="italic" />
@@ -188,9 +187,9 @@
                                 android:id="@+id/seat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="10dp"
                                 android:text="@string/Number_seat"
-                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
                                 android:textStyle="italic" />
@@ -199,9 +198,9 @@
                                 android:id="@+id/price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="@dimen/pad_10dp"
                                 android:text="Price"
-                                android:layout_marginRight="@dimen/pad_5dp"
                                 android:textColor="@android:color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold|italic" />
@@ -236,6 +235,109 @@
                     android:gravity="right"
                     android:orientation="vertical"
                     android:padding="@dimen/dp8">
+
+                    <TextView
+                        android:id="@+id/descr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/pad_10dp"
+                        android:text="@string/descripe"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/pad_5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/timecheckin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/check_in"
+                            android:textColor="@android:color/black"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:id="@+id/timecheckout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/check_out"
+                            android:textColor="@android:color/black"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/pad_10dp"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/status"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableRight="@drawable/ic_perm_identity_black_24dp"
+                            android:text="@string/type_status"
+                            android:textColor="@android:color/black"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/trans"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableRight="@drawable/ic_directions_bus_black_24dp"
+                            android:text="@string/Transportation"
+                            android:textColor="@android:color/black"
+                            android:textSize="13sp" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/pricebus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/pad_5dp"
+                        android:paddingTop="@dimen/pad_10dp"
+                        android:text="@string/pricebus"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="italic" />
+                    <TextView
+                        android:id="@+id/priceplace"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/pad_5dp"
+                        android:paddingTop="@dimen/pad_10dp"
+                        android:text="@string/priceplace"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="italic" />
+                    <TextView
+                        android:id="@+id/pricetotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/pad_5dp"
+                        android:paddingTop="@dimen/pad_10dp"
+                        android:text="@string/pricetotal"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="italic" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/light_gray"
+                        android:layout_marginBottom="@dimen/pad_5dp"/>
 
                     <TableLayout
                         android:layout_width="wrap_content"
@@ -280,3 +382,4 @@
     </ScrollView>
 
 </LinearLayout>
+

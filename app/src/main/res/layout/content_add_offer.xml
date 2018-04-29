@@ -52,6 +52,7 @@
                     android:background="@drawable/button_style2"
                     android:padding="@dimen/padding_8"
                     android:text="@string/startday"
+                    android:imeOptions="actionDone"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/sp18" />
 
@@ -59,6 +60,7 @@
                     android:id="@+id/btnAttendStartTime"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:imeOptions="actionDone"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
@@ -80,6 +82,7 @@
                     android:background="@drawable/button_style2"
                     android:padding="@dimen/padding_8"
                     android:text="@string/start_time"
+                    android:imeOptions="actionDone"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/sp18" />
 
@@ -93,6 +96,7 @@
                     android:layout_marginTop="@dimen/pad_10dp"
                     android:background="@drawable/button_style2"
                     android:padding="@dimen/padding_8"
+                    android:imeOptions="actionDone"
                     android:text="@string/back_day"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/sp18" />
@@ -105,6 +109,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_marginTop="@dimen/pad_10dp"
+                    android:imeOptions="actionDone"
                     android:background="@drawable/button_style2"
                     android:padding="@dimen/padding_8"
                     android:text="@string/attend_end_time"
@@ -121,6 +126,7 @@
                     android:layout_marginTop="@dimen/pad_10dp"
                     android:background="@drawable/button_style2"
                     android:padding="@dimen/padding_8"
+                    android:imeOptions="actionDone"
                     android:text="@string/end_time"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/sp18" />
@@ -133,6 +139,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_marginTop="@dimen/pad_10dp"
+                    android:imeOptions="actionDone"
                     android:background="@drawable/button_style2"
                     android:padding="@dimen/padding_8"
                     android:text="@string/location"
@@ -147,6 +154,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_marginTop="@dimen/pad_10dp"
+                    android:imeOptions="actionDone"
                     android:background="@drawable/button_style2"
                     android:padding="@dimen/padding_8"
                     android:text="@string/choose_multi_imgs"
@@ -169,9 +177,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/shap_back"
                         android:paddingBottom="15dp"
                         android:paddingTop="@dimen/pad_5dp"
-                        android:background="@drawable/shap_back"
                         android:text="@string/type_status"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/black" />
@@ -207,7 +215,6 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
                     android:background="@drawable/button_style2"
                     android:orientation="vertical"
                     android:padding="@dimen/pad_5dp"
@@ -218,9 +225,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shap_back"
-                        android:text="@string/Transportation"
                         android:paddingBottom="15dp"
                         android:paddingTop="@dimen/pad_5dp"
+                        android:text="@string/Transportation"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/black" />
 
@@ -249,53 +256,17 @@
                     </RadioGroup>
                 </LinearLayout>
 
-                <LinearLayout
+                <Spinner
+                    android:id="@+id/spinner_dest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
-                    android:padding="@dimen/pad_5dp"
                     android:layout_marginTop="@dimen/pad_10dp"
-                    android:background="@drawable/button_style2"
-                    android:orientation="vertical"
-                    android:text="@string/end_time"
-                    android:textColor="@color/colorPrimary">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shap_back"
-                        android:text="@string/residence"
-                        android:paddingBottom="15dp"
-                        android:paddingTop="@dimen/pad_5dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@android:color/black" />
-
-                    <RadioGroup
-                        android:id="@+id/radio_group_three"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radioButton1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:text="@string/without_housing"
-
-                            />
-
-                        <RadioButton
-                            android:id="@+id/radioButton2"
-                            android:checked="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/housing" />
-                    </RadioGroup>
-                </LinearLayout>
+                    android:background="@color/colorPrimary"
+                    android:entries="@array/type_places"
+                    android:padding="10dp"
+                    android:prompt="@string/Enter_Distination" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -306,7 +277,9 @@
                         style="@style/AuthEditText"
                         android:drawableLeft="@drawable/ic_assignment_ind_pry"
                         android:drawablePadding="@dimen/dp8"
-                        android:hint="@string/hotelname_hint"></EditText>
+                        android:hint="@string/hotelname_hint"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"></EditText>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -318,20 +291,9 @@
                         style="@style/AuthEditText"
                         android:drawableLeft="@drawable/ic_assignment_black_24dp"
                         android:drawablePadding="@dimen/dp8"
-                        android:hint="@string/deals_hint"></EditText>
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/priceField"
-                        style="@style/AuthEditText"
-                        android:drawableLeft="@drawable/ic_attach_money_black_24dp"
-                        android:drawablePadding="@dimen/dp8"
-                        android:hint="@string/price_hint"
-                        android:inputType="number"></EditText>
+                        android:hint="@string/deals_hint"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"></EditText>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -341,61 +303,58 @@
                     <EditText
                         android:id="@+id/chairsNumField"
                         style="@style/AuthEditText"
-                        android:drawableLeft="@drawable/ic_assignment_ind_pry"
+                        android:drawableLeft="@drawable/ic_format_list_numbered_black_24dp"
                         android:drawablePadding="@dimen/dp8"
                         android:hint="@string/chairs_count_hint"
-                        android:inputType="number"></EditText>
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:singleLine="true"></EditText>
                 </android.support.design.widget.TextInputLayout>
 
-
-                <!--<Spinner-->
-                    <!--android:id="@+id/spinner_hotel_level"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="22dp"-->
-                    <!--android:layout_marginRight="35dp"-->
-                    <!--android:layout_marginTop="@dimen/pad_10dp"-->
-                    <!--android:background="@color/colorPrimary"-->
-                    <!--android:entries="@array/types_hotel"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:prompt="@string/hotel_level_spinner"-->
-                    <!--android:verticalScrollbarPosition="defaultPosition" />-->
-
-                <!--<Spinner-->
-                    <!--android:id="@+id/spinner_bus_level"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="22dp"-->
-                    <!--android:layout_marginRight="35dp"-->
-                    <!--android:layout_marginTop="@dimen/pad_10dp"-->
-                    <!--android:background="@color/colorPrimary"-->
-                    <!--android:entries="@array/types_bus"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:prompt="@string/bus_level_spinner" />-->
-
-                <Spinner
-                    android:id="@+id/spinner_trans"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginRight="35dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:background="@color/colorPrimary"
-                    android:entries="@array/type_transport"
-                    android:padding="10dp"
-                    android:prompt="@string/Enter_Transportation" />
+                    android:layout_height="wrap_content">
 
-                <Spinner
-                    android:id="@+id/spinner_dest"
+                    <EditText
+                        android:id="@+id/priceplaceField"
+                        style="@style/AuthEditText"
+                        android:drawableLeft="@drawable/ic_attach_money_black_24dp"
+                        android:drawablePadding="@dimen/dp8"
+                        android:hint="@string/priceplace"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:singleLine="true"></EditText>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginRight="35dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:background="@color/colorPrimary"
-                    android:entries="@array/type_places"
-                    android:padding="10dp"
-                    android:prompt="@string/Enter_Distination" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/pricebusField"
+                        style="@style/AuthEditText"
+                        android:drawableLeft="@drawable/ic_attach_money_black_24dp"
+                        android:drawablePadding="@dimen/dp8"
+                        android:hint="@string/pricebus"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:singleLine="true"></EditText>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/pricetotalField"
+                        style="@style/AuthEditText"
+                        android:drawableLeft="@drawable/ic_attach_money_black_24dp"
+                        android:drawablePadding="@dimen/dp8"
+                        android:hint="@string/pricetotal"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:singleLine="true"></EditText>
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <android.support.v7.widget.AppCompatButton

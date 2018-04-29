@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -52,7 +53,9 @@ import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ss.com.bannerslider.banners.RemoteBanner;
@@ -77,7 +80,7 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
     MapView mapView;
     private GoogleApiClient googleApiClient;
     CircleImageView profilrImg;
-    TextView mTxtPlace, mTxtPrice, mTxtHotel, mTxtFood, mTxtBus,mTxtSeat;
+    TextView mTxtPlace, mTxtPrice, mTxtPriceBus, mTxtPricePlace, mTxtPriceTotal, mTxtHotel, mTxtFood, mTxtBus, mTxtSeat, mTxtTime, mTxtTimecheckin, descr, status, trans;
     String nameCompany;
 
     @Override
@@ -115,28 +118,57 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         }
         imgOffer = (ImageView) findViewById(R.id.imageCompany);
         mTxtPlace = (TextView) findViewById(R.id.locationTxt);
+
         mTxtPrice = (TextView) findViewById(R.id.price);
+
+        mTxtPriceBus = (TextView) findViewById(R.id.pricebus);
+        mTxtPricePlace = (TextView) findViewById(R.id.priceplace);
+        mTxtPriceTotal = (TextView) findViewById(R.id.pricetotal);
+
         mTxtHotel = (TextView) findViewById(R.id.hotels);
         mTxtFood = (TextView) findViewById(R.id.food);
         mTxtBus = (TextView) findViewById(R.id.bus);
         mTxtSeat = (TextView) findViewById(R.id.seat);
+        mTxtTime = (TextView) findViewById(R.id.timecheckout);
+        mTxtTimecheckin = (TextView) findViewById(R.id.timecheckin);
+        descr = (TextView) findViewById(R.id.descr);
         TextView name = (TextView) findViewById(R.id.dispaly_nameCompany);
         profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
+        status = (TextView) findViewById(R.id.status);
+        trans = (TextView) findViewById(R.id.trans);
 
-        mTxtPlace.setText("EGP "+mPharmacy.getLocation());
-        mTxtPrice.setText(mPharmacy.getPrice());
-        mTxtHotel.setText(mPharmacy.getTransLevel());
-        mTxtFood.setText(mPharmacy.getDeals());
+        mTxtPlace.setText(mPharmacy.getLocation());
+
+        status.setText(mPharmacy.getValue_onehouse());
+        trans.setText(mPharmacy.getValue_twotrans());
+
+
+        mTxtPrice.setText("Ryial " + mPharmacy.getPriceTotal());
+        mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " Ryial ");
+        mTxtPricePlace.setText(getString(R.string.priceplace) + " = " + mPharmacy.getPricePlace() + " Ryial ");
+        mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
+
+
+        mTxtHotel.setText(mPharmacy.getHotelName());
+        if (mPharmacy.getDeals().equals("")) {
+            mTxtFood.setVisibility(View.GONE);
+        } else {
+            mTxtFood.setText(mPharmacy.getDeals());
+
+        }
         mTxtBus.setText(mPharmacy.getDestLevel());
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/Raleway-ExtraBold.ttf");
+        descr.setTypeface(face);
 
-        mTxtSeat.setText(getString(R.string.chairs_count_hint)+" "+ mPharmacy.getNumOfChairs());
+        mTxtTime.setText(getString(R.string.check_out) + "\n" + getDate(mPharmacy.getBackDay(), "EEE, MMM d"));
+        mTxtTimecheckin.setText(getString(R.string.check_in) + "\n" + getDate(mPharmacy.getStartDay(), "EEE, MMM d"));
+        mTxtSeat.setText(getString(R.string.chairs_count_hint) + " " + mPharmacy.getNumOfChairs());
 
         name.setText(nameCompany);
 
         if (mPharmacy.getOfferImage() != null) {
             Glide.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
             Glide.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
-
 //            Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
 //            Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
         }
@@ -164,6 +196,16 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API).build();
         }
+    }
+
+    public static String getDate(long milliSeconds, String dateFormat) {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
 
     private void DemoSliderM() {
@@ -197,6 +239,9 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
     public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
         finishActivity(FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+        Intent back = new Intent(CompanyOfferDetailActivity.this, CompanyOffersActivity.class);
+        startActivity(back);
+        finish();
     }
 
     @Override
@@ -223,8 +268,10 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
 
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //your deleting code
+
                         FirebaseDatabase.getInstance().getReference()
                                 .child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).child(mPharmacy.getKeyId()).removeValue();
+                        Toast.makeText(CompanyOfferDetailActivity.this, "This Offer Deleted", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
 
@@ -240,7 +287,6 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
                 })
                 .create();
         return myQuittingDialogBox;
-
     }
 
     public FABRevealMenu getFabMenu() {
@@ -383,3 +429,4 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         }
     }
 }
+

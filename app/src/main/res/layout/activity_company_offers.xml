@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="ltr"
     android:fitsSystemWindows="true"
+    android:layoutDirection="ltr"
     tools:context="com.apps.labikaomra.activities.CompanyOffersActivity">
 
     <android.support.design.widget.AppBarLayout

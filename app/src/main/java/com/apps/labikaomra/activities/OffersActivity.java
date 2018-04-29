@@ -21,7 +21,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.EditText;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.apps.labikaomra.Application_config.myApplication;
@@ -40,8 +41,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class OffersActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -60,15 +65,9 @@ public class OffersActivity extends AppCompatActivity implements
     static RecyclerView mCategoriesRecyclerView;
     static String mUser_Id;
     List<String> companyList;
-    private static final int REQUEST_APP_SETTINGS = 168;
-
-    private static final String[] requiredPermissions = new String[]{
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-            /* ETC.. */
-    };
+    int numseatback;
+    static List<String> priceList;
+    String value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +80,8 @@ public class OffersActivity extends AppCompatActivity implements
         mcontext = getBaseContext();
 
         mUser_Id = getIntent().getStringExtra("mUser_Id");
+        numseatback = getIntent().getIntExtra("numseat", 1);
+
         mDataCompany = FirebaseDatabase.getInstance().getReference().child("company");
 
         companyList = new ArrayList<>();
@@ -101,53 +102,23 @@ public class OffersActivity extends AppCompatActivity implements
 
             }
         });
-        if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
-            Toast.makeText(this, "Please grant all permissions", Toast.LENGTH_LONG).show();
-            dialog();
-        }
+
         mCategoriesRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_company_offer);
         setMainList();
     }
 
-    public void dialog() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(OffersActivity.this);
-        dialog.setCancelable(false);
-        dialog.setTitle("Allow Omrati \n to access your Loaction and Storage");
-        dialog.setIcon(R.drawable.ic_location_on_black_24dp);
-//        dialog.setMessage("Need to open Permission Location and Storage" );
-        dialog.setPositiveButton("Allow", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                goToSettings();
-            }
-        })
-                .setNegativeButton("Deny ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Action for "Cancel".
-                    }
-                });
+    public static String getDate(long milliSeconds, String dateFormat) {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
 
-        final AlertDialog alert = dialog.create();
-        alert.show();
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
 
-    private void goToSettings() {
-        Intent myAppSettings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
-        myAppSettings.addCategory(Intent.CATEGORY_DEFAULT);
-        myAppSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivityForResult(myAppSettings, REQUEST_APP_SETTINGS);
-    }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public boolean hasPermissions(@NonNull String... permissions) {
-        for (String permission : permissions)
-            if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(permission))
-                return false;
-        return true;
-    }
-
-    public static void recyclering(Query qmyDatabase, final String search) {
+    public void recyclering(Query qmyDatabase, final String search) {
         qmyDatabase.keepSynced(true);
 
         qmyDatabase.addValueEventListener(new ValueEventListener() {
@@ -155,39 +126,78 @@ public class OffersActivity extends AppCompatActivity implements
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 clientList = new ArrayList<Offer>();
+                priceList = new ArrayList<>();
+
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Offer offer = postSnapshot.getValue(Offer.class);
-                    if (checkOutDate != 0l && checkInDate != 01) {
-                        long diff = checkInDate - offer.getStartDay();
-                        long days = diff / (24 * 60 * 60 * 1000);
-
-                        long diff1 = offer.getBackDay() - checkOutDate;
-                        long day = diff1 / (24 * 60 * 60 * 1000);
-
-                            if ((day <= 0 && days == 0) ||
-                                    (offer.getValueonehouse() == value_one) || (offer.getValuetwotrans() == value_two)
-                                    || (offer.getValuethreestatus() == value_three)) {
-
+                    priceList.add(offer.getPriceTotal());
+                    if ((txttrans == getString(R.string.transonly))) {
+                        value = "transonly";
+                        if (checkOutDate != 0l && checkInDate != 01) {
+                            if ((getDate(checkInDate, "EEE, MMM d").equals(getDate(offer.getStartDay(), "EEE, MMM d"))
+                                    && getDate(checkOutDate, "EEE, MMM d").equals(getDate(offer.getBackDay(), "EEE, MMM d")))
+                                    || (offer.getValue_twotrans() == value_two)
+                                    || (offer.getValue_threestatus() == value_three)) {
                                 clientList.add(offer);
-                        } else {
-//                            Toast.makeText(mcontext, "No Data Match this Date", Toast.LENGTH_LONG).show();
+                            } else if ((checkInDate <= offer.getStartDay() && checkOutDate >= offer.getBackDay())
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
+                                clientList.add(offer);
+                            }
 
                         }
-//                        clientList.add(offer);
+                    } else if((txttrans == getString(R.string.transonly2))){
+                        value = "transonly2";
 
-                    } else {
-//                        if (pharmacy.getName().contains(search) || pharmacy.getPhoneNumber().contains(search) ||
-//                                pharmacy.getStreet().contains(search) ||
-//                                pharmacy.getLocation().contains(search) ||
-//                                pharmacy.getLocationPlace().contains(search))
-//                        clientList.add(pharmacy);
+                        if (checkOutDate != 0l && checkInDate != 01) {
+                            if ((getDate(checkInDate, "EEE, MMM d").equals(getDate(offer.getStartDay(), "EEE, MMM d"))
+                                    && getDate(checkOutDate, "EEE, MMM d").equals(getDate(offer.getBackDay(), "EEE, MMM d")))
+                                    || (offer.getValue_twotrans() == value_two)
+                                    || (offer.getValue_threestatus() == value_three)) {
+                                clientList.add(offer);
+                            } else if ((checkInDate <= offer.getStartDay() && checkOutDate >= offer.getBackDay())
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
+
+                                clientList.add(offer);
+                            }
+
+                        }
                     }
+                    else if((txttrans == getString(R.string.transonly3))){
+                        value = "transonly3";
+
+                        if (checkOutDate != 0l && checkInDate != 01) {
+                            if ((getDate(checkInDate, "EEE, MMM d").equals(getDate(offer.getStartDay(), "EEE, MMM d"))
+                                    && getDate(checkOutDate, "EEE, MMM d").equals(getDate(offer.getBackDay(), "EEE, MMM d")))
+                                    || (offer.getValue_twotrans() == value_two)
+                                    || (offer.getValue_threestatus() == value_three)) {
+                                clientList.add(offer);
+                            } else if ((checkInDate <= offer.getStartDay() && checkOutDate >= offer.getBackDay())
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
+
+                                clientList.add(offer);
+                            }
+                        }
+                    }
+                    else {
+                        value = "false";
+
+                        if (checkOutDate != 0l && checkInDate != 01) {
+                            if ((getDate(checkInDate, "EEE, MMM d").equals(getDate(offer.getStartDay(), "EEE, MMM d"))
+                                    && getDate(checkOutDate, "EEE, MMM d").equals(getDate(offer.getBackDay(), "EEE, MMM d")))
+                                    || (offer.getValue_twotrans() == value_two)
+                                    || (offer.getValue_threestatus() == value_three)) {
+                                clientList.add(offer);
+                            } else if ((checkInDate <= offer.getStartDay() && checkOutDate >= offer.getBackDay())
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
+
+                                clientList.add(offer);
+                            }
+                        }
+                    }
+
                 }
-                adapter = new OfferAdapter(mcontext, clientList, mUser_Id);
+                adapter = new OfferAdapter(mcontext, clientList, mUser_Id, numseatback, value);
                 mCategoriesRecyclerView.setAdapter(adapter);
-//                } else {
-//                    Toast.makeText(mcontext, R.string.nodataload, Toast.LENGTH_SHORT).show();
-//                }
             }
 
             @Override
@@ -195,6 +205,33 @@ public class OffersActivity extends AppCompatActivity implements
                 Toast.makeText(mcontext, R.string.nodataload, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_order, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.highprice) {
+            Collections.sort(clientList);
+            adapter = new OfferAdapter(mcontext, clientList, mUser_Id, numseatback, value);
+            mCategoriesRecyclerView.setAdapter(adapter);
+
+        } else if (item.getItemId() == R.id.lowprice) {
+            Collections.sort(clientList);
+            Collections.reverse(clientList);
+
+            adapter.notifyDataSetChanged();
+            adapter = new OfferAdapter(mcontext, clientList, mUser_Id, numseatback, value);
+            mCategoriesRecyclerView.setAdapter(adapter);
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setMainList() {
@@ -209,7 +246,7 @@ public class OffersActivity extends AppCompatActivity implements
         mCategoriesRecyclerView.setItemAnimator(itemAnimator);
 
         List<Offer> categoriesModel = new ArrayList<Offer>();
-        OfferAdapter adapters = new OfferAdapter(getBaseContext(), categoriesModel, mUser_Id);
+        OfferAdapter adapters = new OfferAdapter(getBaseContext(), categoriesModel, mUser_Id, numseatback, value);
         mCategoriesRecyclerView.setAdapter(adapters);
         firebaseCode();
     }
@@ -220,7 +257,7 @@ public class OffersActivity extends AppCompatActivity implements
         myPharmacyDatabase = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS);
 //        Toast.makeText(mcontext, "list "+myPharmacyDatabase.getRef(), Toast.LENGTH_SHORT).show();
         myPharmacyDatabase.keepSynced(true);
-        adapter = new OfferAdapter(getBaseContext(), null, mUser_Id);
+        adapter = new OfferAdapter(getBaseContext(), null, mUser_Id, numseatback, value);
         recyclering(myPharmacyDatabase, getString(R.string.fi));
 
         // Create an instance of GoogleAPIClient.
@@ -244,21 +281,6 @@ public class OffersActivity extends AppCompatActivity implements
         mGoogleApiClient.disconnect();
         super.onStop();
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == REQUEST_APP_SETTINGS) {
-            if (hasPermissions(requiredPermissions)) {
-                Toast.makeText(this, "All permissions granted!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Permissions not granted.", Toast.LENGTH_LONG).show();
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-
-    }//onActivityResult
 
     @Override
     public void onResume() {

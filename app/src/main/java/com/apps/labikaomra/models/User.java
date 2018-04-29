@@ -10,6 +10,8 @@ public class User {
     private String fullName;
     private String photo;
     private String email;
+    private String type;
+
     private HashMap<String, Object> timestampJoined;
 
     public User() {
@@ -21,11 +23,13 @@ public class User {
      *
      * @param timestampJoined
      */
-    public User(String mFullName, String mPhoneNo, String mEmail, HashMap<String, Object> timestampJoined) {
+    public User(String mFullName, String mPhoneNo, String mEmail, HashMap<String, Object> timestampJoined,String type) {
         this.fullName = mFullName;
         this.photo = mPhoneNo;
         this.email = mEmail;
         this.timestampJoined = timestampJoined;
+        this.type = type;
+
     }
 
     public User(String mFullName, String mPhoneNo, String mEmail) {
@@ -43,6 +47,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public HashMap<String, Object> getTimestampJoined() {

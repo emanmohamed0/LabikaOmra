@@ -12,6 +12,14 @@
     <string name="error_notadd">\"Error : not add \"</string>
     <string name="welcome">مرحبا</string>
     <string name="data">بيانات</string>
+    <string name="dialog">من فضلك اضغط للخروج من الحساب الأخر</string>
+    <string name="dialogactive">من فضلك اتصل بهذا الرقم لتفعيل حسابك</string>
+    <string name="highprice">أعلى سعر</string>
+    <string name="alert">تحذير</string>
+    <string name="OK">موافقة</string>
+    <string name="lowprice">أقل سعر</string>
+    <string name="net">التحقق من الانترنت</string>
+    <string name="highrate">أعلى تقييم</string>
     <string name="type_status">نوع الحالة</string>
     <string name="normal">عادي</string>
     <string name="error_num">خطأ في عندد المقاعد</string>
@@ -29,21 +37,21 @@
     <string name="tabed_loc">Taped Location</string>
     <string name="no_permission">No Permissions Granted</string>
     <string name="gps_disable">GPS is disabled in your device. Would you like to enable it?</string>
-    <string name="cancel">إلغاء</string>
     <string name="enable_gps">Goto Settings Page To Enable GPS</string>
     <string name="title_activity_company_login">تسجيل دخول لشركة</string>
     <string name="login_account">الدخول للحساب ..</string>
     <string name="faild">فشل</string>
+    <string name="singleandfamily">عزاب وعوائل</string>
     <string name="less6">اقل من 6</string>
     <string name="pls_wail">برجاء الانتظار ...</string>
     <string name="enter_email">ادخل البريد الالكتروني!</string>
     <string name="enter_pass">ادخل كلمة السر</string>
     <string name="userin">اهلا بك </string>
     <string name="login">تسجيل الدخول</string>
-    <string name="title_activity_company_offers">عمرتي</string>
+    <string name="title_activity_company_offers">عروض شركتك</string>
     <string name="fi" />
     <string name="nodataload">لايوجد بيانات تم تحميلها</string>
-    <string name="title_activity_add_offer">عمرتي</string>
+    <string name="title_activity_add_offer">اضافه عرض</string>
     <string name="hotelname_hint">اسم الفندق</string>
     <string name="startday"> يوم الذهاب</string>
     <string name="attend_start_time">وقت التجمع</string>
@@ -56,6 +64,8 @@
     <string name="price_hint">السعر</string>
     <string name="add_offer">اضافه عرض</string>
     <string name="customer">المعتمر</string>
+    <string name="enterdata">أدخل بياناتك</string>
+
     <!--//add doctor-->
     <string-array name="sub_level_array">
         <item>نوع الباص</item>
@@ -66,7 +76,7 @@
 
     </string-array>
     <string name="bus_level_spinner">نوع الباص</string>
-    <string name="hotel_level_spinner" >مستوى الفندق</string>
+    <string name="hotel_level_spinner">مستوى الفندق</string>
     <string name="choose_multi_imgs">اختر اكثر من صوره</string>
     <string name="return_data">ارجاع البيانات</string>
     <string name="aspc_y">aspectY</string>
@@ -76,7 +86,6 @@
     <string name="onfailure">onfailure</string>
     <string name="offer_img">تحميل صورة العرض ...</string>
     <string name="upload_multi_imgs">تحميل الصور</string>
-    <string name="lists">قوائم</string>
     <string name="timestamp">timestamp</string>
     <string name="title_activity_maps">خريطة</string>
     <string name="error_hotelname">خطأ في اسم الفندق</string>
@@ -89,7 +98,7 @@
     <string name="title_activity_company_offer_detail">تفاصيل عروضك</string>
     <string name="your_location">موقعك</string>
     <string name="title_activity_user_login">تسجيل الدخول</string>
-    <string name="residence">سكن</string>
+    <string name="residence">نوع الرحلة</string>
     <string name="without_housing">بدون سكن</string>
     <string name="housing">سكن</string>
     <string name="Transportation">نوع المواصلات</string>
@@ -101,8 +110,8 @@
     <string name="single">عزاب</string>
     <string name="families">عوائل</string>
     <string name="Omera_Company_Touries_and_more"> شركات لحجز العمره والفنادق  ...</string>
-    <string name="check_in">وقت الوصول</string>
-    <string name="check_out">وقت المغادرة</string>
+    <string name="check_in">تاريخ الذهاب</string>
+    <string name="check_out">تاريخ العودة</string>
     <string name="type_hotel">مستوى الفندق</string>
     <string name="Enter_Distination">ادخل الوجهه</string>
     <string name="Number_seat">عدد المقاعد</string>
@@ -129,6 +138,42 @@
     <string name="go">ذهاب فقط </string>
     <string name="back">عودة فقط</string>
     <string name="goback">ذهاب وعودة</string>
+    <string name="descripe">الوصف</string>
+    <string name="best">وجهات رائعة</string>
+    <string name="dialogoffer">خطأ فى تاريخ الذهاب والعودة</string>
+    <string name="listbooking">قائمة الحجوزات</string>
+    <string name="persondata">بياناتك الشخصيه</string>
+    <string name="firstname">اسم المرافق</string>
+    <string name="lastname">اسم العائلة</string>
+    <string name="addresshint">العنوان</string>
+    <string name="idCard">رقم الاقامة/رقم الهواية</string>
+    <string name="booking">أحجز</string>
+    <string name="conbook">تأكيد الحجز</string>
+    <string name="favorite">مفضلة</string>
+    <string name="dataMorafiq">أدخل بيانات المرافق</string>
+    <string name="staying">مكان الاقامة</string>
+    <string name="morafiq">مرافق</string>
+    <string name="bank">حساب البنك</string>
+    <string name="done">تأكيد</string>
+    <string name="cancel">إلغاء</string>
+    <string name="enter">بيانات المرافقين</string>
+    <string name="enterseat">ادخل عدد المقاعد</string>
+    <string name="passport">جواز السفر</string>
+    <string name="Copyofreceipt">صورة من الايصال</string>
+    <string name="forexample">على سبيل المثال</string>
+    <string name="titleconfirm">تأكيد الحجز</string>
+    <string name="pls">من فضلك اختار</string>
+    <string name="send">ارسال ايميل</string>
+    <string name="detail">تفاصيل حجز العرض</string>
+    <string name="Communicate">مشاركة</string>
+    <string name="total">المبلغ الاجمالى للعرض</string>
+    <string name="priceplace">سعر السكن فقط</string>
+    <string name="pricebus">سعر المواصلات فقط</string>
+    <string name="pricetotal">السعر شامل(المواصلات+السكن)</string>
+    <string name="pricetotalchair">سعر الرحله بعدد المقاعد</string>
+    <string name="transonly">سكن</string>
+    <string name="transonly2">مواصلات</string>
+    <string name="transonly3">سكن+مواصلات</string>
 
     <string-array name="types_hotel">
 

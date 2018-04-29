@@ -6,14 +6,15 @@ import com.google.firebase.database.ServerValue;
 import java.util.HashMap;
 
 public class Company {
-    String firstName, email, profileImage, phone, mobile, location;
+    String activation,firstName, email, profileImage, phone, mobile, location ,bank,type;
     private HashMap<String, Object> timestampLastChanged;
     private HashMap<String, Object> timestampCreated;
     double lat, lng;
     public Company() {
     }
 
-    public Company(String firstName, String email, String profileImage, String phone, String mobile, String location, HashMap<String, Object> timestampCreated, double lat, double lng) {
+    public Company(String activation,String firstName, String email, String profileImage, String phone, String mobile, String location, HashMap<String, Object> timestampCreated, double lat, double lng ,String bank,String type) {
+        this.activation = activation;
         this.firstName = firstName;
         this.email = email;
         this.profileImage = profileImage;
@@ -26,8 +27,13 @@ public class Company {
         this.timestampLastChanged = timestampNowObject;
         this.lat = lat;
         this.lng = lng;
-    }
+        this.bank = bank;
+        this.type = type;
 
+    }
+    public String getType() {
+        return type;
+    }
     public String getFirstName() {
         return firstName;
     }
@@ -48,6 +54,9 @@ public class Company {
         return timestampLastChanged;
     }
 
+    public String getActivation() {
+        return activation;
+    }
 
     public HashMap<String, Object> getTimestampCreated() {
         return timestampCreated;
@@ -69,4 +78,7 @@ public class Company {
         return lng;
     }
 
+    public String getBank() {
+        return bank;
+    }
 }

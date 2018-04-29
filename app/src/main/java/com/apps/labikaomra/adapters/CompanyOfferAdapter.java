@@ -24,10 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
-
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 
@@ -37,23 +34,18 @@ public class CompanyOfferAdapter extends RecyclerView.Adapter<CompanyOfferAdapte
     private int lastPosition = -1;
     private DatabaseReference mDatabaseRef;
     String name;
-
     Context context;
     List<Offer> model;
 
     public CompanyOfferAdapter(Context context, List<Offer> model) {
-
         this.model = model;
         this.context = context;
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
     }
-
     @Override
     public postViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail, parent, false);
-
         postViewHolder viewHolder = new postViewHolder(view);
 
         return viewHolder;
@@ -65,10 +57,12 @@ public class CompanyOfferAdapter extends RecyclerView.Adapter<CompanyOfferAdapte
         setAnimation(holder.myView, position);
 
         holder.setImage(UploadInfo.getOfferImage());
-        holder.setNameHotel(UploadInfo.getTransLevel());
+        holder.setNameHotel(UploadInfo.getHotelName());
         holder.setBus(UploadInfo.getDestLevel());
         holder.setFood(UploadInfo.getDeals());
-        holder.setPrice(UploadInfo.getPrice());
+        holder.setPrice(UploadInfo.getPriceTotal());
+
+
         UploadInfo.getCompanyKeyId();
 
         mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).child(UploadInfo.getCompanyKeyId()).addValueEventListener(new ValueEventListener() {
@@ -95,10 +89,8 @@ public class CompanyOfferAdapter extends RecyclerView.Adapter<CompanyOfferAdapte
         });
         //Loading image from Glide library.
     }
-
     @Override
     public int getItemCount() {
-
         return model.size();
     }
 
@@ -134,7 +126,11 @@ public class CompanyOfferAdapter extends RecyclerView.Adapter<CompanyOfferAdapte
 
         void setFood(String food) {
             TextView txt_food = (TextView) myView.findViewById(R.id.food);
-            txt_food.setText(food);
+            if(food.equals("")){
+                txt_food.setVisibility(View.GONE);
+            }else {
+                txt_food.setText(food);
+            }
         }
 
         void setBus(String Bus) {
@@ -144,14 +140,12 @@ public class CompanyOfferAdapter extends RecyclerView.Adapter<CompanyOfferAdapte
 
         void setPrice(String price) {
             TextView txt_price = (TextView) myView.findViewById(R.id.price);
-            txt_price.setText(price);
+            txt_price.setText("Ryial "+price);
         }
 
         void setImage(String image) {
             ImageView txt_image = (ImageView) myView.findViewById(R.id.imageCompany);
             Glide.with(context).load(image).into(txt_image);
-
-
         }
     }
 }

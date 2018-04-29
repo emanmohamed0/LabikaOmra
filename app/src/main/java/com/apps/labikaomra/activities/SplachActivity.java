@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -17,9 +18,12 @@ import android.widget.TextView;
 
 import com.apps.labikaomra.ConstantsLabika;
 import com.apps.labikaomra.R;
+import com.apps.labikaomra.notification.FCMRegistrationService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Locale;
 
@@ -34,7 +38,8 @@ public class SplachActivity extends FragmentActivity {
     private DatabaseReference myCompanyDatabase;
     public SharedPreferences sharedPreferences;
     public SharedPreferences.Editor editor;
-String locale;
+    String locale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +54,11 @@ String locale;
         appSlogan = (TextView) findViewById(R.id.pro_txt);
         myCompanyDatabase = FirebaseDatabase.getInstance().getReference();
 
+        FirebaseMessaging.getInstance().subscribeToTopic("notification");
+
+        startService(new Intent(this, FCMRegistrationService.class));
+        Log.e("Token is ", FirebaseInstanceId.getInstance().getToken());
+ //Token is: fY0si4U-7Zc:APA91bGft0cntLNCHgXDSxUSh2e8mXkZieYvwoDOvG9fYNLmCJD7w61yJo3dTt2V0Ho37BoNLhGQHzWI3t9-glQYUw0_CuWZZ_g0LDjT0AKqQI2FwgmqVMuFaHpSGEizYpWfXTATs2JG
 //        language = sharedPreferences.getString("LANGUAGE", Locale.getDefault().getDisplayLanguage().toLowerCase().substring(0,2));
 //
 //        if (language.equals("en")) {
@@ -113,18 +123,18 @@ String locale;
                                                auth = FirebaseAuth.getInstance();
                                                if (auth.getCurrentUser() != null) {
                                                    String uid = auth.getCurrentUser().getUid();
-                                                   Intent start =new Intent(SplachActivity.this, ChoiceActivity.class);
-                                                   start.putExtra("company_user_id",uid);
-                                                   start.putExtra("locale",locale);
+                                                   Intent start = new Intent(SplachActivity.this, ChoiceActivity.class);
+                                                   start.putExtra("company_user_id", uid);
+                                                   start.putExtra("locale", locale);
                                                    SplachActivity.this.startActivity(start);
 //                                                   SplachActivity.this.startActivity(new Intent(SplachActivity.this, ChoiceActivity.class));
                                                    SplachActivity.this.finish();
                                                } else {
 //                                                   String key = myCompanyDatabase.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).push().getKey();
 //                                                   String uid = auth.getCurrentUser().getUid();
-                                                   Intent start =new Intent(SplachActivity.this, ChoiceActivity.class);
+                                                   Intent start = new Intent(SplachActivity.this, ChoiceActivity.class);
 //                                                   start.putExtra("company_user_id",key);
-                                                   start.putExtra("locale",locale);
+                                                   start.putExtra("locale", locale);
                                                    SplachActivity.this.startActivity(start);
 //                                                   SplachActivity.this.startActivity(new Intent(SplachActivity.this, ChoiceActivity.class));
                                                    SplachActivity.this.finish();

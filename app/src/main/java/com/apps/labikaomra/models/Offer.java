@@ -1,5 +1,7 @@
 package com.apps.labikaomra.models;
 
+import android.support.annotation.NonNull;
+
 import com.apps.labikaomra.ConstantsLabika;
 import com.google.firebase.database.ServerValue;
 
@@ -7,9 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class Offer {
+public class Offer implements Comparable {
     String hotelName, attendStartTime, startTime, attendEndTime, endTime,
-            deals, price, offerImage, companyKeyId, location, keyId, valueonehouse, valuetwotrans, valuethreestatus, transLevel, destLevel;
+            deals, priceBus,pricePlace,priceTotal, offerImage, companyKeyId, location, keyId, value_onehouse, value_twotrans, value_threestatus, transLevel, destLevel;
     int numOfChairs;
     private HashMap<String, Object> timestampLastChanged;
     private HashMap<String, Object> timestampCreated;
@@ -22,10 +24,10 @@ public class Offer {
 
     public Offer(String hotelName, Long startDay, String attendStartTime, String startTime,
                  Long backDay, String attendEndTime,
-                 String endTime, String deals, String price, String location, int numOfChairs,
+                 String endTime, String deals, String priceBus,String pricePlace,String priceTotal ,String location, int numOfChairs,
                  HashMap<String, Object> timestampCreated, double lat, double lng, String offerImage,
                  ArrayList<String> contentImagesList, String companyKeyId, String keyId,
-                 String valueonehouse, String valuethreestaus, String valuetwotrans, String transLevel, String destLevel) {
+                 String value_onehouse, String value_threestatus, String value_twotrans, String transLevel, String destLevel) {
         this.hotelName = hotelName;
         this.startDay = startDay;
         this.attendStartTime = attendStartTime;
@@ -35,14 +37,16 @@ public class Offer {
         this.attendEndTime = attendEndTime;
         this.endTime = endTime;
         this.deals = deals;
-        this.price = price;
+        this.priceBus = priceBus;
+        this.pricePlace = pricePlace;
+        this.priceTotal = priceTotal;
         this.location = location;
         this.numOfChairs = numOfChairs;
         this.lat = lat;
         this.lng = lng;
-        this.valueonehouse = valueonehouse;
-        this.valuetwotrans = valuetwotrans;
-        this.valuethreestatus = valuethreestaus;
+        this.value_onehouse = value_onehouse;
+        this.value_twotrans = value_twotrans;
+        this.value_threestatus = value_threestatus;
         this.transLevel = transLevel;
         this.destLevel = destLevel;
         this.keyId = keyId;
@@ -57,10 +61,10 @@ public class Offer {
 
     public Offer(String hotelName, Long startDay, String attendStartTime, String startTime,
                  Long backDay, String attendEndTime,
-                 String endTime, String deals, String price, String location, int numOfChairs,
+                 String endTime, String deals, String priceBus,String pricePlace,String priceTotal , String location, int numOfChairs,
                  HashMap<String, Object> timestampCreated, double lat, double lng,
                  ArrayList<String> contentImagesList, String companyKeyId, String keyId,
-                 String valueonehouse, String valuethreestaus, String valuetwotrans, String transLevel, String destLevel) {
+                 String value_onehouse, String value_threestatus, String value_twotrans, String transLevel, String destLevel) {
         this.hotelName = hotelName;
         this.startDay = startDay;
         this.attendStartTime = attendStartTime;
@@ -70,14 +74,16 @@ public class Offer {
         this.attendEndTime = attendEndTime;
         this.endTime = endTime;
         this.deals = deals;
-        this.price = price;
+        this.priceBus = priceBus;
+        this.pricePlace = pricePlace;
+        this.priceTotal = priceTotal;
         this.location = location;
         this.numOfChairs = numOfChairs;
         this.lat = lat;
         this.lng = lng;
-        this.valueonehouse = valueonehouse;
-        this.valuetwotrans = valuetwotrans;
-        this.valuethreestatus = valuethreestaus;
+        this.value_onehouse = value_onehouse;
+        this.value_twotrans = value_twotrans;
+        this.value_threestatus = value_threestatus;
         this.transLevel = transLevel;
         this.destLevel = destLevel;
         this.keyId = keyId;
@@ -109,16 +115,16 @@ public class Offer {
         return startTime;
     }
 
-    public String getValueonehouse() {
-        return valueonehouse;
+    public String getValue_onehouse() {
+        return value_onehouse;
     }
 
-    public String getValuetwotrans() {
-        return valuetwotrans;
+    public String getValue_twotrans() {
+        return value_twotrans;
     }
 
-    public String getValuethreestatus() {
-        return valuethreestatus;
+    public String getValue_threestatus() {
+        return value_threestatus;
     }
 
     public String getTransLevel() {
@@ -145,9 +151,6 @@ public class Offer {
         return deals;
     }
 
-    public String getPrice() {
-        return price;
-    }
 
     public int getNumOfChairs() {
         return numOfChairs;
@@ -187,5 +190,32 @@ public class Offer {
 
     public ArrayList<String> getContentImagesList() {
         return contentImagesList;
+    }
+
+    public String getPriceBus() {
+        return priceBus;
+    }
+
+    public String getPricePlace() {
+        return pricePlace;
+    }
+
+    public String getPriceTotal() {
+        return priceTotal;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        int compareTo = Integer.parseInt(((Offer) o).getPriceTotal());
+        int valuePrice = Integer.parseInt(this.priceTotal);
+
+        /* For Ascending order*/
+        return compareTo - valuePrice;
+
+//        /* For Descending order do like this */
+//        valuePrice - compareTo
+//        return compareTo - valuePrice ;
+
+
     }
 }

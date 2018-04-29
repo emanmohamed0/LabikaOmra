@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.apps.labikaomra.activities.MainActivity">
+    <item
+        android:id="@+id/highprice"
+        android:orderInCategory="100"
+        android:title="@string/highprice"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/lowprice"
+        android:orderInCategory="100"
+        android:title="@string/lowprice"
+        app:showAsAction="never" />
+
+    <!--<item-->
+        <!--android:id="@+id/highrate"-->
+        <!--android:title="@string/highrate"-->
+        <!--app:showAsAction="never" />-->
+</menu>

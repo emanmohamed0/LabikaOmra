@@ -31,7 +31,7 @@
     <application
         android:name=".Application_config.myApplication"
         android:allowBackup="true"
-        android:icon="@drawable/loogz"
+        android:icon="@mipmap/omrati"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -105,7 +105,7 @@
         <activity
             android:name=".activities.UserLoginActivity"
             android:label="@string/title_activity_user_login"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".activities.BaseActivity" />
         <activity
             android:name=".activities.OffersActivity"
@@ -127,6 +127,36 @@
         <activity android:name=".activities.SearchCompanyActivity" />
         <activity android:name=".activities.ChooseLanguageActivity" />
         <activity android:name=".activities.CompleteSearchActivity" />
+        <activity android:name=".activities.CompanyBooking" />
+        <activity android:name=".activities.DialogBooking" />
+        <activity android:name=".activities.ConfirmBooking" />
+        <activity android:name=".activities.DetailBooking"></activity>
+
+        <service
+            android:name=".notification.MyFCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!--###  Register service get token and send it to service  ###-->
+        <service android:name=".notification.FCMRegistrationService" />
+
+        <!--###  Service response to token refresh event  ###-->
+        <service
+            android:name=".notification.FCMTokenRefreshListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorback"
+            />
+
     </application>
 
 </manifest>

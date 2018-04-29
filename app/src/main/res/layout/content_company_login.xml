@@ -36,6 +36,7 @@
                         android:drawableLeft="@drawable/ic_email_pry"
                         android:drawablePadding="@dimen/dp8"
                         android:hint="@string/email_hint"
+                        android:imeOptions="actionDone"
                         android:inputType="textEmailAddress">
 
                     </EditText>
@@ -51,6 +52,7 @@
                         android:drawableLeft="@drawable/ic_vpn_key_pry"
                         android:drawablePadding="@dimen/dp8"
                         android:hint="@string/password_hint"
+                        android:imeOptions="actionDone"
                         android:inputType="textPassword" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>

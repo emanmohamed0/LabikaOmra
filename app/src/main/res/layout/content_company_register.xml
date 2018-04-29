@@ -18,8 +18,10 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/usernameField"
                     style="@style/AuthEditText"
+                    android:imeOptions="actionNext"
                     android:drawableLeft="@drawable/ic_assignment_ind_pry"
                     android:drawablePadding="@dimen/dp8"
                     android:hint="@string/companyname_hint"></EditText>
@@ -30,8 +32,10 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/emailField"
                     style="@style/AuthEditText"
+                    android:imeOptions="actionNext"
                     android:drawableLeft="@drawable/ic_email_pry"
                     android:drawablePadding="@dimen/dp8"
                     android:hint="@string/email_hint"
@@ -43,11 +47,13 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/phoneField"
                     style="@style/AuthEditText"
                     android:drawableLeft="@drawable/ic_call_pry"
                     android:drawablePadding="@dimen/dp8"
                     android:hint="@string/phone_hint"
+                    android:imeOptions="actionNext"
                     android:inputType="phone" />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
@@ -55,11 +61,13 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/mobileField"
                     style="@style/AuthEditText"
                     android:drawableLeft="@drawable/ic_phone_iphone_black_24dp"
                     android:drawablePadding="@dimen/dp8"
                     android:hint="@string/mobile_hint"
+                    android:imeOptions="actionNext"
                     android:inputType="phone" />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
@@ -69,9 +77,11 @@
                 <EditText
                     android:id="@+id/passwordField"
                     style="@style/AuthEditText"
+                    android:singleLine="true"
                     android:drawableLeft="@drawable/ic_vpn_key_pry"
                     android:drawablePadding="@dimen/dp8"
                     android:hint="@string/password_hint"
+                    android:imeOptions="actionNext"
                     android:inputType="textPassword" />
             </android.support.design.widget.TextInputLayout>
 
@@ -85,7 +95,22 @@
                     android:drawableLeft="@drawable/ic_vpn_key_pry"
                     android:drawablePadding="@dimen/dp8"
                     android:hint="@string/confpassword_hint"
+                    android:imeOptions="actionNext"
                     android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/bankField"
+                    style="@style/AuthEditText"
+                    android:drawableLeft="@drawable/ic_account_balance_black_24dp"
+                    android:drawablePadding="@dimen/dp8"
+                    android:hint="@string/bank"
+                    android:imeOptions="actionDone"
+                    android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    tools:context=".activities.DialogBooking">
+
+    <LinearLayout
+        android:id="@+id/mLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/pad_10dp"
+            android:layout_marginTop="10dp"
+            android:paddingTop="@dimen/pad_10dp"
+            android:text="@string/persondata"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp18"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_style2"
+            android:drawableLeft="@drawable/ic_person_black_24dp"
+            android:text="@string/login"
+            android:textColor="@color/colorPrimary" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pad_10dp">
+
+            <EditText
+                android:id="@+id/nameField"
+                style="@style/AuthEditText"
+                android:drawablePadding="@dimen/dp8"
+                android:hint="@string/firstname"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                android:singleLine="true"></EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext">
+
+            <EditText
+                android:singleLine="true"
+                android:id="@+id/lastnameField"
+                style="@style/AuthEditText"
+                android:drawablePadding="@dimen/dp8"
+                android:hint="@string/lastname"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"></EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext">
+
+            <EditText
+                android:singleLine="true"
+                android:id="@+id/emailField"
+                style="@style/AuthEditText"
+                android:drawablePadding="@dimen/dp8"
+                android:hint="@string/email_hint"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"></EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext">
+
+            <EditText
+                android:singleLine="true"
+                android:id="@+id/addressField"
+                style="@style/AuthEditText"
+                android:drawablePadding="@dimen/dp8"
+                android:hint="@string/addresshint"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"></EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:singleLine="true"
+                android:id="@+id/mobileField"
+                style="@style/AuthEditText"
+                android:drawablePadding="@dimen/dp8"
+                android:hint="@string/mobile_hint"
+                android:imeOptions="actionNext"
+                android:inputType="number"></EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:singleLine="true"
+                android:id="@+id/idcardField"
+                style="@style/AuthEditText"
+                android:drawablePadding="@dimen/dp8"
+                android:hint="@string/idCard"
+                android:imeOptions="actionDone"
+                android:inputType="number"></EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/addfacility"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_create_black_24dp"
+            android:padding="@dimen/pad_10dp"
+            android:paddingLeft="20dp"
+            android:text="@string/dataMorafiq"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp15" />
+
+    </LinearLayout>
+</ScrollView>

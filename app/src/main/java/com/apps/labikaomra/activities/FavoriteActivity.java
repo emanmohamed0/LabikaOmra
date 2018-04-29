@@ -87,7 +87,7 @@ public class FavoriteActivity extends AppCompatActivity {
                                 viewHolder.setBus(offer.getDestLevel());
                                 viewHolder.setFood(offer.getDeals());
                                 viewHolder.setHotels(offer.getTransLevel());
-                                viewHolder.setPrice(offer.getPrice());
+                                viewHolder.setPrice(offer.getPriceTotal());
                                 viewHolder.setImage(offer.getOfferImage());
                                 nameCompany = dataSnapshot.child("companyKeyId").getValue().toString();
 

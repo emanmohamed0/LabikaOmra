@@ -1,9 +1,11 @@
 package com.apps.labikaomra.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -19,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -32,37 +35,28 @@ public class ChoiceActivity extends AppCompatActivity {
     private DatabaseReference myDatabase;
     public static Query myPharmacyDatabase;
     Locale myLocale;
+    String locale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Omrati");
+        toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
-       final String locale= getIntent().getStringExtra("locale");
+        locale = getIntent().getStringExtra("locale");
         lincustomer = (View) findViewById(R.id.lincustomer);
         linleader = (View) findViewById(R.id.linleader);
         myAuth = FirebaseAuth.getInstance();
         myDatabase = myApplication.getDatabaseReference();
+        myDatabase = FirebaseDatabase.getInstance().getReference();
+
         myPharmacyDatabase = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_USERS);
-//         company_user_id = myAuth.getCurrentUser().getUid();
         lincustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (myAuth.getCurrentUser() != null) {
-                    mUser_Id = myAuth.getCurrentUser().getUid();
-                    Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
-                    searchIntent.putExtra("mUser_Id", mUser_Id);
-                    searchIntent.putExtra("locale", locale);
-                    startActivity(searchIntent);
-                } else {
-                    Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
-                    searchIntent.putExtra("mUser_Id", mUser_Id);
-                    searchIntent.putExtra("locale", locale);
-                    startActivity(searchIntent);
-                }
+                getTypeUser();
 
             }
         });
@@ -70,21 +64,109 @@ public class ChoiceActivity extends AppCompatActivity {
         linleader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (myAuth.getCurrentUser() != null) {
-                    company_user_id = myAuth.getCurrentUser().getUid();
-                    Intent searchIntent = new Intent(ChoiceActivity.this, CompanyOffersActivity.class);
-                    searchIntent.putExtra("company_user_id", company_user_id);
-                    searchIntent.putExtra("locale", locale);
-                    startActivity(searchIntent);
-                } else {
-                    Intent searchIntent = new Intent(ChoiceActivity.this, CompanyLoginActivity.class);
-                    searchIntent.putExtra("company_user_id", company_user_id);
-                    searchIntent.putExtra("locale", locale);
-                    startActivity(searchIntent);
-                }
+                getTypeCompany();
 
             }
         });
+    }
+
+    public void  createDialog(final int r ){
+        AlertDialog alertDialog = new AlertDialog.Builder(ChoiceActivity.this).create();
+        alertDialog.setTitle(getString(R.string.alert));
+        alertDialog.setMessage(getString(R.string.dialog));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.OK),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().signOut();
+                        if(r==R.id.lincustomer){
+                            Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
+                            searchIntent.putExtra("locale", locale);
+                            startActivity(searchIntent);
+                        }else{
+                            Intent searchIntent = new Intent(ChoiceActivity.this, CompanyLoginActivity.class);
+                            searchIntent.putExtra("locale", locale);
+                            startActivity(searchIntent);
+                        }
+
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+    public void getTypeUser() {
+        if (myAuth.getCurrentUser() != null) {
+            myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_USERS).child(myAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getValue() == null){
+                        createDialog(R.id.lincustomer);
+
+                    }else {
+                        String type = dataSnapshot.child("type").getValue().toString();
+                        if (type.equals("user")) {
+                        Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
+                        searchIntent.putExtra("mUser_Id", myAuth.getCurrentUser().getUid());
+                        searchIntent.putExtra("locale", locale);
+                        startActivity(searchIntent);
+                    } else {
+                        Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
+                        searchIntent.putExtra("mUser_Id", myAuth.getCurrentUser().getUid());
+                        searchIntent.putExtra("locale", locale);
+                        startActivity(searchIntent);
+                    }}
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }else{
+            Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
+            searchIntent.putExtra("mUser_Id", mUser_Id);
+            searchIntent.putExtra("locale", locale);
+            startActivity(searchIntent);
+        }
+
+    }
+
+    public void getTypeCompany() {
+        if (myAuth.getCurrentUser() != null) {
+            myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).child(myAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getValue() == null){
+                       createDialog(R.id.linleader);
+
+                    }else {
+                        String type = dataSnapshot.child("type").getValue().toString();
+                        if (type.equals("company")) {
+                            Intent searchIntent = new Intent(ChoiceActivity.this, CompanyOffersActivity.class);
+                            searchIntent.putExtra("company_user_id", myAuth.getCurrentUser().getUid());
+                            searchIntent.putExtra("locale", locale);
+                            startActivity(searchIntent);
+                        } else {
+                            Intent searchIntent = new Intent(ChoiceActivity.this, CompanyLoginActivity.class);
+                            searchIntent.putExtra("company_user_id", myAuth.getCurrentUser().getUid());
+                            searchIntent.putExtra("locale", locale);
+                            startActivity(searchIntent);
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }else{
+            Intent searchIntent = new Intent(ChoiceActivity.this, CompanyLoginActivity.class);
+            searchIntent.putExtra("company_user_id", company_user_id);
+            searchIntent.putExtra("locale", locale);
+            startActivity(searchIntent);
+        }
+
     }
 
     @Override
@@ -100,14 +182,13 @@ public class ChoiceActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.language_en) {
             setLocale("en");
             Intent loginIntent = new Intent(ChoiceActivity.this, SplachActivity.class);
-            loginIntent.putExtra("locale","en");
+            loginIntent.putExtra("locale", "en");
             startActivity(loginIntent);
             finish();
-        }
-        else if(item.getItemId() == R.id.language_ar){
+        } else if (item.getItemId() == R.id.language_ar) {
             setLocale("ar");
             Intent loginIntent = new Intent(ChoiceActivity.this, SplachActivity.class);
-            loginIntent.putExtra("locale","ar");
+            loginIntent.putExtra("locale", "ar");
             startActivity(loginIntent);
             finish();
         }

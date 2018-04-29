@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/2/Download/android-studio-ide-173.4529993-windows/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/notification/ic_confirmation_number_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/D:/2/Download/android-studio-ide-173.4529993-windows/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_format_list_numbered_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,7 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_confirmation_number_black_24dp" />
+                            <entry key="color" value="3c4fff" />
+                            <entry key="outputName" value="ic_format_list_numbered_black_24dp" />
                             <entry key="sourceFile" value="C:\Users\EmanEraky" />
                           </map>
                         </option>

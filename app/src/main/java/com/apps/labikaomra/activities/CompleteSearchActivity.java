@@ -21,6 +21,7 @@ public class CompleteSearchActivity extends AppCompatActivity {
     private RadioGroup radio_group_one, radio_group_two, radio_group_three;
     private RadioButton radioButtonOne, radioButtonTwo, radioButtonThree;
     String mUser_Id;
+    int numseat;
     Button search_btn;
 
     @Override
@@ -33,6 +34,7 @@ public class CompleteSearchActivity extends AppCompatActivity {
 
         search_btn = (Button) findViewById(R.id.search);
         mUser_Id = getIntent().getStringExtra("mUser_Id");
+        numseat =getIntent().getIntExtra("numseat",1);
 
 
         addListenerOnButton();
@@ -62,7 +64,6 @@ public class CompleteSearchActivity extends AppCompatActivity {
                     Value_one = radioButtonOne.getText().toString();
                     OffersActivity.value_one = Value_one;
                 }
-
                 // get selected radio button from radioGroup
                 int selectedIdTwo = radio_group_two.getCheckedRadioButtonId();
                 // find the radiobutton by returned id
@@ -74,7 +75,6 @@ public class CompleteSearchActivity extends AppCompatActivity {
                     Value_two = radioButtonTwo.getText().toString();
                     OffersActivity.value_two = Value_two;
                 }
-
                 // get selected radio button from radioGroup
                 int selectedIdThree = radio_group_three.getCheckedRadioButtonId();
                 // find the radiobutton by returned id
@@ -87,11 +87,10 @@ public class CompleteSearchActivity extends AppCompatActivity {
                     OffersActivity.value_three = Value_three;
                 }
 
-                Toast.makeText(CompleteSearchActivity.this,
-                        radioButtonOne.getText(), Toast.LENGTH_SHORT).show();
 
                 Intent homeIntent = new Intent(CompleteSearchActivity.this, OffersActivity.class);
                 homeIntent.putExtra("mUser_Id", mUser_Id);
+                homeIntent.putExtra("numseat",numseat);
                 startActivity(homeIntent);
 
             }

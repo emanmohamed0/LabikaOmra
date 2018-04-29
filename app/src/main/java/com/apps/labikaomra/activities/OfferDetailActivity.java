@@ -7,22 +7,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,11 +64,11 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
-import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ss.com.bannerslider.banners.RemoteBanner;
@@ -93,7 +91,12 @@ public class OfferDetailActivity extends AppCompatActivity
     CircleImageView profilrImg;
     ImageView imgOffer;
     String nameCompany, mUser_Id;
-    TextView mTxtPlace, mTxtPrice, mTxtHotel, mTxtFood, mTxtBus, mTxtSeat;
+    TextView mTxtPlace, mTxtPrice, mTxtPriceBus, mTxtPricePlace, mTxtPriceTotal, mTxtHotel,
+            mTxtFood, mTxtBus, mTxtSeat, txtPricetotalChair, mTxtTime, mTxtTimecheckin, descr, status, trans;
+    String email, name, phoneNum;
+    Booking booking;
+    int numseat, seatback;
+    String value, seat;
 
     @Override
     public void onBackPressed() {
@@ -110,9 +113,13 @@ public class OfferDetailActivity extends AppCompatActivity
 
         nameCompany = getIntent().getStringExtra("nameCompany");
         mUser_Id = getIntent().getStringExtra("mUser_Id");
+        numseat = getIntent().getIntExtra("numseat", 1);
+        value = getIntent().getStringExtra("value");
+        seat = getIntent().getStringExtra("mNumSeat");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setTitle(nameCompany);
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final FABRevealMenu fabMenu = (FABRevealMenu) findViewById(R.id.fabMenu);
@@ -145,21 +152,109 @@ public class OfferDetailActivity extends AppCompatActivity
 
         imgOffer = (ImageView) findViewById(R.id.imageCompany);
         mTxtPlace = (TextView) findViewById(R.id.locationTxt);
+
         mTxtPrice = (TextView) findViewById(R.id.price);
+        mTxtPriceBus = (TextView) findViewById(R.id.pricebus);
+        mTxtPricePlace = (TextView) findViewById(R.id.priceplace);
+        mTxtPriceTotal = (TextView) findViewById(R.id.pricetotal);
+        txtPricetotalChair = (TextView) findViewById(R.id.pricetotalChair);
+
         mTxtSeat = (TextView) findViewById(R.id.seat);
         mTxtHotel = (TextView) findViewById(R.id.hotels);
         mTxtFood = (TextView) findViewById(R.id.food);
         mTxtBus = (TextView) findViewById(R.id.bus);
+        mTxtTime = (TextView) findViewById(R.id.timecheckout);
+        mTxtTimecheckin = (TextView) findViewById(R.id.timecheckin);
         TextView name = (TextView) findViewById(R.id.dispaly_nameCompany);
+        descr = (TextView) findViewById(R.id.descr);
+        status = (TextView) findViewById(R.id.status);
+        trans = (TextView) findViewById(R.id.trans);
+
         profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
 
         mTxtPlace.setText(mPharmacy.getLocation());
-        mTxtPrice.setText("EGP " + mPharmacy.getPrice());
-        mTxtHotel.setText(mPharmacy.getTransLevel());
-        mTxtFood.setText(mPharmacy.getDeals());
+
+        mTxtPrice.setText("Ryial " + mPharmacy.getPriceTotal());
+        if (value == null) {
+            mTxtPricePlace.setText(getString(R.string.priceplace) + " = " + mPharmacy.getPricePlace() + " Ryial ");
+            mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
+            mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " Ryial ");
+            if (numseat == 0) {
+                numseat = 1;
+                txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
+            } else {
+                txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
+            }
+        } else {
+            if (value.equals("transonly")) {
+                mTxtPriceBus.setVisibility(View.GONE);
+                mTxtPriceTotal.setVisibility(View.GONE);
+                mTxtPricePlace.setText(getString(R.string.priceplace) + " = " + mPharmacy.getPricePlace() + " Ryial ");
+//                mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
+                if (numseat == 0) {
+                    numseat = 1;
+                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
+                } else {
+                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
+                }
+            } else if (value.equals("transonly2")) {
+                mTxtPricePlace.setVisibility(View.GONE);
+                mTxtPriceTotal.setVisibility(View.GONE);
+                mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " Ryial ");
+//                mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
+                if (numseat == 0) {
+                    numseat = 1;
+                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
+                } else {
+                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
+                }
+            } else if (value.equals("transonly3")) {
+                mTxtPriceBus.setVisibility(View.GONE);
+                mTxtPricePlace.setVisibility(View.GONE);
+//                mTxtPricePlace.setText(getString(R.string.priceplace) + " = " + mPharmacy.getPricePlace() + " Ryial ");
+                mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
+                if (numseat == 0) {
+                    numseat = 1;
+                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
+                } else {
+                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
+                }
+            } else {
+                mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " Ryial ");
+                mTxtPricePlace.setVisibility(View.GONE);
+                mTxtPriceTotal.setVisibility(View.GONE);
+                if (numseat == 0) {
+                    numseat = 1;
+                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceBus())) + " Ryial "));
+
+                } else {
+                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceBus())) + " Ryial "));
+                }
+            }
+
+        }
+
+        mTxtHotel.setText(mPharmacy.getHotelName());
+
+        if (mPharmacy.getDeals().equals("")) {
+            mTxtFood.setVisibility(View.GONE);
+
+        } else {
+            mTxtFood.setText(mPharmacy.getDeals());
+
+        }
+        mTxtTime = (TextView) findViewById(R.id.timecheckout);
+        mTxtTimecheckin = (TextView) findViewById(R.id.timecheckin);
         mTxtBus.setText(mPharmacy.getDestLevel());
         mTxtSeat.setText(getString(R.string.chairs_count_hint) + " " + mPharmacy.getNumOfChairs());
+        status.setText(mPharmacy.getValue_onehouse());
+        trans.setText(mPharmacy.getValue_twotrans());
         name.setText(nameCompany);
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/Raleway-ExtraBold.ttf");
+        descr.setTypeface(face);
+
+        mTxtTime.setText(getString(R.string.check_out) + "\n" + getDate(mPharmacy.getBackDay(), "EEE, MMM d"));
+        mTxtTimecheckin.setText(getString(R.string.check_in) + "\n" + getDate(mPharmacy.getStartDay(), "EEE, MMM d"));
 //        Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
 
         if (mPharmacy.getOfferImage() != null) {
@@ -186,6 +281,15 @@ public class OfferDetailActivity extends AppCompatActivity
         }
     }
 
+    public static String getDate(long milliSeconds, String dateFormat) {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
+    }
 
     private void DemoSliderM() {
         //add banner using image url
@@ -219,10 +323,28 @@ public class OfferDetailActivity extends AppCompatActivity
     public void onMenuItemSelected(View view) {
         int id = (int) view.getTag();
         if (id == R.id.menu_book) {
-            if (mUser_Id != null) {
-                completeBooking();
+
+            if (auth.getCurrentUser() != null) {
+                if (seat == null) {
+                    Intent booking = new Intent(OfferDetailActivity.this, DialogBooking.class);
+                    booking.putExtra("CompanyKeyId", mPharmacy.getCompanyKeyId());
+                    booking.putExtra("mUser_Id", mUser_Id);
+                    booking.putExtra("numseat", numseat);
+                    booking.putExtra("KeyId", mPharmacy.getKeyId());
+                    startActivity(booking);
+                } else {
+                    if (seat.equals("1")) {
+                        showSeatDialog();
+                    }
+                }
+
             } else {
-                startActivityForResult(new Intent(OfferDetailActivity.this, UserLoginActivity.class), 1);
+                Intent logingoogle = new Intent(OfferDetailActivity.this, UserLoginActivity.class);
+                logingoogle.putExtra("CompanyKeyId", mPharmacy.getCompanyKeyId());
+                logingoogle.putExtra("KeyId", mPharmacy.getKeyId());
+                logingoogle.putExtra("mNumSeat", seat);
+                startActivity(logingoogle);
+//                startActivityForResult(new Intent(OfferDetailActivity.this, UserLoginActivity.class), 1);
 
             }
         } else if (id == R.id.menu_favorite) {
@@ -249,25 +371,6 @@ public class OfferDetailActivity extends AppCompatActivity
         HashMap<String, Object> timestampJoined = new HashMap<>();
         timestampJoined.put(getString(R.string.timestamp), ServerValue.TIMESTAMP);
 
-//        Favorite favorite = new Favorite(mPharmacy.getKeyId(), timestampJoined);
-//        if(mUser_Id !=null){
-//        DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_FAVORITE)
-//                .child(mUser_Id);
-//        Map friendsMap = new HashMap();
-//        friendsMap.put( "favorite/"+mUser_Id + "/" + mPharmacy.getKeyId(), timestampJoined);
-//
-//        myDatabase.updateChildren(friendsMap, new DatabaseReference.CompletionListener() {
-//            @Override
-//            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-//                Toast.makeText(getBaseContext(), R.string.add_fav, Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//        }else
-//        {
-//            Toast.makeText(getBaseContext(), R.string.error +"\n Please Login Before Add Favorite", Toast.LENGTH_LONG).show();
-//        }
-
         DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_FAVORITE)
                 .child(auth.getCurrentUser().getUid());
 
@@ -293,7 +396,6 @@ public class OfferDetailActivity extends AppCompatActivity
                 progressDialog.dismiss();
             }
         });
-
 
     }
 
@@ -324,6 +426,43 @@ public class OfferDetailActivity extends AppCompatActivity
                 .position(new LatLng(mPharmacy.getLat(), mPharmacy.getLng()))
                 .title(nameCompany));
         mMap = map;
+    }
+
+    public void showSeatDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.seat_layout, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText edtchair = (EditText) dialogView.findViewById(R.id.chairField);
+
+        dialogBuilder.setTitle(getString(R.string.enterseat));
+        dialogBuilder.setPositiveButton(getString(R.string.done), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if (edtchair.getText().toString().isEmpty()) {
+                    Toast.makeText(OfferDetailActivity.this, "Please Enter All Data ^_^ ", Toast.LENGTH_LONG).show();
+                } else {
+//                    seatback = Integer.parseInt(edtchair.getText().toString());
+                    Intent booking = new Intent(OfferDetailActivity.this, DialogBooking.class);
+                    booking.putExtra("CompanyKeyId", mPharmacy.getCompanyKeyId());
+                    booking.putExtra("mUser_Id", mUser_Id);
+                    booking.putExtra("numseat", numseat);
+                    booking.putExtra("mNumSeat", edtchair.getText().toString());
+                    booking.putExtra("KeyId", mPharmacy.getKeyId());
+                    startActivity(booking);
+                }
+
+                //do something with edt.getText().toString();
+            }
+        });
+        dialogBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
+
     }
 
     @Override
@@ -507,31 +646,12 @@ public class OfferDetailActivity extends AppCompatActivity
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        final String[] email1 = new String[1];
-        final String[] name1 = new String[1];
 
-        String phoneNum = null;
-        myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_USERS).child(mUser_Id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String email = dataSnapshot.child("email").getValue().toString();
-                email1[0] = email;
-                String name = dataSnapshot.child("fullName").getValue().toString();
-                name1[0] = name;
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        HashMap<String, Object> timestampJoined = new HashMap<>();
+        final HashMap<String, Object> timestampJoined = new HashMap<>();
         timestampJoined.put(getString(R.string.timestamp), ServerValue.TIMESTAMP);
 
-        DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING).child(mUser_Id);
-        String clientId = mPharmacy.getKeyId();
-
+        final DatabaseReference client_database = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING).child(mUser_Id);
+        final String clientId = mPharmacy.getKeyId();
         final EditText edtText = new EditText(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Prompt dialog demo !");
@@ -541,19 +661,62 @@ public class OfferDetailActivity extends AppCompatActivity
         builder.setNeutralButton("Prompt", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String phoneNum = edtText.getText().toString();
+                phoneNum = edtText.getText().toString();
+                myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_USERS).child(mUser_Id).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        email = dataSnapshot.child("email").getValue().toString();
+                        name = dataSnapshot.child("fullName").getValue().toString();
+
+                        booking = new Booking(mPharmacy.getKeyId(), name, email, phoneNum, timestampJoined);
+                        client_database.child(clientId).setValue(booking)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            bookingCompany(booking);
+                                            Toast.makeText(getBaseContext(), R.string.add_book, Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getBaseContext(), R.string.error_notadd, Toast.LENGTH_SHORT).show();
+                                        }
+                                        progressDialog.dismiss();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e("TAG", "onFailure: Not add to fav: " + e.getMessage());
+                                Toast.makeText(getBaseContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
                 Toast.makeText(com.apps.labikaomra.activities.OfferDetailActivity.this, "Hello " + edtText.getText() + " ! how are you?", Toast.LENGTH_LONG).show();
             }
         });
         builder.show();
-        Booking booking = new Booking(mPharmacy.getKeyId(), name1[0], email1[0], phoneNum, timestampJoined);
 
-        client_database.child(clientId).setValue(booking)
+//...............................................................................................................//
+
+    }
+
+    public void bookingCompany(Booking booking) {
+        DatabaseReference client_database1 = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING_COMPANY).child(mPharmacy.getCompanyKeyId());
+        String clientId1 = mPharmacy.getKeyId();
+
+        client_database1.child(clientId1).setValue(booking)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getBaseContext(), R.string.add_book, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getBaseContext(), R.string.add_book, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getBaseContext(), R.string.error_notadd, Toast.LENGTH_SHORT).show();
                         }

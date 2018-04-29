@@ -114,7 +114,7 @@ public class ChooseLocationActivity extends FragmentActivity implements OnMapRea
                         e.printStackTrace();
                         return;
                     }
-                    Address add = list.get(0);
+//                    Address add = list.get(0);
                     MarkerOptions markerOptions = new MarkerOptions()
                             .position(latLng).title(getString(R.string.tabed_loc));
                     mMap.addMarker(markerOptions);

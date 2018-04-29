@@ -62,7 +62,7 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
     public SharedPrefManager sharedPrefManager;
     private final Context mContext = this;
     private DatabaseReference myDatabase;
-    private String name, email;
+    private String name, email , CompanyKeyId ,KeyId;
     private String photo;
     private Uri photoUri;
     private SignInButton mSignInButton;
@@ -71,10 +71,9 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_user_login);
+            CompanyKeyId = getIntent().getStringExtra("CompanyKeyId");
+            KeyId = getIntent().getStringExtra("KeyId");
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            toolbar.setTitle("User LogIn");
-            setSupportActionBar(toolbar);
             myDatabase = FirebaseDatabase.getInstance().getReference();
             mSignInButton = (SignInButton) findViewById(R.id.signin_google_btn);
             mSignInButton.setSize(SignInButton.SIZE_WIDE);
@@ -85,7 +84,7 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
 
 
 
-            mAuth = com.google.firebase.auth.FirebaseAuth.getInstance();
+            mAuth = FirebaseAuth.getInstance();
 
             //this is where we start the Auth state Listener to listen for whether the user is signed in or not
             mAuthListener = new FirebaseAuth.AuthStateListener(){
@@ -120,7 +119,7 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
             timestampJoined.put(ConstantsLabika.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
 
             // Insert into Firebase database
-            final User newUser = new User(name, photo, encodedEmail, timestampJoined);
+            final User newUser = new User(name, photo, encodedEmail, timestampJoined,"user");
             myDatabase.setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -131,9 +130,11 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
             });
         }
     private void Finishing(User newUser) {
-        Intent returnIntent = new Intent(UserLoginActivity.this,Home.class);
+        Intent returnIntent = new Intent(UserLoginActivity.this,DialogBooking.class);
         returnIntent.putExtra("name",newUser.getFullName());
         returnIntent.putExtra("email",newUser.getEmail());
+        returnIntent.putExtra("CompanyKeyId",CompanyKeyId);
+        returnIntent.putExtra("KeyId",KeyId);
         returnIntent.putExtra("mUser_Id",mAuth.getCurrentUser().getUid().toString());
         startActivity(returnIntent);
 //        setResult(Activity.RESULT_OK,returnIntent);

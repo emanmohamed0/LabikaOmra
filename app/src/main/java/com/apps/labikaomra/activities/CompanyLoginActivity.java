@@ -129,7 +129,7 @@ public class CompanyLoginActivity extends AppCompatActivity {
                             if (password.length() < 6) {
                                 inputPassword.setError(getString(R.string.less6));
                             } else {
-                                Toast.makeText(CompanyLoginActivity.this, R.string.faild, Toast.LENGTH_LONG).show();
+                                Toast.makeText(CompanyLoginActivity.this, R.string.faild + "&" + getString(R.string.net), Toast.LENGTH_LONG).show();
                             }
                             progressDialog.dismiss();
                         } else {

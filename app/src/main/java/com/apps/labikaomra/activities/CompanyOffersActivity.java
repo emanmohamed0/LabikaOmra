@@ -2,6 +2,7 @@ package com.apps.labikaomra.activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -60,6 +62,7 @@ public class CompanyOffersActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_offers);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.title_activity_company_offers));
         setSupportActionBar(toolbar);
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         mDatabaseRef.keepSynced(true);
@@ -71,17 +74,57 @@ public class CompanyOffersActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addoffer =   new Intent(CompanyOffersActivity.this, AddOfferActivity.class);
-                addoffer.putExtra("company_user_id",company_user_id);
+                Intent addoffer = new Intent(CompanyOffersActivity.this, AddOfferActivity.class);
+                addoffer.putExtra("company_user_id", company_user_id);
                 startActivity(addoffer);
             }
         });
         mCategoriesRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_company_offer);
-        setMainList();
+
+        mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).child(company_user_id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String active = dataSnapshot.child("activation").getValue().toString();
+                checkactive(active);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
+    public void checkactive(String activation) {
 
-    public  void recyclering(Query qmyDatabase, final String search) {
+        if (activation.equals("notActive")) {
+            createDialog();
+        } else {
+            setMainList();
+        }
+
+    }
+
+    public void createDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(CompanyOffersActivity.this).create();
+        alertDialog.setTitle(getString(R.string.alert));
+        alertDialog.setMessage(getString(R.string.dialogactive));
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent open = new Intent(CompanyOffersActivity.this, ChoiceActivity.class);
+                        startActivity(open);
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    public void recyclering(Query qmyDatabase, final String search) {
 
         qmyDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -89,13 +132,14 @@ public class CompanyOffersActivity extends AppCompatActivity implements
 
                 clientList = new ArrayList<Offer>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//                    String one = postSnapshot.child("value_onehouse").getValue().toString();
+//                    Log.d("", "onDataChange:"+one);
                     Offer pharmacy = postSnapshot.getValue(Offer.class);
                     pharmacy.getCompanyKeyId();
                     clientList.add(pharmacy);
 
-
                 }
-                Toast.makeText(mcontext, "list count" + clientList.size(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mcontext, "list count" + clientList.size(), Toast.LENGTH_SHORT).show();
                 adapter = new CompanyOfferAdapter(mcontext, clientList);
                 mCategoriesRecyclerView.setAdapter(adapter);
             }
@@ -131,14 +175,14 @@ public class CompanyOffersActivity extends AppCompatActivity implements
         adapter = new CompanyOfferAdapter(getBaseContext(), null);
         recyclering(myPharmacyDatabase, getString(R.string.fi));
 
-        // Create an instance of GoogleAPIClient.
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
+//        // Create an instance of GoogleAPIClient.
+//        if (mGoogleApiClient == null) {
+//            mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                    .addConnectionCallbacks(this)
+//                    .addOnConnectionFailedListener(this)
+//                    .addApi(LocationServices.API)
+//                    .build();
+//        }
     }
 
     @Override
@@ -156,20 +200,24 @@ public class CompanyOffersActivity extends AppCompatActivity implements
             Intent startIntent = new Intent(CompanyOffersActivity.this, CompanyLoginActivity.class);
             startActivity(startIntent);
         }
+        if (item.getItemId() == R.id.listbook) {
+            Intent startIntent = new Intent(CompanyOffersActivity.this, CompanyBooking.class);
+            startActivity(startIntent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onStart() {
-        mGoogleApiClient.connect();
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        mGoogleApiClient.disconnect();
-        super.onStop();
-    }
+//    @Override
+//    public void onStart() {
+//        mGoogleApiClient.connect();
+//        super.onStart();
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        mGoogleApiClient.disconnect();
+//        super.onStop();
+//    }
 
     @Override
     public void onResume() {

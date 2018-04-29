@@ -58,9 +58,10 @@ public class CompanyRegisterActivity extends AppCompatActivity {
     ProgressDialog progressDialogS;
     private FirebaseAuth auth;
     private DatabaseReference myUserDatabase;
-    private EditText inputEmail, inputPassword, inputconfPassword, inputFirstName, inputPhone, inputMobile;
+    private EditText inputEmail, inputPassword, inputconfPassword, inputFirstName, inputPhone, inputMobile, inputBank;
     private DatabaseReference mySUserDatabase;
     private FirebaseAuth myAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
 
         register();
     }
+
     private void register() {
 //        txtbirth.setTypeface(myTypeface);
 //        btnSignUp.setTypeface(myTypeface);
@@ -85,7 +87,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
         inputPhone = (EditText) findViewById(R.id.phoneField);
 //        inputSLastName.setTypeface(myTypeface);
         inputMobile = (EditText) findViewById(R.id.mobileField);
-
+        inputBank = (EditText) findViewById(R.id.bankField);
         imgProfile = (ImageView) findViewById(R.id.imageView_profile);
         btnSignUp = (Button) findViewById(R.id.btn_signup);
         btnLocation = (Button) findViewById(R.id.btnLocation);
@@ -111,7 +113,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
                     startActivityForResult(Intent.createChooser(galaryIntent, getString(R.string.completeaction)), GALARY_REQUEST1);
 
                 } catch (ActivityNotFoundException e) {
-                    Toast.makeText(CompanyRegisterActivity.this, "error"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CompanyRegisterActivity.this, "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 //                startActivityForResult(galaryIntent, GALARY_REQUEST1);
             }
@@ -136,6 +138,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
         String password = inputPassword.getText().toString().trim();
         final String firstName = inputFirstName.getText().toString().trim();
         final String phone = inputPhone.getText().toString().trim();
+        final String bank = inputBank.getText().toString().trim();
         final String mobile = inputMobile.getText().toString().trim();
         if (!validate()) {
             return;
@@ -153,7 +156,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
             public void onComplete(Task<AuthResult> task) {
                 if (task.isSuccessful()) {
 
-                    completeRegister(firstName, email, phone, mobile);
+                    completeRegister(firstName, email, phone, mobile ,bank);
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(CompanyRegisterActivity.this);
                     SharedPreferences.Editor spe = sp.edit();
                     spe.putString(ConstantsLabika.USER_ID, myAuth.getCurrentUser().getUid()).apply();
@@ -172,19 +175,18 @@ public class CompanyRegisterActivity extends AppCompatActivity {
         boolean valid = true;
         String firstName = inputFirstName.getText().toString().trim();
         String phone = inputPhone.getText().toString().trim();
+        String bank = inputBank.getText().toString().trim();
         String email = inputEmail.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
         String repassword = inputconfPassword.getText().toString().trim();
         String mobile = inputMobile.getText().toString().trim();
         if (firstName.isEmpty() || firstName.length() < 3) {
             inputFirstName.setError("at least 3 characters");
-            Toast.makeText(CompanyRegisterActivity.this, "First Name is not right", Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
             inputFirstName.setError(null);
         }
         if (phone.isEmpty() || phone.length() < 9 || !Patterns.PHONE.matcher(phone).matches()) {
-            inputPhone.setError("at least 9 characters");
             Toast.makeText(CompanyRegisterActivity.this, "phone is not right", Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
@@ -192,21 +194,23 @@ public class CompanyRegisterActivity extends AppCompatActivity {
         }
         if (mobile.isEmpty() || mobile.length() < 9 || !Patterns.PHONE.matcher(phone).matches()) {
             inputMobile.setError("at least 9 characters");
-            Toast.makeText(CompanyRegisterActivity.this, "mobile is not right", Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
             inputMobile.setError(null);
         }
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             inputEmail.setError("enter a valid email address");
-            Toast.makeText(CompanyRegisterActivity.this, "Email is not right", Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
             inputEmail.setError(null);
         }
-
+        if (bank.isEmpty()) {
+            inputBank.setError("enter a valid Bank Account");
+            valid = false;
+        } else {
+            inputBank.setError(null);
+        }
         if (password.isEmpty() || password.length() < 7 || password.length() > 14) {
-            inputPassword.setError("between 7 and 14 alphanumeric characters");
             Toast.makeText(CompanyRegisterActivity.this, "Password is not right", Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
@@ -226,13 +230,13 @@ public class CompanyRegisterActivity extends AppCompatActivity {
         if (ChooseLocationActivity.lat == 0.0 || ChooseLocationActivity.lang == 0.0) {
             Toast.makeText(CompanyRegisterActivity.this, R.string.add_doc_tost_lat, Toast.LENGTH_SHORT).show();
             valid = false;
-        }else {
+        } else {
             location = getAddress(ChooseLocationActivity.lat, ChooseLocationActivity.lang);
         }
         return valid;
     }
 
-    private void completeRegister(final String firstName, final String email, final String phone, final String mobile) {
+    private void completeRegister(final String firstName, final String email, final String phone, final String mobile , final String bank) {
         StorageReference filepath = mystorage.child(getString(R.string.useuproimg)).child(RandomName());
 
         // Get the data from an ImageView as bytes
@@ -257,7 +261,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                AddUserData(firstName, email, downloadUrl.toString(), phone, mobile);
+                AddUserData(firstName, email, downloadUrl.toString(), phone, mobile ,bank);
 
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -272,7 +276,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
 
     }
 
-    private void AddUserData(String firstName, String email, String photo, String phone, String mobile) {
+    private void AddUserData(String firstName, String email, String photo, String phone, String mobile,String bank) {
 
         /**
          * Set raw version of date to the ServerValue.TIMESTAMP value and save into
@@ -281,7 +285,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
         HashMap<String, Object> timestampCreated = new HashMap<>();
         timestampCreated.put(ConstantsLabika.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
 
-        Company user = new Company(firstName, email, photo, phone, mobile, location, timestampCreated,lat,lang );
+        Company user = new Company("notActive", firstName, email, photo, phone, mobile, location, timestampCreated, lat, lang, bank,"company");
         final String user_id = myAuth.getCurrentUser().getUid();
 
         DatabaseReference user_database = mySUserDatabase.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).child(user_id);
@@ -340,6 +344,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
         }
         return stringBuilder.toString();
     }
+
     public String getAddress(double lat, double lng) {
         Geocoder geocoder = new Geocoder(CompanyRegisterActivity.this, Locale.getDefault());
         try {

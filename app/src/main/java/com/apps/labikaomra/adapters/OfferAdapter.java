@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapters.OfferAdapter.postViewHolder> {
+public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.postViewHolder> {
 
     Context mContext;
     DatabaseReference myDatabase;
@@ -40,17 +40,20 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
     FirebaseAuth auth;
     private List<Offer> model;
     private DatabaseReference mDatabaseRef;
-    String name,  namechoice;
-    public  String  mUser_Id;
+    String name, namechoice;
+    public String mUser_Id;
+    String value;
     //firstName
-    private int lastPosition = -1;
+    private int lastPosition = -1, numseatback;
 
-    public OfferAdapter(Context mContext, List<Offer> model,String mUser_Id) {
+    public OfferAdapter(Context mContext, List<Offer> model, String mUser_Id, int numseatback, String value) {
         this.model = model;
         this.mUser_Id = mUser_Id;
         this.mContext = mContext;
         myDatabase = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
+        this.numseatback = numseatback;
+        this.value = value;
     }
 
     @Override
@@ -74,7 +77,7 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
                 mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).child(companyKeyId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String  name = dataSnapshot.child("firstName").getValue().toString();
+                        String name = dataSnapshot.child("firstName").getValue().toString();
                         viewHolder.setName(name);
 //                        Toast.makeText(mContext, "name" +name, Toast.LENGTH_SHORT).show();
                     }
@@ -94,23 +97,22 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
         });
 
         setAnimation(viewHolder.myView, position);
-        viewHolder.setNameHotel(model.get(position).getTransLevel());
+        viewHolder.setNameHotel(model.get(position).getHotelName());
         viewHolder.setBus(model.get(position).getDestLevel());
         viewHolder.setFood(model.get(position).getDeals());
-        viewHolder.setPrice(model.get(position).getPrice());
-        if(model.get(position).getOfferImage() !=null){
+        viewHolder.setPrice(model.get(position).getPriceTotal());
+        if (model.get(position).getOfferImage() != null) {
             viewHolder.setImage(model.get(position).getOfferImage());
         }
-
 
 
         viewHolder.myView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OfferDetailActivity.mPharmacy = model.get(viewHolder.getAdapterPosition());
-                Toast.makeText(mContext, model.get(viewHolder.getAdapterPosition()).getKeyId(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, model.get(viewHolder.getAdapterPosition()).getKeyId(), Toast.LENGTH_SHORT).show();
 
-                mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).child( model.get(viewHolder.getAdapterPosition()).getKeyId()).addValueEventListener(new ValueEventListener() {
+                mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).child(model.get(viewHolder.getAdapterPosition()).getKeyId()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String companyKeyId = dataSnapshot.child("companyKeyId").getValue().toString();
@@ -118,9 +120,12 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 namechoice = dataSnapshot.child("firstName").getValue().toString();
+
                                 Intent OfferDetail = new Intent(mContext, OfferDetailActivity.class);
-                                OfferDetail.putExtra("nameCompany",namechoice);
-                                OfferDetail.putExtra("mUser_Id",mUser_Id);
+                                OfferDetail.putExtra("nameCompany", namechoice);
+                                OfferDetail.putExtra("mUser_Id", mUser_Id);
+                                OfferDetail.putExtra("numseat", numseatback);
+                                OfferDetail.putExtra("value", value);
                                 OfferDetail.addFlags(FLAG_ACTIVITY_NEW_TASK);
                                 mContext.startActivity(OfferDetail);
 //                                viewHolder.setName(namechoice);
@@ -135,6 +140,7 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
 //                Toast.makeText(mContext, "companyKeyId \n adapter" + companyKeyId, Toast.LENGTH_SHORT).show();
 
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
@@ -151,14 +157,6 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
 //                mContext.startActivity(n);
             }
         });
-//        viewHolder.setOrderDocBtn(model.get(position));
-
-
-
-//        viewHolder.setProfileImage(model.get(position).get());
-//        if (ListDoctorFragment.mLastLocation != null) {
-//            viewHolder.setDistance(model.get(position).getLat(), model.get(position).getLng());
-//        }
 
     }
 
@@ -184,25 +182,6 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
             myView = itemView;
         }
 
-        /*public void setOrderDocBtn(final Doctor mDoctor) {
-            Button orderDocBtn = (Button) myView.findViewById(R.id.btn_order_doctor);
-            orderDocBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    OrderDoctorActivity.name = mDoctor.getName();
-                    OrderDoctorActivity.home = mDoctor.getLocation();
-                    OrderDoctorActivity.street = mDoctor.getStreet();
-                    OrderDoctorActivity.specialty = mDoctor.getSpecialty();
-                    OrderDoctorActivity.keyId = mDoctor.getKeyId();
-                    OrderDoctorActivity.photo = mDoctor.getProfileImg();
-                    Intent i = new Intent(mContext, OrderDoctorActivity.class);
-                    i.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(i);
-                }
-            });
-        }
-
-*/
         void setImage(String image) {
             ImageView txt_image = (ImageView) myView.findViewById(R.id.imageCompany);
             Glide.with(mContext).load(image).into(txt_image);
@@ -210,11 +189,7 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
 //            Picasso.with(mContext).load(image).into(txt_image);
 
         }
-//        void setofferImage(String image){
-//            CircleImageView img = (CircleImageView)myView.findViewById(R.id.profilrImg);
-//            Picasso.with(mContext).load(image).into(img);
-//
-//        }
+
         void setNameHotel(String Title) {
             TextView txt_hotel = (TextView) myView.findViewById(R.id.hotels);
             txt_hotel.setText(Title);
@@ -231,8 +206,12 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
         }
 
         void setFood(String food) {
-            TextView txt_title = (TextView) myView.findViewById(R.id.food);
-            txt_title.setText(food);
+            TextView txt_food = (TextView) myView.findViewById(R.id.food);
+            if (food.equals("")) {
+                txt_food.setVisibility(View.GONE);
+            } else {
+                txt_food.setText(food);
+            }
         }
 
         void setHotels(String Title) {
@@ -242,77 +221,8 @@ public class OfferAdapter extends RecyclerView.Adapter<com.apps.labikaomra.adapt
 
         void setPrice(String Title) {
             TextView txt_title = (TextView) myView.findViewById(R.id.price);
-            txt_title.setText(Title);
+            txt_title.setText("Ryial " + Title);
         }
 
-    /*    void setExperience(String Title) {
-            TextView txt_title = (TextView) myView.findViewById(R.id.item_doctor_experience);
-            txt_title.setText(Title);
-        }
-
-        public void setDistance(double lat, double lang) {
-            TextView txt_Date = (TextView) myView.findViewById(R.id.item_doctor_distance);
-            Location latLng = new Location(mContext.getString(R.string.client));
-            latLng.setLatitude(lat);
-            latLng.setLongitude(lang);
-            int n = (int) ListDoctorFragment.mLastLocation.distanceTo(latLng);
-            String dis = mContext.getString(R.string.m);
-            if (n > 1000) {
-                n = n / 1000;
-                dis = mContext.getString(R.string.km);
-            }
-            txt_Date.setText((int) ListDoctorFragment.mLastLocation.distanceTo(latLng) + dis);
-        }
-
-        public void setAddFav(final String keyId) {
-            ImageView orderDocBtn = (ImageView) myView.findViewById(R.id.btn_add_fav);
-            orderDocBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    progressDialog = new ProgressDialog(mContext);
-                    progressDialog.setMessage(mContext.getString(R.string.adding_fav));
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
-
-                    HashMap<String, Object> timestampJoined = new HashMap<>();
-                    timestampJoined.put(mContext.getString(R.string.timestamp), ServerValue.TIMESTAMP);
-                    DatabaseReference client_database = myDatabase.child(ConstantsDoctory.FIREBASE_LOCATION_FAVORITE).child(ConstantsDoctory.FIREBASE_LOCATION_DOCTORS)
-                            .child(auth.getCurrentUser().getUid());
-                    Favorite favorite = new Favorite(keyId, timestampJoined);
-                    client_database.child(keyId).setValue(favorite)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(mContext, R.string.add_fav, Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(mContext, R.string.error_notadd, Toast.LENGTH_SHORT).show();
-                                    }
-                                    progressDialog.dismiss();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e("TAG", "onFailure: Not add to fav: " + e.getMessage());
-                            Toast.makeText(mContext, R.string.error, Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                        }
-                    });
-                }
-            });
-        }
-
-        public void setCall(final String phoneNumber) {
-            ImageView orderDocBtn = (ImageView) myView.findViewById(R.id.btn_call);
-            orderDocBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                    callIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                    callIntent.setData(Uri.parse(mContext.getString(R.string.tel) + phoneNumber));
-                    mContext.startActivity(callIntent);
-                }
-            });
-        }*/
     }
 }
