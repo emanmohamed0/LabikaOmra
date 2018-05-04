@@ -57,7 +57,7 @@ public class SplachActivity extends FragmentActivity {
         FirebaseMessaging.getInstance().subscribeToTopic("notification");
 
         startService(new Intent(this, FCMRegistrationService.class));
-        Log.e("Token is ", FirebaseInstanceId.getInstance().getToken());
+//        Log.e("Token is ", FirebaseInstanceId.getInstance().getToken());
  //Token is: fY0si4U-7Zc:APA91bGft0cntLNCHgXDSxUSh2e8mXkZieYvwoDOvG9fYNLmCJD7w61yJo3dTt2V0Ho37BoNLhGQHzWI3t9-glQYUw0_CuWZZ_g0LDjT0AKqQI2FwgmqVMuFaHpSGEizYpWfXTATs2JG
 //        language = sharedPreferences.getString("LANGUAGE", Locale.getDefault().getDisplayLanguage().toLowerCase().substring(0,2));
 //

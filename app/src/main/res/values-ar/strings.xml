@@ -148,7 +148,8 @@
     <string name="addresshint">العنوان</string>
     <string name="idCard">رقم الاقامة/رقم الهواية</string>
     <string name="booking">أحجز</string>
-    <string name="conbook">تأكيد الحجز</string>
+    <string name="conbook">حجز دائم</string>
+    <string name="tembooking">حجز مؤقت</string>
     <string name="favorite">مفضلة</string>
     <string name="dataMorafiq">أدخل بيانات المرافق</string>
     <string name="staying">مكان الاقامة</string>

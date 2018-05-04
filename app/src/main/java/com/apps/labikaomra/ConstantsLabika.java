@@ -20,6 +20,7 @@ public class ConstantsLabika {
     public static final String FIREBASE_LOCATION_FAVORITE = "favorite";
     public static final String FIREBASE_LOCATION_BOOKING = "booking";
     public static final String FIREBASE_LOCATION_BOOKING_COMPANY = "bookingCompany";
+    public static final String FIREBASE_LOCATION_TEMBOOKING_COMPANY = "temporarybooking";
 
     public static final String FIREBASE_LOCATION_BOOKINGUser = "bookingUser";
 

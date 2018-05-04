@@ -135,7 +135,8 @@
     <string name="done">Done</string>
     <string name="pls">Please Choose</string>
     <string name="titleconfirm">Confirm Booking</string>
-    <string name="conbook">Confirm Booking</string>
+    <string name="conbook">Permanent reservation</string>
+    <string name="tembooking">Temporary booking</string>
     <string name="Copyofreceipt">Copy of receipt</string>
     <string name="enter">Enter data Morafkin</string>
     <string name="enterseat">Enter Number Seat</string>

@@ -84,9 +84,11 @@ public class Home extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
+
         countryNames = new String[]{getString(R.string.transonly), getString(R.string.transonly2), getString(R.string.transonly3)};
         local = getIntent().getStringExtra("locale");
         //init firebase
@@ -103,7 +105,6 @@ public class Home extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -322,15 +323,6 @@ public class Home extends AppCompatActivity
             }
         });
     }
-    public static String getDate(long milliSeconds, String dateFormat) {
-        // Create a DateFormatter object for displaying date in specified format.
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
-
-        // Create a calendar object that will convert the date and time value in milliseconds to date.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliSeconds);
-        return formatter.format(calendar.getTime());
-    }
 
     public boolean Validate() {
         boolean valid = true;
@@ -344,46 +336,7 @@ public class Home extends AppCompatActivity
         return valid;
     }
 
-//    //MEthods
-//    private void showSettingsAlert() {
-//        AlertDialog alertDialog = new AlertDialog.Builder(Home.this).create();
-//        alertDialog.setTitle("Alert");
-//        alertDialog.setMessage("App needs to access the Camera&Storage&Location.");
-//
-//        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "DONT ALLOW",
-//                new DialogInterface.OnClickListener() {
-//
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                        //finish();
-//                    }
-//                });
-//        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SETTINGS",
-//                new DialogInterface.OnClickListener() {
-//
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                        startInstalledAppDetailsActivity(Home.this);
-//                    }
-//                });
-//
-//        alertDialog.show();
-//    }
 
-    public static void startInstalledAppDetailsActivity(final Activity context) {
-        if (context == null) {
-            return;
-        }
-
-        final Intent i = new Intent();
-        i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        i.addCategory(Intent.CATEGORY_DEFAULT);
-        i.setData(Uri.parse("package:" + context.getPackageName()));
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-        context.startActivity(i);
-    }
 
 
     private void showAlert() {
@@ -456,15 +409,6 @@ public class Home extends AppCompatActivity
     }
 
 
-    private void setLocale(String language) {
-        myLocale = new Locale(language);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-    }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -483,8 +427,9 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_reservations) {
-            if (mUser_Id == null) {
+            if (auth.getCurrentUser() == null) {
                 Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
+                loginIntent.putExtra("navigate","true");
                 startActivity(loginIntent);
             } else {
                 if (mUser_Id != null) {
@@ -511,8 +456,9 @@ public class Home extends AppCompatActivity
 
             }
         } else if (id == R.id.nav_Favorite_Companies) {
-            if (mUser_Id == null) {
+            if (auth.getCurrentUser() == null) {
                 Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
+                loginIntent.putExtra("navigate","true");
                 startActivity(loginIntent);
             } else {
                 if (mUser_Id != null) {

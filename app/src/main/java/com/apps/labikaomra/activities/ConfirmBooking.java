@@ -38,9 +38,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import id.zelory.compressor.Compressor;
 
 public class ConfirmBooking extends AppCompatActivity {
     ImageView putImg, getImg;
@@ -58,7 +63,7 @@ public class ConfirmBooking extends AppCompatActivity {
 
     //    String image_uri = "";
     Uri image_uriget = null;
-
+    byte[] thumb_byte;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,127 +157,138 @@ public class ConfirmBooking extends AppCompatActivity {
                 Bitmap photo = extras2.getParcelable(getString(R.string.data));
                 putImg.setImageBitmap(photo);
             }
-        }
-        else if (requestCode == GAL_REQUEST && resultCode == Activity.RESULT_OK) {
+
+        } else if (requestCode == GAL_REQUEST && resultCode == Activity.RESULT_OK) {
             image_uriget = data.getData();
-            putImg.setImageURI(image_uriget);
+//            image_uriget.getPath();
+//
+//            File thumbin_path = new File(image_uriget.getPath());
+//          //this for compress image to load fast
+//            Bitmap thumbin_ImageBitmap = new Compressor(this)
+//                    .setMaxWidth(640)
+//                    .setMaxHeight(480)
+//                    .setQuality(75).compressToBitmap(thumbin_path);
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            thumbin_ImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//            thumb_byte = baos.toByteArray();
 
-            Bundle extras2 = data.getExtras();
-            if (extras2 != null) {
-                Bitmap photo = extras2.getParcelable(getString(R.string.data));
-                putImg.setImageBitmap(photo);
+                putImg.setImageURI(image_uriget);
+
+                Bundle extras2 = data.getExtras();
+                if (extras2 != null) {
+                    Bitmap photo = extras2.getParcelable(getString(R.string.data));
+                    putImg.setImageBitmap(photo);
+                 }
             }
+
         }
 
+        private void completeRegister (View view){
+            progressDialog = new ProgressDialog(ConfirmBooking.this);
+            progressDialog.setMessage(getString(R.string.adding_book));
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            if (image_uriget == null) {
+                Snackbar.make(view, getString(R.string.pls) + " " + getString(R.string.Copyofreceipt), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            } else {
+                StorageReference filepath = mystorage.child("Bookimgs").child(image_uriget.getLastPathSegment());
+                filepath.putFile(image_uriget).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        String firstname = listBookingCompany.getFirstName();
+                        String lastname = listBookingCompany.getLastName();
+                        String email = listBookingCompany.getEmail();
+                        String address = listBookingCompany.getAddress();
+                        String phone = listBookingCompany.getPhoneNum();
+                        String idCard = listBookingCompany.getIDcard();
+                        List<DataFacility> facilityList = listBookingCompany.getDataFacilities();
+                        Toast.makeText(ConfirmBooking.this, getString(R.string.add_book), Toast.LENGTH_SHORT).show();
 
-    }
+                        ListBookingCompany listBookingCompany = new ListBookingCompany(CompanyKeyId, firstname,
+                                lastname, email, address, phone, idCard, facilityList, downloadUrl.toString());
 
-    private void completeRegister(View view) {
-        if (image_uriget == null) {
-            Snackbar.make(view, getString(R.string.pls) + " " + getString(R.string.Copyofreceipt), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        } else {
-            StorageReference filepath = mystorage.child("Bookimgs").child(image_uriget.getLastPathSegment());
-            filepath.putFile(image_uriget).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        bookingCompany(listBookingCompany);
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.i(getString(R.string.profress), String.format(getString(R.string.onProgress),
+                                taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0));
+                    }
+                });
+
+
+            }
+
+        }
+
+        public void bookingUser (ListBookingCompany booking){
+
+            DatabaseReference client_database1 = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING).child(mUser_Id);
+            String clientId1 = KeyId;
+
+            client_database1.child(clientId1).setValue(booking)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                finish();
+                                progressDialog.dismiss();
+//                            Toast.makeText(getBaseContext(), R.string.add_book, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getBaseContext(), R.string.error_notadd, Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    String firstname = listBookingCompany.getFirstName();
-                    String lastname = listBookingCompany.getLastName();
-                    String email = listBookingCompany.getEmail();
-                    String address = listBookingCompany.getAddress();
-                    String phone = listBookingCompany.getPhoneNum();
-                    String idCard = listBookingCompany.getIDcard();
-                    List<DataFacility> facilityList = listBookingCompany.getDataFacilities();
-                    Toast.makeText(ConfirmBooking.this, getString(R.string.add_book), Toast.LENGTH_SHORT).show();
-
-                    ListBookingCompany listBookingCompany = new ListBookingCompany(CompanyKeyId, firstname,
-                            lastname, email, address, phone, idCard, facilityList, downloadUrl.toString());
-
-                    bookingCompany(listBookingCompany);
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.i(getString(R.string.profress), String.format(getString(R.string.onProgress),
-                            taskSnapshot.getBytesTransferred() / 1024.0 / 1024.0));
-
-
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("TAG", "onFailure: Not add to fav: " + e.getMessage());
+                    Toast.makeText(getBaseContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
             });
-
-
         }
 
-    }
+        public void bookingCompany ( final ListBookingCompany booking){
 
-    public void bookingUser(ListBookingCompany booking) {
+            DatabaseReference client_database1 = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING_COMPANY).child(CompanyKeyId);
+            String clientId1 = KeyId;
 
-        DatabaseReference client_database1 = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING).child(mUser_Id);
-        String clientId1 = KeyId;
-
-        client_database1.child(clientId1).setValue(booking)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-//                            Toast.makeText(getBaseContext(), R.string.add_book, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getBaseContext(), R.string.error_notadd, Toast.LENGTH_SHORT).show();
+            client_database1.child(clientId1).setValue(booking)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                bookingUser(booking);
+                                Intent intent = new Intent(ConfirmBooking.this, Home.class);
+                                intent.putExtra("mUser_Id", mUser_Id);
+                                startActivity(intent);
+                                progressDialog.dismiss();
+                                finish();
+                            } else {
+                                Toast.makeText(getBaseContext(), R.string.error_notadd, Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        progressDialog.dismiss();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("TAG", "onFailure: Not add to fav: " + e.getMessage());
-                Toast.makeText(getBaseContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-            }
-        });
-    }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("TAG", "onFailure: Not add to fav: " + e.getMessage());
+                    Toast.makeText(getBaseContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+            });
+        }
 
-    public void bookingCompany(final ListBookingCompany booking) {
-        progressDialog = new ProgressDialog(ConfirmBooking.this);
-        progressDialog.setMessage(getString(R.string.adding_book));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        DatabaseReference client_database1 = myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_BOOKING_COMPANY).child(CompanyKeyId);
-        String clientId1 = KeyId;
-
-        client_database1.child(clientId1).setValue(booking)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            bookingUser(booking);
-                            Intent intent = new Intent(ConfirmBooking.this, Home.class);
-                            intent.putExtra("mUser_Id", mUser_Id);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(getBaseContext(), R.string.error_notadd, Toast.LENGTH_SHORT).show();
-                        }
-                        progressDialog.dismiss();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("TAG", "onFailure: Not add to fav: " + e.getMessage());
-                Toast.makeText(getBaseContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-            }
-        });
-    }
-
-    public void getBankAccount(String CompanyKeyId) {
-        myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).child(CompanyKeyId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                bank = dataSnapshot.child("bank").getValue().toString();
-                bankNum.setText(bank);
+        public void getBankAccount (String CompanyKeyId){
+            myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).child(CompanyKeyId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    bank = dataSnapshot.child("bank").getValue().toString();
+                    bankNum.setText(bank);
 //                AlertDialog.Builder popupBuilder = new AlertDialog.Builder(DialogBooking.this);
 //                TextView myMsg = new TextView(DialogBooking.this);
 //                popupBuilder.setTitle(getString(R.string.bank));
@@ -291,13 +307,13 @@ public class ConfirmBooking extends AppCompatActivity {
 //                });
 //                popupBuilder.show();
 //                Toast.makeText(ConfirmBooking.this, "banking " + bank, Toast.LENGTH_SHORT).show();
-            }
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
 
+        }
     }
-}

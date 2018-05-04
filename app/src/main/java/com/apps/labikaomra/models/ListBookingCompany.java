@@ -1,11 +1,13 @@
 package com.apps.labikaomra.models;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ListBookingCompany {
 
     private String companyKeyId, firstName, lastName, email, address, phoneNum, IDcard, bookingImage;
     List<DataFacility> dataFacilities;
+    HashMap<String, Object> timestampCreated;
 
     public ListBookingCompany(String companyKeyId, String firstName, String lastName, String email, String address
             , String phoneNum, String IDcard, List<DataFacility> dataFacilities, String bookingImage) {
@@ -26,8 +28,21 @@ public class ListBookingCompany {
         this.email = email;
         this.address = address;
         this.phoneNum = phoneNum;
-        this.bookingImage =bookingImage;
+        this.bookingImage = bookingImage;
 
+    }
+
+    public ListBookingCompany(String companyKeyId, String firstName, String lastName, String email, String address
+            , String phoneNum, String IDcard, List<DataFacility> dataFacilities, HashMap<String, Object> timestampCreated) {
+        this.companyKeyId = companyKeyId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.phoneNum = phoneNum;
+        this.IDcard = IDcard;
+        this.dataFacilities = dataFacilities;
+        this.timestampCreated = timestampCreated;
     }
 
     public ListBookingCompany(String companyKeyId, String firstName, String lastName, String email, String address
