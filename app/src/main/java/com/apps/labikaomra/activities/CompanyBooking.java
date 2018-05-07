@@ -111,7 +111,7 @@ public class CompanyBooking extends AppCompatActivity {
                         final String hotelname = dataSnapshot.child("hotelName").getValue().toString();
                         final String busLevel = dataSnapshot.child("destLevel").getValue().toString();
                         final String deals = dataSnapshot.child("deals").getValue().toString();
-                        final String price = dataSnapshot.child("price").getValue().toString();
+                        final String price = dataSnapshot.child("priceTotal").getValue().toString();
                         final String offerImage = dataSnapshot.child("offerImage").getValue().toString();
 
                         viewHolder.setHotels(hotelname);

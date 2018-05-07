@@ -71,7 +71,11 @@ public class DialogBooking extends AppCompatActivity {
 
         }
     }
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
     private void CreateView() {
         LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.mLayout);
         if (seat == null) {

@@ -305,7 +305,7 @@ public class AddOfferActivity extends AppCompatActivity {
                     createDialog();
 
                 } else {
-                    addOffer();
+                    addOffer(view);
 //                    createDialogTotal(inputChairCount.getText().toString(), inputPrice.getText().toString());
 
                 }
@@ -313,10 +313,7 @@ public class AddOfferActivity extends AppCompatActivity {
         });
     }
 
-    public void addOffer() {
-        progressDialog.setTitle(getString(R.string.add_offer));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+    public void addOffer(final View view) {
         final String hotelName = inputHotelName.getText().toString().trim();
         final String deals = inputDeals.getText().toString().trim();
         final String priceBus = inputPriceBus.getText().toString().trim();
@@ -326,51 +323,58 @@ public class AddOfferActivity extends AppCompatActivity {
         final String chairCount = inputChairCount.getText().toString().trim();
         final String destLevel = spinnerDestLevel.getSelectedItem().toString().trim();
 
-
-        StorageReference filepath = mStorageReference.child("OfferImgs").child(uri_Post_usre_profile_image.getLastPathSegment());
-        filepath.putFile(uri_Post_usre_profile_image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                HashMap<String, Object> timestampJoined = new HashMap<>();
-                timestampJoined.put(getString(R.string.timestamp), ServerValue.TIMESTAMP);
-
-                Toast.makeText(AddOfferActivity.this, " Upload Done", Toast.LENGTH_SHORT).show();
-                Uri uri_load = taskSnapshot.getDownloadUrl();
-                DatabaseReference offerDb = mDatabase.push();
-                offerDb.child("offerImage").setValue(uri_load.toString());
-                offerDb.child("attendStartTime").setValue(attendStartTime);
-                offerDb.child("attendEndTime").setValue(attendEndTime);
-                offerDb.child("startDay").setValue(startDay);
-                offerDb.child("backDay").setValue(backDay);
-                offerDb.child("hotelName").setValue(hotelName);
-                offerDb.child("companyKeyId").setValue(mAuth.getCurrentUser().getUid().toString());
-                offerDb.child("deals").setValue(deals);
-                offerDb.child("keyId").setValue(offerDb.getKey());
-                offerDb.child("numOfChairs").setValue(Integer.parseInt(chairCount));
-                offerDb.child("lat").setValue(lat);
-                offerDb.child("lang").setValue(lang);
-                offerDb.child("location").setValue(location);
-                offerDb.child("priceBus").setValue(priceBus);
-                offerDb.child("pricePlace").setValue(pricePlace);
-                offerDb.child("priceTotal").setValue(priceTotal);
-                offerDb.child("contentImagesList").setValue(contentImgsArrayList);
-                offerDb.child("startTime").setValue(startTime);
-                offerDb.child("endTime").setValue(endTime);
-                offerDb.child("destLevel").setValue(destLevel);
+        if(uri_Post_usre_profile_image !=null) {
+            progressDialog.setTitle(getString(R.string.add_offer));
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            StorageReference filepath = mStorageReference.child("OfferImgs").child(uri_Post_usre_profile_image.getLastPathSegment());
+            filepath.putFile(uri_Post_usre_profile_image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    HashMap<String, Object> timestampJoined = new HashMap<>();
+                    timestampJoined.put(getString(R.string.timestamp), ServerValue.TIMESTAMP);
+                    Toast.makeText(AddOfferActivity.this, " Upload Done", Toast.LENGTH_SHORT).show();
+                    Uri uri_load = taskSnapshot.getDownloadUrl();
+                    DatabaseReference offerDb = mDatabase.push();
+                    offerDb.child("offerImage").setValue(uri_load.toString());
+                    offerDb.child("attendStartTime").setValue(attendStartTime);
+                    offerDb.child("attendEndTime").setValue(attendEndTime);
+                    offerDb.child("startDay").setValue(startDay);
+                    offerDb.child("backDay").setValue(backDay);
+                    offerDb.child("hotelName").setValue(hotelName);
+                    offerDb.child("companyKeyId").setValue(mAuth.getCurrentUser().getUid().toString());
+                    offerDb.child("deals").setValue(deals);
+                    offerDb.child("keyId").setValue(offerDb.getKey());
+                    offerDb.child("numOfChairs").setValue(Integer.parseInt(chairCount));
+                    offerDb.child("lat").setValue(lat);
+                    offerDb.child("lang").setValue(lang);
+                    offerDb.child("location").setValue(location);
+                    offerDb.child("priceBus").setValue(priceBus);
+                    offerDb.child("pricePlace").setValue(pricePlace);
+                    offerDb.child("priceTotal").setValue(priceTotal);
+                    offerDb.child("contentImagesList").setValue(contentImgsArrayList);
+                    offerDb.child("startTime").setValue(startTime);
+                    offerDb.child("endTime").setValue(endTime);
+                    offerDb.child("destLevel").setValue(destLevel);
 //                offerDb.child("transLevel").setValue(transLevel);
-                offerDb.child("value_onehouse").setValue(Value_one);
-                offerDb.child("value_twotrans").setValue(Value_two);
-                offerDb.child("timestampJoined").setValue(timestampJoined);
+                    offerDb.child("value_onehouse").setValue(Value_one);
+                    offerDb.child("value_twotrans").setValue(Value_two);
+                    offerDb.child("timestampJoined").setValue(timestampJoined);
 
-                Intent mainIntent = new Intent(AddOfferActivity.this, CompanyOffersActivity.class);
-                mainIntent.putExtra("company_user_id", company_user_id);
-                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(mainIntent);
-                progressDialog.dismiss();
+                    Intent mainIntent = new Intent(AddOfferActivity.this, CompanyOffersActivity.class);
+                    mainIntent.putExtra("company_user_id", company_user_id);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(mainIntent);
+                    progressDialog.dismiss();
 
+                }
+            });
 
-            }
-        });
+        }
+        else {
+            Snackbar.make(view, getString(R.string.pls) + " " + getString(R.string.Copyofreceipt), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
     }
 
     public void createDialog() {
@@ -387,33 +391,33 @@ public class AddOfferActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void createDialogTotal(String inputChairCount, String inputPrice) {
-        int chair = Integer.parseInt(inputChairCount);
-        int price = Integer.parseInt(inputPrice);
-        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.alert))
-                .setMessage(getString(R.string.total) + " = " + (chair * price) + " riyal")
-                .setIcon(R.drawable.ic_attach_money_black_24dp)
-
-                .setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        //your Adding code
-                        addOffer();
-                        dialog.dismiss();
-                    }
-
-                })
-                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.dismiss();
-
-                    }
-                })
-                .create();
-        myQuittingDialogBox.show();
-    }
+//    public void createDialogTotal(String inputChairCount, String inputPrice) {
+//        int chair = Integer.parseInt(inputChairCount);
+//        int price = Integer.parseInt(inputPrice);
+//        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
+//                .setTitle(getString(R.string.alert))
+//                .setMessage(getString(R.string.total) + " = " + (chair * price) + " riyal")
+//                .setIcon(R.drawable.ic_attach_money_black_24dp)
+//
+//                .setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
+//
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        //your Adding code
+//                        addOffer();
+//                        dialog.dismiss();
+//                    }
+//
+//                })
+//                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        dialog.dismiss();
+//
+//                    }
+//                })
+//                .create();
+//        myQuittingDialogBox.show();
+//    }
 
     private void getImages() {
         Config config = new Config();

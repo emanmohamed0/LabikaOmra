@@ -63,21 +63,20 @@ public class Home extends AppCompatActivity
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference cateagory, mDatabase;
-
     TextView searchtxt, txtPop, check_out, check_in;
     Button next_btn;
     Calendar from, to;
     EditText numseat;
     String mUser_Id, local;
-    String placeLevel, transLevel, nameCompany;
-    Locale myLocale, locale;
+    String placeLevel, transLevel;
+    Locale locale;
     String[] countryNames;
     RecyclerView recyclerViewPopDest;
     PopDestAdapter adapters;
     List<Offer> categoriesModel;
     LinearLayoutManager horizontalLayoutManagaer;
     FirebaseAuth auth;
-    String date_Out ,date_In;
+    String date_Out, date_In;
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 100;
 
     @Override
@@ -91,15 +90,13 @@ public class Home extends AppCompatActivity
 
         countryNames = new String[]{getString(R.string.transonly), getString(R.string.transonly2), getString(R.string.transonly3)};
         local = getIntent().getStringExtra("locale");
+        mUser_Id = getIntent().getStringExtra("mUser_Id");
         //init firebase
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseDatabase = FirebaseDatabase.getInstance();
         cateagory = firebaseDatabase.getReference("Cateagory");
-        nameCompany = getIntent().getStringExtra("nameCompany");
 
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -113,9 +110,6 @@ public class Home extends AppCompatActivity
         horizontalLayoutManagaer = new LinearLayoutManager(Home.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewPopDest.setLayoutManager(horizontalLayoutManagaer);
 
-
-        mUser_Id = getIntent().getStringExtra("mUser_Id");
-
         categoriesModel = new ArrayList<Offer>();
 
         mDatabase.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).addValueEventListener(new ValueEventListener() {
@@ -124,10 +118,9 @@ public class Home extends AppCompatActivity
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                     Offer pharmacy = postSnapshot.getValue(Offer.class);
-                      if(from.getTimeInMillis() <= pharmacy.getStartDay() ){
+                    if (from.getTimeInMillis() <= pharmacy.getStartDay()) {
                         categoriesModel.add(pharmacy);
                     }
-
                 }
                 adapters = new PopDestAdapter(getBaseContext(), categoriesModel, mUser_Id);
                 recyclerViewPopDest.setAdapter(adapters);
@@ -177,7 +170,6 @@ public class Home extends AppCompatActivity
         check_out = (TextView) findViewById(R.id.check_out);
         check_in = (TextView) findViewById(R.id.check_in);
         next_btn = (Button) findViewById(R.id.next);
-//        transLevel = spinnerTrans.getSelectedItem().toString().trim();
         placeLevel = spinnerPlace.getSelectedItem().toString().trim();
         OffersActivity.txttrans = transLevel;
         OffersActivity.txtplace = placeLevel;
@@ -187,68 +179,48 @@ public class Home extends AppCompatActivity
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/NABILA.TTF");
         searchtxt.setTypeface(face);
         txtPop.setTypeface(face);
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                && (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-                && (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                && (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                && (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                ) {
 
-            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                    && (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-                    && (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                    && (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                    && (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                    ) {
 //                showSettingsAlert();
-                // Should we show an explanation?
-                if ((ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION)) && (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.CAMERA))
-                        && (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION))
-                        && (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE))
-                        && (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
-                    showAlert();
-                } else {
-                    // No explanation needed, we can request the permission.
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA,
-                                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            MY_PERMISSIONS_REQUEST_CAMERA);
-                }
-            }
+        // Should we show an explanation?
+        if ((ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)) && (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.CAMERA))
+                && (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION))
+                && (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE))
+                && (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
+            showAlert();
+        } else {
+            // No explanation needed, we can request the permission.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_CAMERA);
         }
+
+
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 placeLevel = spinnerPlace.getSelectedItem().toString().trim();
-//                transLevel = spinnerTrans.getSelectedItem().toString().trim();
-//                if(choice_place.getText().toString().isEmpty()){
-//                }else{
-//                    OffersActivity.txtplace = choice_place.getText().toString();
-//                }
                 OffersActivity.txttrans = transLevel;
                 OffersActivity.txtplace = placeLevel;
                 OffersActivity.checkOutDate = to.getTimeInMillis();
                 OffersActivity.checkInDate = from.getTimeInMillis();
                 if (numseat.getText().toString().isEmpty()) {
-
                 } else {
                     OffersActivity.numseat = Integer.parseInt(numseat.getText().toString());
                 }
                 if (!Validate()) {
-
                 } else {
                     Intent homeIntent = new Intent(Home.this, CompleteSearchActivity.class);
                     homeIntent.putExtra("mUser_Id", mUser_Id);
                     homeIntent.putExtra("numseat", Integer.parseInt(numseat.getText().toString()));
                     startActivity(homeIntent);
                 }
-
             }
         });
 
@@ -273,7 +245,6 @@ public class Home extends AppCompatActivity
 
                 if (currentTimefrom >= currentTimeto) {
                     getDate();
-//                    check_out.setText(getDate());
                 }
                 OffersActivity.checkInDate = from.getTimeInMillis();
             }
@@ -286,7 +257,6 @@ public class Home extends AppCompatActivity
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
                 // TODO Auto-generated method stub
-
                 view.setMinDate(System.currentTimeMillis() - 1000);
                 to.set(Calendar.YEAR, year);
                 to.set(Calendar.MONTH, monthOfYear);
@@ -330,14 +300,10 @@ public class Home extends AppCompatActivity
 
         if (seat.isEmpty()) {
             numseat.setError(getString(R.string.error_chairCount));
-//            Toast.makeText(Home.this, R.string.error_chairCount, Toast.LENGTH_SHORT).show();
             valid = false;
         }
         return valid;
     }
-
-
-
 
     private void showAlert() {
         AlertDialog alertDialog = new AlertDialog.Builder(Home.this).create();
@@ -379,7 +345,7 @@ public class Home extends AppCompatActivity
                 + (DateUtils.DAY_IN_MILLIS - currentTime % DateUtils.DAY_IN_MILLIS);
 
         to.setTimeInMillis(endOfTomorrow);
-         date_Out = sdf.format(to.getTime());
+        date_Out = sdf.format(to.getTime());
         check_out.setText(getString(R.string.check_out) + "\n" + date_Out);
 
     }
@@ -388,11 +354,10 @@ public class Home extends AppCompatActivity
 
         String myFormat = "EEE, MMM d"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-         date_In = sdf.format(from.getTime());
+        date_In = sdf.format(from.getTime());
         check_in.setText(getString(R.string.check_in) + "\n" + date_In);
 
     }
-
 
     private void updateLabelto() {
 
@@ -407,7 +372,6 @@ public class Home extends AppCompatActivity
         getMenuInflater().inflate(R.menu.navigation, menu);
         return true;
     }
-
 
     @Override
     public void onBackPressed() {
@@ -429,7 +393,7 @@ public class Home extends AppCompatActivity
         if (id == R.id.nav_reservations) {
             if (auth.getCurrentUser() == null) {
                 Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
-                loginIntent.putExtra("navigate","true");
+                loginIntent.putExtra("mNumSeat", "0");
                 startActivity(loginIntent);
             } else {
                 if (mUser_Id != null) {
@@ -441,9 +405,6 @@ public class Home extends AppCompatActivity
                                 Intent bookingIntent = new Intent(Home.this, BookingActivity.class);
                                 bookingIntent.putExtra("mUser_Id", auth.getCurrentUser().getUid().toString());
                                 startActivity(bookingIntent);
-                            } else {
-                                Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
-                                startActivity(loginIntent);
                             }
                         }
 
@@ -458,7 +419,7 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.nav_Favorite_Companies) {
             if (auth.getCurrentUser() == null) {
                 Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
-                loginIntent.putExtra("navigate","true");
+                loginIntent.putExtra("mNumSeat", "0");
                 startActivity(loginIntent);
             } else {
                 if (mUser_Id != null) {
@@ -470,9 +431,6 @@ public class Home extends AppCompatActivity
                                 Intent favoriteIntent = new Intent(Home.this, FavoriteActivity.class);
                                 favoriteIntent.putExtra("mUser_Id", auth.getCurrentUser().getUid().toString());
                                 startActivity(favoriteIntent);
-                            } else {
-                                Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
-                                startActivity(loginIntent);
                             }
                         }
 
@@ -500,8 +458,6 @@ public class Home extends AppCompatActivity
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share) + " \n https://play.google.com/store");
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
-
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -512,11 +468,6 @@ public class Home extends AppCompatActivity
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-//        if (countryNames[position].equals(getString(R.string.go))) {
-//            check_out.setVisibility(View.GONE);
-//        } else {
-//            check_out.setVisibility(View.VISIBLE);
-//        }
         transLevel = countryNames[position];
         OffersActivity.txttrans = countryNames[position];
 

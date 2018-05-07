@@ -38,14 +38,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import id.zelory.compressor.Compressor;
 
 public class ConfirmBooking extends AppCompatActivity {
     ImageView putImg, getImg;
@@ -109,6 +104,7 @@ public class ConfirmBooking extends AppCompatActivity {
             }
         });
     }
+
 
     private void selectImage() {
         final CharSequence[] items = {"Take Photo", "Choose from Library",
@@ -184,14 +180,14 @@ public class ConfirmBooking extends AppCompatActivity {
         }
 
         private void completeRegister (View view){
-            progressDialog = new ProgressDialog(ConfirmBooking.this);
-            progressDialog.setMessage(getString(R.string.adding_book));
-            progressDialog.setCancelable(false);
-            progressDialog.show();
             if (image_uriget == null) {
                 Snackbar.make(view, getString(R.string.pls) + " " + getString(R.string.Copyofreceipt), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             } else {
+                progressDialog = new ProgressDialog(ConfirmBooking.this);
+                progressDialog.setMessage(getString(R.string.adding_book));
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 StorageReference filepath = mystorage.child("Bookimgs").child(image_uriget.getLastPathSegment());
                 filepath.putFile(image_uriget).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -316,4 +312,6 @@ public class ConfirmBooking extends AppCompatActivity {
             });
 
         }
+
     }
+

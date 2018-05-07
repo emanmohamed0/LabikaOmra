@@ -66,7 +66,7 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
     public SharedPrefManager sharedPrefManager;
     private final Context mContext = this;
     private DatabaseReference myDatabase;
-    private String name, email, CompanyKeyId, KeyId, seat, navigate;
+    private String name, email, CompanyKeyId, KeyId, from;
     private String photo;
     private Uri photoUri;
     private SignInButton mSignInButton;
@@ -78,10 +78,10 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
         CompanyKeyId = getIntent().getStringExtra("CompanyKeyId");
-        seat = getIntent().getStringExtra("mNumSeat");
+        from = getIntent().getStringExtra("mNumSeat");
         KeyId = getIntent().getStringExtra("KeyId");
         numseat = getIntent().getIntExtra("numseat", 1);
-        getIntent().getStringExtra("navigate");
+
 
         myDatabase = FirebaseDatabase.getInstance().getReference();
         mSignInButton = (SignInButton) findViewById(R.id.signin_google_btn);
@@ -140,33 +140,33 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
     }
 
     private void Finishing(User newUser) {
-        if (navigate == null) {
+        if (from == null) {
 
         } else {
-            if (navigate.equals("true")) {
+            if (from.equals("0")) {
                 Intent returnIntent = new Intent(UserLoginActivity.this, Home.class);
                 returnIntent.putExtra("CompanyKeyId", CompanyKeyId);
                 returnIntent.putExtra("KeyId", KeyId);
                 returnIntent.putExtra("mUser_Id", mAuth.getCurrentUser().getUid().toString());
                 startActivity(returnIntent);
             }
-        }
-        if (seat == null) {
-            Intent returnIntent = new Intent(UserLoginActivity.this, DialogBooking.class);
-            returnIntent.putExtra("name", newUser.getFullName());
-            returnIntent.putExtra("email", newUser.getEmail());
-            returnIntent.putExtra("CompanyKeyId", CompanyKeyId);
-            returnIntent.putExtra("KeyId", KeyId);
-            returnIntent.putExtra("mUser_Id", mAuth.getCurrentUser().getUid().toString());
-            startActivity(returnIntent);
-        } else {
-            if (seat.equals("1")) {
+            else if (from.equals("1")) {
                 showSeatDialog();
             }
         }
-
-//        setResult(Activity.RESULT_OK,returnIntent);
+//        if (from == null) {
+//            Intent returnIntent = new Intent(UserLoginActivity.this, DialogBooking.class);
+//            returnIntent.putExtra("name", newUser.getFullName());
+//            returnIntent.putExtra("email", newUser.getEmail());
+//            returnIntent.putExtra("CompanyKeyId", CompanyKeyId);
+//            returnIntent.putExtra("KeyId", KeyId);
+//            returnIntent.putExtra("mUser_Id", mAuth.getCurrentUser().getUid().toString());
+//            startActivity(returnIntent);
+//        } else {
+//
+//        }
         finish();
+//        setResult(Activity.RESULT_OK,returnIntent);
     }
 
     // This method configures Google SignIn

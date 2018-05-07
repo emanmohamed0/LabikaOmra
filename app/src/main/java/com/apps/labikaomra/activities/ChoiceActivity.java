@@ -70,7 +70,7 @@ public class ChoiceActivity extends AppCompatActivity {
         });
     }
 
-    public void  createDialog(final int r ){
+    public void createDialog(final int r) {
         AlertDialog alertDialog = new AlertDialog.Builder(ChoiceActivity.this).create();
         alertDialog.setTitle(getString(R.string.alert));
         alertDialog.setMessage(getString(R.string.dialog));
@@ -78,11 +78,11 @@ public class ChoiceActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         FirebaseAuth.getInstance().signOut();
-                        if(r==R.id.lincustomer){
+                        if (r == R.id.lincustomer) {
                             Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
                             searchIntent.putExtra("locale", locale);
                             startActivity(searchIntent);
-                        }else{
+                        } else {
                             Intent searchIntent = new Intent(ChoiceActivity.this, CompanyLoginActivity.class);
                             searchIntent.putExtra("locale", locale);
                             startActivity(searchIntent);
@@ -93,27 +93,29 @@ public class ChoiceActivity extends AppCompatActivity {
                 });
         alertDialog.show();
     }
+
     public void getTypeUser() {
         if (myAuth.getCurrentUser() != null) {
             myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_USERS).child(myAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.getValue() == null){
+                    if (dataSnapshot.getValue() == null) {
                         createDialog(R.id.lincustomer);
 
-                    }else {
+                    } else {
                         String type = dataSnapshot.child("type").getValue().toString();
                         if (type.equals("user")) {
-                        Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
-                        searchIntent.putExtra("mUser_Id", myAuth.getCurrentUser().getUid());
-                        searchIntent.putExtra("locale", locale);
-                        startActivity(searchIntent);
-                    } else {
-                        Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
-                        searchIntent.putExtra("mUser_Id", myAuth.getCurrentUser().getUid());
-                        searchIntent.putExtra("locale", locale);
-                        startActivity(searchIntent);
-                    }}
+                            Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
+                            searchIntent.putExtra("mUser_Id", myAuth.getCurrentUser().getUid());
+                            searchIntent.putExtra("locale", locale);
+                            startActivity(searchIntent);
+                        } else {
+                            Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
+                            searchIntent.putExtra("mUser_Id", myAuth.getCurrentUser().getUid());
+                            searchIntent.putExtra("locale", locale);
+                            startActivity(searchIntent);
+                        }
+                    }
                 }
 
                 @Override
@@ -121,7 +123,7 @@ public class ChoiceActivity extends AppCompatActivity {
 
                 }
             });
-        }else{
+        } else {
             Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
             searchIntent.putExtra("mUser_Id", mUser_Id);
             searchIntent.putExtra("locale", locale);
@@ -135,10 +137,10 @@ public class ChoiceActivity extends AppCompatActivity {
             myDatabase.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).child(myAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.getValue() == null){
-                       createDialog(R.id.linleader);
+                    if (dataSnapshot.getValue() == null) {
+                        createDialog(R.id.linleader);
 
-                    }else {
+                    } else {
                         String type = dataSnapshot.child("type").getValue().toString();
                         if (type.equals("company")) {
                             Intent searchIntent = new Intent(ChoiceActivity.this, CompanyOffersActivity.class);
@@ -160,7 +162,7 @@ public class ChoiceActivity extends AppCompatActivity {
 
                 }
             });
-        }else{
+        } else {
             Intent searchIntent = new Intent(ChoiceActivity.this, CompanyLoginActivity.class);
             searchIntent.putExtra("company_user_id", company_user_id);
             searchIntent.putExtra("locale", locale);
