@@ -15,7 +15,7 @@ public class Offer implements Comparable {
     int numOfChairs;
     private HashMap<String, Object> timestampLastChanged;
     private HashMap<String, Object> timestampCreated;
-    double lat, lng;
+    double lat, lang;
     ArrayList<String> contentImagesList;
     Long startDay, backDay;
 
@@ -25,7 +25,7 @@ public class Offer implements Comparable {
     public Offer(String hotelName, Long startDay, String attendStartTime, String startTime,
                  Long backDay, String attendEndTime,
                  String endTime, String deals, String priceBus,String pricePlace,String priceTotal ,String location, int numOfChairs,
-                 HashMap<String, Object> timestampCreated, double lat, double lng, String offerImage,
+                 HashMap<String, Object> timestampCreated, double lat, double lang, String offerImage,
                  ArrayList<String> contentImagesList, String companyKeyId, String keyId,
                  String value_onehouse, String value_threestatus, String value_twotrans, String transLevel, String destLevel) {
         this.hotelName = hotelName;
@@ -43,7 +43,7 @@ public class Offer implements Comparable {
         this.location = location;
         this.numOfChairs = numOfChairs;
         this.lat = lat;
-        this.lng = lng;
+        this.lang = lang;
         this.value_onehouse = value_onehouse;
         this.value_twotrans = value_twotrans;
         this.value_threestatus = value_threestatus;
@@ -62,7 +62,7 @@ public class Offer implements Comparable {
     public Offer(String hotelName, Long startDay, String attendStartTime, String startTime,
                  Long backDay, String attendEndTime,
                  String endTime, String deals, String priceBus,String pricePlace,String priceTotal , String location, int numOfChairs,
-                 HashMap<String, Object> timestampCreated, double lat, double lng,
+                 HashMap<String, Object> timestampCreated, double lat, double lang,
                  ArrayList<String> contentImagesList, String companyKeyId, String keyId,
                  String value_onehouse, String value_threestatus, String value_twotrans, String transLevel, String destLevel) {
         this.hotelName = hotelName;
@@ -80,7 +80,7 @@ public class Offer implements Comparable {
         this.location = location;
         this.numOfChairs = numOfChairs;
         this.lat = lat;
-        this.lng = lng;
+        this.lang = lang;
         this.value_onehouse = value_onehouse;
         this.value_twotrans = value_twotrans;
         this.value_threestatus = value_threestatus;
@@ -168,8 +168,8 @@ public class Offer implements Comparable {
         return lat;
     }
 
-    public double getLng() {
-        return lng;
+    public double getlang() {
+        return lang;
     }
 
     public String getOfferImage() {

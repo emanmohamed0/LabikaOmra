@@ -5,12 +5,16 @@ import java.util.List;
 
 public class ListBookingCompany {
 
-    private String companyKeyId, firstName, lastName, email, address, phoneNum, IDcard, bookingImage;
+    private String companyKeyId, firstName, lastName, email, address, phoneNum, IDcard, bookingImage, bookingId;
     List<DataFacility> dataFacilities;
     HashMap<String, Object> timestampCreated;
 
-    public ListBookingCompany(String companyKeyId, String firstName, String lastName, String email, String address
+    public ListBookingCompany() {
+    }
+
+    public ListBookingCompany(String bookingId,String companyKeyId, String firstName, String lastName, String email, String address
             , String phoneNum, String IDcard, List<DataFacility> dataFacilities, String bookingImage) {
+        this.bookingId = bookingId;
         this.companyKeyId = companyKeyId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +27,7 @@ public class ListBookingCompany {
     }
 
     public ListBookingCompany(String firstName, String lastName, String email, String address, String phoneNum, String bookingImage) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -32,8 +37,9 @@ public class ListBookingCompany {
 
     }
 
-    public ListBookingCompany(String companyKeyId, String firstName, String lastName, String email, String address
+    public ListBookingCompany(String bookingId, String companyKeyId, String firstName, String lastName, String email, String address
             , String phoneNum, String IDcard, List<DataFacility> dataFacilities, HashMap<String, Object> timestampCreated) {
+        this.bookingId = bookingId;
         this.companyKeyId = companyKeyId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,8 +51,9 @@ public class ListBookingCompany {
         this.timestampCreated = timestampCreated;
     }
 
-    public ListBookingCompany(String companyKeyId, String firstName, String lastName, String email, String address
+    public ListBookingCompany(String bookingId ,String companyKeyId, String firstName, String lastName, String email, String address
             , String phoneNum, String IDcard, List<DataFacility> dataFacilities) {
+        this.bookingId = bookingId;
         this.companyKeyId = companyKeyId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -55,6 +62,18 @@ public class ListBookingCompany {
         this.phoneNum = phoneNum;
         this.IDcard = IDcard;
         this.dataFacilities = dataFacilities;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public HashMap<String, Object> getTimestampCreated() {
+        return timestampCreated;
     }
 
     public String getBookingImage() {

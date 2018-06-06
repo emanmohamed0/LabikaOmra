@@ -130,6 +130,7 @@
                         android:id="@+id/detailOffer"
                         android:layout_width="match_parent"
                         android:layout_height="190dp"
+                        android:layoutDirection="rtl"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -249,6 +250,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/pad_5dp"
+                        android:layoutDirection="rtl"
                         android:orientation="horizontal">
 
                         <TextView
@@ -275,6 +277,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/pad_10dp"
+                        android:layoutDirection="rtl"
                         android:orientation="horizontal">
 
 
@@ -360,6 +363,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="right"
+                                android:layoutDirection="rtl"
                                 android:orientation="horizontal">
 
                                 <TextView

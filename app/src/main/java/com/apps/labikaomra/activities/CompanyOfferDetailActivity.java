@@ -310,10 +310,10 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         }
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(mPharmacy.getLat(), mPharmacy.getLng()), 18);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(mPharmacy.getLat(), mPharmacy.getlang()), 18);
         map.animateCamera(cameraUpdate);
         map.addMarker(new MarkerOptions()
-                .position(new LatLng(mPharmacy.getLat(), mPharmacy.getLng()))
+                .position(new LatLng(mPharmacy.getLat(), mPharmacy.getlang()))
                 .title(nameCompany));
         mMap = map;
     }
@@ -374,7 +374,7 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
 
             if (currentUserLatLng != null) {
                 GoogleDirection.withServerKey(getResources().getString(R.string.google_maps_key))
-                        .from(new LatLng(mPharmacy.getLat(), mPharmacy.getLng()))
+                        .from(new LatLng(mPharmacy.getLat(), mPharmacy.getlang()))
                         .to(currentUserLatLng)
                         .execute(new DirectionCallback() {
                             @Override
@@ -387,7 +387,7 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
                                     mMap.addMarker(new MarkerOptions().position(currentUserLatLng)
                                             .title(getString(R.string.your_location)));
 //                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.mappp)));
-                                    mMap.addMarker(new MarkerOptions().position(new LatLng(mPharmacy.getLat(), mPharmacy.getLng()))
+                                    mMap.addMarker(new MarkerOptions().position(new LatLng(mPharmacy.getLat(), mPharmacy.getlang()))
                                             .title(nameCompany)
                                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_photo_filter_pry)));
                                     Log.e("Direction :", "Direction Seccuss");

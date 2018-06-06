@@ -74,21 +74,6 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickRadio(View view) {
-
-        switch (view.getId()) {
-            case R.id.radiobuttonEn:
-                setLocale("en");
-                break;
-            case R.id.radiobuttonAr:
-                setLocale("ar");
-                break;
-            default:
-                setLocale("en");
-
-        }
-    }
-
     private void setLocale(String language) {
         myLocale = new Locale(language);
         Resources res = getResources();

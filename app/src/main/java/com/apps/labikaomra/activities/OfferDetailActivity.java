@@ -117,6 +117,7 @@ public class OfferDetailActivity extends AppCompatActivity
         value = getIntent().getStringExtra("value");
         seat = getIntent().getStringExtra("mNumSeat");
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -139,6 +140,7 @@ public class OfferDetailActivity extends AppCompatActivity
         myDatabase = FirebaseDatabase.getInstance().getReference();
         myDatabase.keepSynced(true);
         auth = FirebaseAuth.getInstance();
+
         mapView = (MapView) findViewById(R.id.mapview);
 //        mapView.onCreate(savedInstanceState);
         try {
@@ -174,11 +176,12 @@ public class OfferDetailActivity extends AppCompatActivity
 
         mTxtPlace.setText(mPharmacy.getLocation());
 
+
         mTxtPrice.setText("Ryial " + mPharmacy.getPriceTotal());
-        if (value == null) {
-            mTxtPricePlace.setText(getString(R.string.priceplace) + " = " + mPharmacy.getPricePlace() + " Ryial ");
+        if (value.equals("value")) {
+            mTxtPriceBus.setVisibility(View.GONE);
+            mTxtPricePlace.setVisibility(View.GONE);
             mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
-            mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " Ryial ");
             if (numseat == 0) {
                 numseat = 1;
                 txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
@@ -201,7 +204,6 @@ public class OfferDetailActivity extends AppCompatActivity
                 mTxtPricePlace.setVisibility(View.GONE);
                 mTxtPriceTotal.setVisibility(View.GONE);
                 mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " Ryial ");
-//                mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
                 if (numseat == 0) {
                     numseat = 1;
                     txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
@@ -211,7 +213,6 @@ public class OfferDetailActivity extends AppCompatActivity
             } else if (value.equals("transonly3")) {
                 mTxtPriceBus.setVisibility(View.GONE);
                 mTxtPricePlace.setVisibility(View.GONE);
-//                mTxtPricePlace.setText(getString(R.string.priceplace) + " = " + mPharmacy.getPricePlace() + " Ryial ");
                 mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
                 if (numseat == 0) {
                     numseat = 1;
@@ -293,6 +294,7 @@ public class OfferDetailActivity extends AppCompatActivity
 
     private void DemoSliderM() {
         //add banner using image url
+
         for (int i = 0; i < mPharmacy.getContentImagesList().size(); i++) {
             bannerSlider.addBanner(new RemoteBanner(mPharmacy.getContentImagesList().get(i)));
         }
@@ -420,11 +422,12 @@ public class OfferDetailActivity extends AppCompatActivity
         }
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(mPharmacy.getLat(), mPharmacy.getLng()), 18);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(mPharmacy.getLat(), mPharmacy.getlang()), 14);
         map.animateCamera(cameraUpdate);
         map.addMarker(new MarkerOptions()
-                .position(new LatLng(mPharmacy.getLat(), mPharmacy.getLng()))
-                .title(nameCompany));
+                .position(new LatLng(mPharmacy.getLat(), mPharmacy.getlang()))
+                .title("Name Company: " + nameCompany))
+                .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mMap = map;
     }
 
@@ -517,34 +520,18 @@ public class OfferDetailActivity extends AppCompatActivity
             final LatLng currentUserLatLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
             currentUserLocation.position(currentUserLatLng)
                     .title(getString(R.string.your_location));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUserLatLng, 16));
+//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUserLatLng, 14));
 
             if (currentUserLatLng != null) {
                 GoogleDirection.withServerKey(getResources().getString(R.string.google_maps_key))
-                        .from(new LatLng(mPharmacy.getLat(), mPharmacy.getLng()))
+                        .from(new LatLng(mPharmacy.getLat(), mPharmacy.getlang()))
                         .to(currentUserLatLng)
                         .execute(new DirectionCallback() {
                             @Override
                             public void onDirectionSuccess(Direction direction, String rawBody) {
-                                if (direction.isOK()) {
-                                    Leg leg = direction.getRouteList().get(0).getLegList().get(0);
-                                    ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
-                                    PolylineOptions polylineOptions = DirectionConverter.createPolyline(getBaseContext(), directionPositionList, 3, Color.RED);
-                                    mMap.addPolyline(polylineOptions);
-                                    mMap.addMarker(new MarkerOptions().position(currentUserLatLng)
-                                            .title(getString(R.string.your_location)));
-//                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.mappp)));
-                                    mMap.addMarker(new MarkerOptions().position(new LatLng(mPharmacy.getLat(), mPharmacy.getLng()))
-                                            .title(nameCompany)
-                                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_photo_filter_pry)));
-                                    Log.e("Direction :", "Direction Seccuss");
-                                } else {
-//                                Log.e("Direction :", direction.getErrorMessage());
-                                }
+                                drawPath(new LatLng(mPharmacy.getLat(), mPharmacy.getlang()), currentUserLatLng);
                             }
 
-                            //    }
-//
                             @Override
                             public void onDirectionFailure(Throwable t) {
                                 Log.e("Direction :", "Failure :" + t.getLocalizedMessage());
@@ -553,6 +540,37 @@ public class OfferDetailActivity extends AppCompatActivity
             }
         }
     }
+
+    public void drawPath(final LatLng currentLocation, final LatLng placeLocation) {
+        final LatLng latLng = new LatLng(currentLocation.latitude, currentLocation.longitude);
+        GoogleDirection.withServerKey(getResources().getString(R.string.google_maps_key))
+                .from(latLng)
+                .to(placeLocation)
+                .execute(new DirectionCallback() {
+                    @Override
+                    public void onDirectionSuccess(Direction direction, String rawBody) {
+                        if (direction.isOK()) {
+                            Leg leg = direction.getRouteList().get(0).getLegList().get(0);
+                            ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
+                            PolylineOptions polylineOptions = DirectionConverter.createPolyline(OfferDetailActivity.this, directionPositionList, 2, Color.BLUE);
+                            mMap.addPolyline(polylineOptions);
+                            mMap.addMarker(new MarkerOptions().position(placeLocation)
+                                    .title("Current_Location"));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mPharmacy.getLat(), mPharmacy.getlang())));
+                            Log.e("Direction :", "Direction Seccuss");
+                        } else {
+                            Log.e("Direction :", direction.getErrorMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onDirectionFailure(Throwable t) {
+                        Log.e("Direction :", "Failure :" + t.getLocalizedMessage());
+                        Toast.makeText(OfferDetailActivity.this, "Check_Network", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     @Override
     public void onConnectionSuspended(int i) {

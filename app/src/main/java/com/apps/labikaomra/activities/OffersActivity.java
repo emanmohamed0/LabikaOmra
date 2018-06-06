@@ -34,6 +34,7 @@ import com.apps.labikaomra.models.Offer;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,10 +42,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -68,6 +71,7 @@ public class OffersActivity extends AppCompatActivity implements
     int numseatback;
     static List<String> priceList;
     String value;
+    Date checkIn, checkOut, checkOutoffer, checkInoffer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,84 +131,131 @@ public class OffersActivity extends AppCompatActivity implements
 
                 clientList = new ArrayList<Offer>();
                 priceList = new ArrayList<>();
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d");
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Offer offer = postSnapshot.getValue(Offer.class);
                     priceList.add(offer.getPriceTotal());
+                    try {
+                        checkIn = sdf.parse(getDate(checkInDate, "EEE, MMM d"));
+                        checkOut = sdf.parse(getDate(checkOutDate, "EEE, MMM d"));
+                        checkInoffer = sdf.parse(getDate(offer.getStartDay(), "EEE, MMM d"));
+                        checkOutoffer = sdf.parse(getDate(offer.getBackDay(), "EEE, MMM d"));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
                     if ((txttrans == getString(R.string.transonly))) {
                         value = "transonly";
                         if (checkOutDate != 0l && checkInDate != 01) {
-                            if ((getDate(checkInDate, "EEE, MMM d").equals(getDate(offer.getStartDay(), "EEE, MMM d"))
-                                    && getDate(checkOutDate, "EEE, MMM d").equals(getDate(offer.getBackDay(), "EEE, MMM d")))
+
+                            if ((checkIn.compareTo(checkInoffer) == 0) && ((checkOut.compareTo(checkOutoffer) == 0))
                                     || (offer.getValue_twotrans() == value_two)
                                     || (offer.getValue_threestatus() == value_three)) {
                                 clientList.add(offer);
-                            } else if ((checkInDate <= offer.getStartDay() && checkOutDate >= offer.getBackDay())
+                                System.out.println("Date1 is equal to Date2");
+                            } else if ((checkIn.compareTo(checkInoffer) < 0) && (checkOut.compareTo(checkOutoffer) > 0)
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
+                                clientList.add(offer);
+                            } else if ((checkIn.compareTo(checkInoffer) < 0) && (checkOut.compareTo(checkOutoffer) == 0)
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
+                                clientList.add(offer);
+                            } else if ((checkIn.compareTo(checkInoffer) == 0) && (checkOut.compareTo(checkOutoffer) > 0)
                                     || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
                                 clientList.add(offer);
                             }
 
                         }
-                    } else if((txttrans == getString(R.string.transonly2))){
+                    } else if ((txttrans == getString(R.string.transonly2))) {
                         value = "transonly2";
 
                         if (checkOutDate != 0l && checkInDate != 01) {
-                            if ((getDate(checkInDate, "EEE, MMM d").equals(getDate(offer.getStartDay(), "EEE, MMM d"))
-                                    && getDate(checkOutDate, "EEE, MMM d").equals(getDate(offer.getBackDay(), "EEE, MMM d")))
+                            if ((checkIn.compareTo(checkInoffer) == 0) && ((checkOut.compareTo(checkOutoffer) == 0))
                                     || (offer.getValue_twotrans() == value_two)
                                     || (offer.getValue_threestatus() == value_three)) {
                                 clientList.add(offer);
-                            } else if ((checkInDate <= offer.getStartDay() && checkOutDate >= offer.getBackDay())
+                                System.out.println("Date1 is equal to Date2");
+                            } else if ((checkIn.compareTo(checkInoffer) < 0) && (checkOut.compareTo(checkOutoffer) > 0)
                                     || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
-
+                                clientList.add(offer);
+                            } else if ((checkIn.compareTo(checkInoffer) < 0) && (checkOut.compareTo(checkOutoffer) == 0)
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
+                                clientList.add(offer);
+                            } else if ((checkIn.compareTo(checkInoffer) == 0) && (checkOut.compareTo(checkOutoffer) > 0)
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
                                 clientList.add(offer);
                             }
 
                         }
-                    }
-                    else if((txttrans == getString(R.string.transonly3))){
+                    } else if ((txttrans == getString(R.string.transonly3))) {
                         value = "transonly3";
 
                         if (checkOutDate != 0l && checkInDate != 01) {
-                            if ((getDate(checkInDate, "EEE, MMM d").equals(getDate(offer.getStartDay(), "EEE, MMM d"))
-                                    && getDate(checkOutDate, "EEE, MMM d").equals(getDate(offer.getBackDay(), "EEE, MMM d")))
+
+                            if ((checkIn.compareTo(checkInoffer) == 0) && ((checkOut.compareTo(checkOutoffer) == 0))
                                     || (offer.getValue_twotrans() == value_two)
                                     || (offer.getValue_threestatus() == value_three)) {
                                 clientList.add(offer);
-                            } else if ((checkInDate <= offer.getStartDay() && checkOutDate >= offer.getBackDay())
+                                System.out.println("Date1 is equal to Date2");
+                            } else if ((checkIn.compareTo(checkInoffer) < 0) && (checkOut.compareTo(checkOutoffer) > 0)
                                     || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
-
+                                clientList.add(offer);
+                            } else if ((checkIn.compareTo(checkInoffer) < 0) && (checkOut.compareTo(checkOutoffer) == 0)
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
+                                clientList.add(offer);
+                            } else if ((checkIn.compareTo(checkInoffer) == 0) && (checkOut.compareTo(checkOutoffer) > 0)
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
                                 clientList.add(offer);
                             }
                         }
-                    }
-                    else {
+                    } else {
                         value = "false";
 
                         if (checkOutDate != 0l && checkInDate != 01) {
-                            if ((getDate(checkInDate, "EEE, MMM d").equals(getDate(offer.getStartDay(), "EEE, MMM d"))
-                                    && getDate(checkOutDate, "EEE, MMM d").equals(getDate(offer.getBackDay(), "EEE, MMM d")))
+                            if ((checkIn.compareTo(checkInoffer) == 0) && ((checkOut.compareTo(checkOutoffer) == 0))
                                     || (offer.getValue_twotrans() == value_two)
                                     || (offer.getValue_threestatus() == value_three)) {
                                 clientList.add(offer);
-                            } else if ((checkInDate <= offer.getStartDay() && checkOutDate >= offer.getBackDay())
+                                System.out.println("Date1 is equal to Date2");
+                            } else if ((checkIn.compareTo(checkInoffer) < 0) && (checkOut.compareTo(checkOutoffer) > 0)
                                     || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
-
+                                clientList.add(offer);
+                            } else if ((checkIn.compareTo(checkInoffer) < 0) && (checkOut.compareTo(checkOutoffer) == 0)
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
+                                clientList.add(offer);
+                            } else if ((checkIn.compareTo(checkInoffer) == 0) && (checkOut.compareTo(checkOutoffer) > 0)
+                                    || (offer.getValue_twotrans() == value_two) || (offer.getValue_threestatus() == value_three)) {
                                 clientList.add(offer);
                             }
                         }
                     }
 
                 }
+                if (clientList.size() == 0) {
+                    createDialog();
+                }
                 adapter = new OfferAdapter(mcontext, clientList, mUser_Id, numseatback, value);
                 mCategoriesRecyclerView.setAdapter(adapter);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(mcontext, R.string.nodataload, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mcontext, R.string.nodataload, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void createDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(OffersActivity.this).create();
+        alertDialog.setTitle(getString(R.string.alert));
+        alertDialog.setMessage(getString(R.string.dialog_offer));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.OK),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     @Override

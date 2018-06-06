@@ -6,15 +6,28 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.apps.labikaomra.R;
-import com.apps.labikaomra.notification.FCMRegistrationService;
+import com.apps.labikaomra.notifications.SharedPrefManager;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SplachActivity extends FragmentActivity {
@@ -41,11 +54,11 @@ public class SplachActivity extends FragmentActivity {
         appTitle = (TextView) findViewById(R.id.track_txt);
         appSlogan = (TextView) findViewById(R.id.pro_txt);
 
-        FirebaseMessaging.getInstance().subscribeToTopic("notification");
-
-        startService(new Intent(this, FCMRegistrationService.class));
-        // Log.e("Token is ", FirebaseInstanceId.getInstance().getToken());
-        //Token is: fY0si4U-7Zc:APA91bGft0cntLNCHgXDSxUSh2e8mXkZieYvwoDOvG9fYNLmCJD7w61yJo3dTt2V0Ho37BoNLhGQHzWI3t9-glQYUw0_CuWZZ_g0LDjT0AKqQI2FwgmqVMuFaHpSGEizYpWfXTATs2JG
+        sendTokenToServer();
+//
+//        startService(new Intent(this, FCMRegistrationService.class));
+//         Log.e("Token is ", FirebaseInstanceId.getInstance().getToken());
+        //Token is: fY0si4U-7Zc:APA91bGft0cntLNCHgXDSxUSh2e8mXkZieYvwoDOvG9fYNLmCJD7w61yJo3dTt2V0Ho37BoNLhGQHzWI3t9-glQYUw0_CuWZZ_g0LDjT0AKqQI2FwgmqVMuFaHpSGEizYpWfXTATs2JG
 
         // Font path
         String fontPath = getString(R.string.font_path);
@@ -126,6 +139,37 @@ public class SplachActivity extends FragmentActivity {
 
         );
 
+    }
+    private void sendTokenToServer() {
+        final String token = SharedPrefManager.getInstance(getApplicationContext()).getDeviceToken();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://fettered-disability.000webhostapp.com/RegisterDevice.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            Log.e("log", "onResponse: "+response );
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("token", token);
+                params.put("email", "eman00@yahoo.com");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
     }
 
 }

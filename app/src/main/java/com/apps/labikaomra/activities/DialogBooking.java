@@ -71,11 +71,7 @@ public class DialogBooking extends AppCompatActivity {
 
         }
     }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
-    }
+
     private void CreateView() {
         LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.mLayout);
         if (seat == null) {
@@ -105,8 +101,7 @@ public class DialogBooking extends AppCompatActivity {
 
                     tv[i] = temp;
                 }
-            } else if ((numseat == 0) && (numseat == 1)) {
-                addfacility.setVisibility(View.GONE);
+
             }
         } else {
             int size = Integer.parseInt(seat); // total number of TextViews to add
@@ -138,6 +133,10 @@ public class DialogBooking extends AppCompatActivity {
                 }
             }
         }
+//        TextView txt = new TextView(this);
+//        txt.setText(getString(R.string.dataMorafiq));
+//        txt.setTextColor(Color.parseColor("#FFFFFF"));
+//        txt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_create_black_24dp, 0, 0, 0);
         Button btn = new Button(this);
         btn.setText(getString(R.string.booking));
         btn.setTextColor(Color.parseColor("#FFFFFF"));
@@ -145,11 +144,9 @@ public class DialogBooking extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (!validate()) {
-
                 } else {
-                    ListBookingCompany listBookingCompany = new ListBookingCompany(CompanyKeyId, inputName.getText().toString(),
+                    ListBookingCompany listBookingCompany = new ListBookingCompany(KeyId, CompanyKeyId, inputName.getText().toString(),
                             inputlastName.getText().toString(), inputEmail.getText().toString(), inputaddress.getText().toString(),
                             inputMobile.getText().toString(), inputIdcard.getText().toString(), facilityList);
                     ConfirmBooking.listBookingCompany = listBookingCompany;
@@ -256,5 +253,10 @@ public class DialogBooking extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 
 }

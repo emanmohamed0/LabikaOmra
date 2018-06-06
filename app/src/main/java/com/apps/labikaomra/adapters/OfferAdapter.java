@@ -106,46 +106,48 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.postViewHold
         }
 
 
-        viewHolder.myView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OfferDetailActivity.mPharmacy = model.get(viewHolder.getAdapterPosition());
+        if (model.get(position).getContentImagesList() != null) {
+
+            viewHolder.myView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    OfferDetailActivity.mPharmacy = model.get(viewHolder.getAdapterPosition());
 //                Toast.makeText(mContext, model.get(viewHolder.getAdapterPosition()).getKeyId(), Toast.LENGTH_SHORT).show();
 
-                mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).child(model.get(viewHolder.getAdapterPosition()).getKeyId()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String companyKeyId = dataSnapshot.child("companyKeyId").getValue().toString();
-                        mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).child(companyKeyId).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                namechoice = dataSnapshot.child("firstName").getValue().toString();
+                    mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).child(model.get(viewHolder.getAdapterPosition()).getKeyId()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String companyKeyId = dataSnapshot.child("companyKeyId").getValue().toString();
+                            mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_COMPANY).child(companyKeyId).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    namechoice = dataSnapshot.child("firstName").getValue().toString();
 
-                                Intent OfferDetail = new Intent(mContext, OfferDetailActivity.class);
-                                OfferDetail.putExtra("nameCompany", namechoice);
-                                OfferDetail.putExtra("mUser_Id", mUser_Id);
-                                OfferDetail.putExtra("numseat", numseatback);
-                                OfferDetail.putExtra("value", value);
-                                OfferDetail.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(OfferDetail);
+                                    Intent OfferDetail = new Intent(mContext, OfferDetailActivity.class);
+                                    OfferDetail.putExtra("nameCompany", namechoice);
+                                    OfferDetail.putExtra("mUser_Id", mUser_Id);
+                                    OfferDetail.putExtra("numseat", numseatback);
+                                    OfferDetail.putExtra("value", value);
+                                    OfferDetail.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                                    mContext.startActivity(OfferDetail);
 //                                viewHolder.setName(namechoice);
 //                        Toast.makeText(mContext, "name" +name, Toast.LENGTH_SHORT).show();
-                            }
+                                }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
-                            }
-                        });
+                                }
+                            });
 //                Toast.makeText(mContext, "companyKeyId \n adapter" + companyKeyId, Toast.LENGTH_SHORT).show();
 
-                    }
+                        }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
 
 //
 
@@ -155,8 +157,11 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.postViewHold
 //                n.putExtra("nameCompany",n);
 //                n.addFlags(FLAG_ACTIVITY_NEW_TASK);
 //                mContext.startActivity(n);
-            }
-        });
+                }
+            });
+        }else {
+            Toast.makeText(mContext, mContext.getString(R.string.offer_expire), Toast.LENGTH_SHORT).show();
+        }
 
     }
 

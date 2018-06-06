@@ -33,9 +33,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/omrati"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:largeHeap="true"
         tools:replace="android:allowBackup">
 
         <!-- This meta-data tag is required to use Google Play Services. -->
@@ -84,6 +84,9 @@
             android:name=".activities.AddOfferActivity"
             android:label="@string/title_activity_add_offer"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.OffersNotApprovedActivity"
+            android:theme="@style/AppTheme" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -116,6 +119,7 @@
             android:name=".activities.OfferDetailActivity"
             android:label="@string/title_activity_offer_detail"
             android:theme="@style/AppTheme" />
+
         <activity android:name=".activities.SplachActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -133,30 +137,27 @@
         <activity android:name=".activities.ConfirmBooking" />
         <activity android:name=".activities.DetailBooking"></activity>
 
+
         <service
-            android:name=".notification.MyFCMService"
-            android:exported="false">
+            android:name=".notifications.MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 
-        <!--###  Register service get token and send it to service  ###-->
-        <service android:name=".notification.FCMRegistrationService" />
-
-        <!--###  Service response to token refresh event  ###-->
         <service
-            android:name=".notification.FCMTokenRefreshListenerService"
-            android:exported="false">
+            android:name=".notifications.MyFirebaseMessaging">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+
             </intent-filter>
         </service>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorback"
-            />
+            android:resource="@color/colorback" />
 
     </application>
 

@@ -204,6 +204,10 @@ public class CompanyOffersActivity extends AppCompatActivity implements
             Intent startIntent = new Intent(CompanyOffersActivity.this, CompanyBooking.class);
             startActivity(startIntent);
         }
+        if (item.getItemId() == R.id.listbooktem) {
+            Intent startIntent = new Intent(CompanyOffersActivity.this, OffersNotApprovedActivity.class);
+            startActivity(startIntent);
+        }
         return super.onOptionsItemSelected(item);
     }
 

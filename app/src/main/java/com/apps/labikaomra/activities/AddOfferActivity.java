@@ -1,6 +1,5 @@
 package com.apps.labikaomra.activities;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -14,17 +13,12 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.format.DateUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -36,10 +30,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.apps.labikaomra.ConstantsLabika;
 import com.apps.labikaomra.R;
-import com.google.android.gms.tasks.OnFailureListener;
+import com.apps.labikaomra.notifications.MyVolley;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -51,8 +49,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
-
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,8 +56,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-
+import java.util.Map;
 import com.gun0912.tedpicker.Config;
 
 public class AddOfferActivity extends AppCompatActivity {
@@ -323,7 +318,7 @@ public class AddOfferActivity extends AppCompatActivity {
         final String chairCount = inputChairCount.getText().toString().trim();
         final String destLevel = spinnerDestLevel.getSelectedItem().toString().trim();
 
-        if(uri_Post_usre_profile_image !=null) {
+        if (uri_Post_usre_profile_image != null) {
             progressDialog.setTitle(getString(R.string.add_offer));
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -346,8 +341,8 @@ public class AddOfferActivity extends AppCompatActivity {
                     offerDb.child("deals").setValue(deals);
                     offerDb.child("keyId").setValue(offerDb.getKey());
                     offerDb.child("numOfChairs").setValue(Integer.parseInt(chairCount));
-                    offerDb.child("lat").setValue(lat);
-                    offerDb.child("lang").setValue(lang);
+                    offerDb.child("lat").setValue(ChooseLocationActivity.lat);
+                    offerDb.child("lang").setValue(ChooseLocationActivity.lang);
                     offerDb.child("location").setValue(location);
                     offerDb.child("priceBus").setValue(priceBus);
                     offerDb.child("pricePlace").setValue(pricePlace);
@@ -361,6 +356,7 @@ public class AddOfferActivity extends AppCompatActivity {
                     offerDb.child("value_twotrans").setValue(Value_two);
                     offerDb.child("timestampJoined").setValue(timestampJoined);
 
+                    sendMultiplePush("New Offer", priceTotal, getDate(startDay, "EEE, MMM d"), getDate(backDay, "EEE, MMM d"));
                     Intent mainIntent = new Intent(AddOfferActivity.this, CompanyOffersActivity.class);
                     mainIntent.putExtra("company_user_id", company_user_id);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -370,11 +366,52 @@ public class AddOfferActivity extends AppCompatActivity {
                 }
             });
 
-        }
-        else {
+        } else {
             Snackbar.make(view, getString(R.string.pls) + " " + getString(R.string.Copyofreceipt), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
+    }
+
+    public static String getDate(long milliSeconds, String dateFormat) {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
+    }
+
+    private void sendMultiplePush(final String title, final String price, final String startTime, final String endTime) {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://fettered-disability.000webhostapp.com/SendAlldevices.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Toast.makeText(AddOfferActivity.this, response, Toast.LENGTH_LONG).show();
+                        Log.e("log", "onResponse: " + response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("title", title);
+                params.put("message", price);
+                params.put("starttime", startTime);
+                params.put("endtime", endTime);
+
+                return params;
+            }
+        };
+
+        MyVolley.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     public void createDialog() {
@@ -677,7 +714,7 @@ public class AddOfferActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        return "f";
+        return "No Get Address";
     }
 
     @Override

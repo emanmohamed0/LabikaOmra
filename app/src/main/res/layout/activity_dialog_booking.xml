@@ -43,7 +43,7 @@
                 android:id="@+id/nameField"
                 style="@style/AuthEditText"
                 android:drawablePadding="@dimen/dp8"
-                android:hint="@string/firstname"
+                android:hint="@string/fName"
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName"
                 android:singleLine="true"></EditText>
@@ -129,6 +129,7 @@
             android:drawableLeft="@drawable/ic_create_black_24dp"
             android:padding="@dimen/pad_10dp"
             android:paddingLeft="20dp"
+            android:visibility="gone"
             android:text="@string/dataMorafiq"
             android:textColor="@android:color/black"
             android:textSize="@dimen/sp15" />

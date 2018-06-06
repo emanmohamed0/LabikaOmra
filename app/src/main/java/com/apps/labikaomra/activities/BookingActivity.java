@@ -113,6 +113,12 @@ public class BookingActivity extends AppCompatActivity {
         mBookingList.setAdapter(recyclerAdapter);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
     public static class BookingViewHolder extends RecyclerView.ViewHolder {
         View myView;
 

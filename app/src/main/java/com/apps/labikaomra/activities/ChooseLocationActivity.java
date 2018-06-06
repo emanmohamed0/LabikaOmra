@@ -18,7 +18,11 @@ import android.widget.Toast;
 import com.apps.labikaomra.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -97,6 +101,9 @@ public class ChooseLocationActivity extends FragmentActivity implements OnMapRea
             if (userCurrentLocation != null) {
                 MarkerOptions currentUserLocation = new MarkerOptions();
                 LatLng currentUserLatLang = new LatLng(userCurrentLocation.getLatitude(), userCurrentLocation.getLongitude());
+                double lat = currentUserLatLang.latitude;
+                double lang = currentUserLatLang.longitude;
+
                 currentUserLocation.position(currentUserLatLang);
                 mMap.addMarker(currentUserLocation);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUserLatLang, 16));
@@ -146,6 +153,7 @@ public class ChooseLocationActivity extends FragmentActivity implements OnMapRea
             Toast.makeText(ChooseLocationActivity.this, R.string.no_permission, Toast.LENGTH_SHORT).show();
         }
     }
+
 
 
     private void showGPSDisabledAlertToUser() {

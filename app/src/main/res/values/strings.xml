@@ -16,6 +16,8 @@
     <string name="Offer_Detail">Offer Detail</string>
     <string name="error_num">Error number seat</string>
     <string name="register">Register</string>
+    <string name="fName">First Name</string>
+    <string name="offer_expire">Offer Expire</string>
     <string name="confpassword_hint">Confirm Password</string>
     <string name="password_hint">Password</string>
     <string name="phone_hint">Phone</string>
@@ -55,6 +57,7 @@
     <string name="chairs_count_hint">Chairs Count</string>
     <string name="price_hint">Price</string>
     <string name="add_offer">Add Offer</string>
+    <string name="tempBooking">Temporary Booking</string>
     <!--//add doctor-->
     <string-array name="sub_level_array">
         <item>First class</item>
@@ -76,6 +79,7 @@
     <string name="highprice">High Price</string>
     <string name="lowprice">Low Price</string>
     <string name="dialog">Please Logout from other choice before</string>
+    <string name="dialog_offer">No Found Offers in this Data</string>
     <string name="dialogactive">Please Contact this number to Activate your account</string>
     <string name="highrate">High Rate</string>
     <string name="offer_imgs">OfferImgs</string>
@@ -137,6 +141,7 @@
     <string name="titleconfirm">Confirm Booking</string>
     <string name="conbook">Permanent reservation</string>
     <string name="tembooking">Temporary booking</string>
+    <string name="temabooking">Temporary Booking</string>
     <string name="Copyofreceipt">Copy of receipt</string>
     <string name="enter">Enter data Morafkin</string>
     <string name="enterseat">Enter Number Seat</string>
@@ -202,7 +207,8 @@
     <string name="descripe">Description</string>
     <string name="best">Popular destination</string>
     <string name="dialogoffer">You Must choose BackDay after StartDay</string>
-    <string name="listbooking">List Booking</string>
+    <string name="listbooking">Confirm Booking</string>
+
     <string name="persondata">Personal Data</string>
     <string name="firstname">FirstName</string>
     <string name="name">Name</string>

@@ -9,14 +9,22 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.apps.labikaomra.Application_config.myApplication;
 import com.apps.labikaomra.ConstantsLabika;
+import com.apps.labikaomra.notifications.MyFirebaseMessaging;
+import com.apps.labikaomra.notifications.MyVolley;
 import com.apps.labikaomra.R;
-import com.apps.labikaomra.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +33,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class ChoiceActivity extends AppCompatActivity {
     View linleader, lincustomer;
@@ -36,6 +48,7 @@ public class ChoiceActivity extends AppCompatActivity {
     public static Query myPharmacyDatabase;
     Locale myLocale;
     String locale;
+    List<String> listemails = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +81,39 @@ public class ChoiceActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    private void sendMultiplePush() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://fettered-disability.000webhostapp.com/SendAlldevices.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Toast.makeText(ChoiceActivity.this, response, Toast.LENGTH_LONG).show();
+                        Log.e("log", "onResponse: " + response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("title", "ahmed");
+                params.put("message", "10le");
+                params.put("starttime", "1am");
+                params.put("endtime", "5pm");
+
+                return params;
+            }
+        };
+
+        MyVolley.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     public void createDialog(final int r) {
@@ -120,7 +166,6 @@ public class ChoiceActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
                 }
             });
         } else {
@@ -130,7 +175,9 @@ public class ChoiceActivity extends AppCompatActivity {
             startActivity(searchIntent);
         }
 
+
     }
+
 
     public void getTypeCompany() {
         if (myAuth.getCurrentUser() != null) {

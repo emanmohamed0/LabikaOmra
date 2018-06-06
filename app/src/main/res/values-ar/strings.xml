@@ -11,14 +11,18 @@
     <string name="onProgress">onProgress: %5.2f MB transferred</string>
     <string name="error_notadd">\"Error : not add \"</string>
     <string name="welcome">مرحبا</string>
+    <string name="share">حمل تطبيق عمرتي الان واحجز رحلتك في دقائق</string>
     <string name="data">بيانات</string>
+    <string name="dialog_offer">لا يوجد عروض فى هذا التاريخ</string>
     <string name="dialog">من فضلك اضغط للخروج من الحساب الأخر</string>
     <string name="dialogactive">من فضلك اتصل بهذا الرقم لتفعيل حسابك</string>
     <string name="highprice">أعلى سعر</string>
     <string name="alert">تحذير</string>
+    <string name="offer_expire">العرض انتهي</string>
     <string name="OK">موافقة</string>
     <string name="lowprice">أقل سعر</string>
     <string name="net">التحقق من الانترنت</string>
+    <string name="tempBooking">حجز مؤقت</string>
     <string name="highrate">أعلى تقييم</string>
     <string name="type_status">نوع الحالة</string>
     <string name="normal">عادي</string>
@@ -61,7 +65,7 @@
     <string name="end_time">وقت الانطلاق للعودة</string>
     <string name="deals_hint">الوجبات</string>
     <string name="chairs_count_hint">عدد المقاعد</string>
-    <string name="price_hint">السعر</string>
+    <string name="price_hint">الرسوم</string>
     <string name="add_offer">اضافه عرض</string>
     <string name="customer">المعتمر</string>
     <string name="enterdata">أدخل بياناتك</string>
@@ -90,7 +94,7 @@
     <string name="title_activity_maps">خريطة</string>
     <string name="error_hotelname">خطأ في اسم الفندق</string>
     <string name="error_deals">خطأ في الوجبات</string>
-    <string name="error_price">خطأ في السعر</string>
+    <string name="error_price">خطأ في الرسوم</string>
     <string name="error_chairCount">خطأ في عدد الكراسي</string>
     <string name="error_hotelLevel">خطأ في اختيار المكان</string>
     <string name="error_busLevel">خطأ في اختر المواصلات</string>
@@ -141,17 +145,19 @@
     <string name="descripe">الوصف</string>
     <string name="best">وجهات رائعة</string>
     <string name="dialogoffer">خطأ فى تاريخ الذهاب والعودة</string>
-    <string name="listbooking">قائمة الحجوزات</string>
+    <string name="listbooking">الحجوزات المؤكدة</string>
     <string name="persondata">بياناتك الشخصيه</string>
     <string name="firstname">اسم المرافق</string>
+    <string name="fName">الاسم</string>
     <string name="lastname">اسم العائلة</string>
     <string name="addresshint">العنوان</string>
     <string name="idCard">رقم الاقامة/رقم الهواية</string>
     <string name="booking">أحجز</string>
     <string name="conbook">حجز دائم</string>
     <string name="tembooking">حجز مؤقت</string>
+    <string name="temabooking">الحجوزات المؤقتة</string>
     <string name="favorite">مفضلة</string>
-    <string name="dataMorafiq">أدخل بيانات المرافق</string>
+    <string name="dataMorafiq">أدخل البيانات</string>
     <string name="staying">مكان الاقامة</string>
     <string name="morafiq">مرافق</string>
     <string name="bank">حساب البنك</string>
@@ -168,13 +174,13 @@
     <string name="detail">تفاصيل حجز العرض</string>
     <string name="Communicate">مشاركة</string>
     <string name="total">المبلغ الاجمالى للعرض</string>
-    <string name="priceplace">سعر السكن فقط</string>
-    <string name="pricebus">سعر المواصلات فقط</string>
-    <string name="pricetotal">السعر شامل(المواصلات+السكن)</string>
-    <string name="pricetotalchair">سعر الرحله بعدد المقاعد</string>
+    <string name="priceplace">رسوم السكن فقط</string>
+    <string name="pricebus">رسوم المواصلات فقط</string>
+    <string name="pricetotal">الرسوم شامل(المواصلات و السكن)</string>
+    <string name="pricetotalchair">رسوم الرحله بعدد المقاعد</string>
     <string name="transonly">سكن</string>
     <string name="transonly2">مواصلات</string>
-    <string name="transonly3">سكن+مواصلات</string>
+    <string name="transonly3">سكن ومواصلات</string>
 
     <string-array name="types_hotel">
 

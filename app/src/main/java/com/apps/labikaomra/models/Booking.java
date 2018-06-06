@@ -18,6 +18,10 @@ private   String userKeyId, firstName, email, phoneNum;
     public Booking() {
     }
 
+    public String getUserKeyId() {
+        return userKeyId;
+    }
+
     public String getFirstName() {
         return firstName;
     }

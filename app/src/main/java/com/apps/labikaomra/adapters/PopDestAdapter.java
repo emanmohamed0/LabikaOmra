@@ -2,20 +2,16 @@ package com.apps.labikaomra.adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.apps.labikaomra.ConstantsLabika;
 import com.apps.labikaomra.R;
 import com.apps.labikaomra.activities.OfferDetailActivity;
@@ -27,9 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.List;
-
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -126,6 +120,7 @@ public class PopDestAdapter extends RecyclerView.Adapter<PopDestAdapter.postView
                                 OfferDetail.putExtra("nameCompany", namechoice);
                                 OfferDetail.putExtra("mUser_Id", mUser_Id);
                                 OfferDetail.putExtra("mNumSeat", "1");
+                                OfferDetail.putExtra("value","value");
                                 OfferDetail.addFlags(FLAG_ACTIVITY_NEW_TASK);
                                 mContext.startActivity(OfferDetail);
 //                                viewHolder.setName(namechoice);
@@ -206,7 +201,6 @@ public class PopDestAdapter extends RecyclerView.Adapter<PopDestAdapter.postView
                 }
             });
         }
-
 */
         void setImage(String image) {
             ImageView txt_image = (ImageView) myView.findViewById(R.id.imageCompany);
