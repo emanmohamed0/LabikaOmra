@@ -63,7 +63,7 @@ public class Home extends AppCompatActivity
     EditText numseat;
     String mUser_Id, local;
     String placeLevel, transLevel;
-    Locale locale;
+//    Locale locale;
     String[] countryNames;
     RecyclerView recyclerViewPopDest;
     PopDestAdapter adapters;
@@ -84,7 +84,7 @@ public class Home extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         countryNames = new String[]{getString(R.string.transonly), getString(R.string.transonly2), getString(R.string.transonly3)};
-        local = getIntent().getStringExtra("locale");
+//        local = getIntent().getStringExtra("locale");
         mUser_Id = getIntent().getStringExtra("mUser_Id");
         auth = FirebaseAuth.getInstance();
 
@@ -229,8 +229,8 @@ public class Home extends AppCompatActivity
         });
 
 
-        locale = getResources().getConfiguration().locale;
-        Locale.setDefault(locale);
+//        locale = getResources().getConfiguration().locale;
+//        Locale.setDefault(locale);
 
 //        final com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener datefrom = new com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener() {
 //            @Override
@@ -346,7 +346,7 @@ public class Home extends AppCompatActivity
 
     public void getDate() {
         String myFormat = "EEE, MMM d"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         Long currentTime = from.getTimeInMillis();
         long endOfTomorrow = currentTime + DateUtils.DAY_IN_MILLIS
@@ -361,7 +361,7 @@ public class Home extends AppCompatActivity
     private void updateLabelfrom() {
 
         String myFormat = "EEE, MMM d"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
         date_In = sdf.format(from.getTime());
         check_in.setText(getString(R.string.check_in) + "\n" + date_In);
 
@@ -370,7 +370,7 @@ public class Home extends AppCompatActivity
     private void updateLabelto() {
 
         String myFormat = "EEE, MMM d"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
         check_out.setText(getString(R.string.check_out) + "\n" + sdf.format(to.getTime()));
     }
 

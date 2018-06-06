@@ -37,28 +37,28 @@ public class SplachActivity extends FragmentActivity {
     private TextView appSlogan;
     private FirebaseAuth auth;
     public String language;
-    public SharedPreferences sharedPreferences;
-    public SharedPreferences.Editor editor;
     String locale;
+    ChoiceActivity choiceActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.animation1, R.anim.animation2);
         setContentView(R.layout.activity_splach);
-        sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
 
-        locale = getIntent().getStringExtra("locale");
+        choiceActivity = new ChoiceActivity();
+
+        String lang = getLanguage();
+        choiceActivity.setLocale(this, lang);
+
+
+//        locale = getIntent().getStringExtra("locale");
+
         logo = (ImageView) findViewById(R.id.logo_img);
         appTitle = (TextView) findViewById(R.id.track_txt);
         appSlogan = (TextView) findViewById(R.id.pro_txt);
 
         sendTokenToServer();
-//
-//        startService(new Intent(this, FCMRegistrationService.class));
-//         Log.e("Token is ", FirebaseInstanceId.getInstance().getToken());
-        //Token is: fY0si4U-7Zc:APA91bGft0cntLNCHgXDSxUSh2e8mXkZieYvwoDOvG9fYNLmCJD7w61yJo3dTt2V0Ho37BoNLhGQHzWI3t9-glQYUw0_CuWZZ_g0LDjT0AKqQI2FwgmqVMuFaHpSGEizYpWfXTATs2JG
 
         // Font path
         String fontPath = getString(R.string.font_path);
@@ -81,6 +81,16 @@ public class SplachActivity extends FragmentActivity {
                 endSplash();
             }
         }, 3000);
+    }
+
+    public String getLanguage() {
+        String lang = choiceActivity.checkLocal(SplachActivity.this);
+        if (lang == null || lang == "") {
+            lang = "en";
+        }
+        choiceActivity.save_local(SplachActivity.this, lang);
+
+        return lang;
     }
 
     private void flyIn() {
@@ -116,12 +126,12 @@ public class SplachActivity extends FragmentActivity {
                                                    String uid = auth.getCurrentUser().getUid();
                                                    Intent start = new Intent(SplachActivity.this, ChoiceActivity.class);
 //                                                   start.putExtra("company_user_id", uid);
-                                                   start.putExtra("locale", locale);
+//                                                   start.putExtra("locale", locale);
                                                    SplachActivity.this.startActivity(start);
                                                    SplachActivity.this.finish();
                                                } else {
                                                    Intent start = new Intent(SplachActivity.this, ChoiceActivity.class);
-                                                   start.putExtra("locale", locale);
+//                                                   start.putExtra("locale", locale);
                                                    SplachActivity.this.startActivity(start);
                                                    SplachActivity.this.finish();
                                                }
@@ -140,6 +150,7 @@ public class SplachActivity extends FragmentActivity {
         );
 
     }
+
     private void sendTokenToServer() {
         final String token = SharedPrefManager.getInstance(getApplicationContext()).getDeviceToken();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://fettered-disability.000webhostapp.com/RegisterDevice.php",
@@ -148,7 +159,7 @@ public class SplachActivity extends FragmentActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject obj = new JSONObject(response);
-                            Log.e("log", "onResponse: "+response );
+                            Log.e("log", "onResponse: " + response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -1,10 +1,13 @@
 package com.apps.labikaomra.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -46,9 +49,10 @@ public class ChoiceActivity extends AppCompatActivity {
     String mUser_Id;
     private DatabaseReference myDatabase;
     public static Query myPharmacyDatabase;
-    Locale myLocale;
-    String locale;
-    List<String> listemails = new ArrayList<>();
+    static Locale myLocale;
+//    String locale;
+
+    String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,7 @@ public class ChoiceActivity extends AppCompatActivity {
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
-        locale = getIntent().getStringExtra("locale");
+//        locale = getIntent().getStringExtra("locale");
         lincustomer = (View) findViewById(R.id.lincustomer);
         linleader = (View) findViewById(R.id.linleader);
         myAuth = FirebaseAuth.getInstance();
@@ -84,38 +88,6 @@ public class ChoiceActivity extends AppCompatActivity {
     }
 
 
-    private void sendMultiplePush() {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://fettered-disability.000webhostapp.com/SendAlldevices.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        Toast.makeText(ChoiceActivity.this, response, Toast.LENGTH_LONG).show();
-                        Log.e("log", "onResponse: " + response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("title", "ahmed");
-                params.put("message", "10le");
-                params.put("starttime", "1am");
-                params.put("endtime", "5pm");
-
-                return params;
-            }
-        };
-
-        MyVolley.getInstance(this).addToRequestQueue(stringRequest);
-    }
-
     public void createDialog(final int r) {
         AlertDialog alertDialog = new AlertDialog.Builder(ChoiceActivity.this).create();
         alertDialog.setTitle(getString(R.string.alert));
@@ -126,11 +98,11 @@ public class ChoiceActivity extends AppCompatActivity {
                         FirebaseAuth.getInstance().signOut();
                         if (r == R.id.lincustomer) {
                             Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
-                            searchIntent.putExtra("locale", locale);
+//                            searchIntent.putExtra("locale", locale);
                             startActivity(searchIntent);
                         } else {
                             Intent searchIntent = new Intent(ChoiceActivity.this, CompanyLoginActivity.class);
-                            searchIntent.putExtra("locale", locale);
+//                            searchIntent.putExtra("locale", locale);
                             startActivity(searchIntent);
                         }
 
@@ -153,12 +125,12 @@ public class ChoiceActivity extends AppCompatActivity {
                         if (type.equals("user")) {
                             Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
                             searchIntent.putExtra("mUser_Id", myAuth.getCurrentUser().getUid());
-                            searchIntent.putExtra("locale", locale);
+//                            searchIntent.putExtra("locale", locale);
                             startActivity(searchIntent);
                         } else {
                             Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
                             searchIntent.putExtra("mUser_Id", myAuth.getCurrentUser().getUid());
-                            searchIntent.putExtra("locale", locale);
+//                            searchIntent.putExtra("locale", locale);
                             startActivity(searchIntent);
                         }
                     }
@@ -171,7 +143,7 @@ public class ChoiceActivity extends AppCompatActivity {
         } else {
             Intent searchIntent = new Intent(ChoiceActivity.this, Home.class);
             searchIntent.putExtra("mUser_Id", mUser_Id);
-            searchIntent.putExtra("locale", locale);
+//            searchIntent.putExtra("locale", locale);
             startActivity(searchIntent);
         }
 
@@ -192,12 +164,12 @@ public class ChoiceActivity extends AppCompatActivity {
                         if (type.equals("company")) {
                             Intent searchIntent = new Intent(ChoiceActivity.this, CompanyOffersActivity.class);
                             searchIntent.putExtra("company_user_id", myAuth.getCurrentUser().getUid());
-                            searchIntent.putExtra("locale", locale);
+//                            searchIntent.putExtra("locale", locale);
                             startActivity(searchIntent);
                         } else {
                             Intent searchIntent = new Intent(ChoiceActivity.this, CompanyLoginActivity.class);
                             searchIntent.putExtra("company_user_id", myAuth.getCurrentUser().getUid());
-                            searchIntent.putExtra("locale", locale);
+//                            searchIntent.putExtra("locale", locale);
                             startActivity(searchIntent);
                         }
                     }
@@ -212,7 +184,7 @@ public class ChoiceActivity extends AppCompatActivity {
         } else {
             Intent searchIntent = new Intent(ChoiceActivity.this, CompanyLoginActivity.class);
             searchIntent.putExtra("company_user_id", company_user_id);
-            searchIntent.putExtra("locale", locale);
+//            searchIntent.putExtra("locale", locale);
             startActivity(searchIntent);
         }
 
@@ -229,27 +201,47 @@ public class ChoiceActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.language_en) {
-            setLocale("en");
-            Intent loginIntent = new Intent(ChoiceActivity.this, SplachActivity.class);
-            loginIntent.putExtra("locale", "en");
-            startActivity(loginIntent);
+            language = "en";
+            save_local(ChoiceActivity.this, "en");
+            refresh();
             finish();
         } else if (item.getItemId() == R.id.language_ar) {
-            setLocale("ar");
-            Intent loginIntent = new Intent(ChoiceActivity.this, SplachActivity.class);
-            loginIntent.putExtra("locale", "ar");
-            startActivity(loginIntent);
+            language = "ar";
+            save_local(ChoiceActivity.this, "ar");
+            refresh();
             finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void setLocale(String language) {
+    public  void setLocale(Context context, String language) {
         myLocale = new Locale(language);
-        Resources res = getResources();
+        Resources res = context.getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
+        save_local(context, language);
+        res.updateConfiguration(conf, context.getResources().getDisplayMetrics());
+    }
+
+    public  void save_local(Context context, String language) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("language", language);
+        editor.commit();
+
+    }
+
+    public void refresh() {
+        Intent loginIntent = new Intent(ChoiceActivity.this, SplachActivity.class);
+        startActivity(loginIntent);
+    }
+
+    public String checkLocal(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString("language", "");
     }
 }
+
+
+//                res.updateConfiguration(conf, dm);

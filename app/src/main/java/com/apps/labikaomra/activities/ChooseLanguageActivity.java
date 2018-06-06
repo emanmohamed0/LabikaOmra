@@ -18,13 +18,15 @@ import java.util.Locale;
 
 public class ChooseLanguageActivity extends AppCompatActivity {
     Locale myLocale;
-
+    ChoiceActivity choiceActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_language);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getResources().getString(R.string.app_name));
+        choiceActivity = new ChoiceActivity();
 
         // This will get the radiogroup
         RadioGroup rGroup = (RadioGroup) findViewById(R.id.rBGPoly1);
@@ -40,19 +42,21 @@ public class ChooseLanguageActivity extends AppCompatActivity {
                 if (isChecked)
                 {
                     if(checkedRadioButton.getText().toString().equals("English")){
-                        setLocale("en");
+                        choiceActivity.setLocale(ChooseLanguageActivity.this,"en");
+//                        setLocale("en");
                         Intent loginIntent = new Intent(ChooseLanguageActivity.this, SplachActivity.class);
                         startActivity(loginIntent);
                         finish();
                     }else {
-                        setLocale("ar");
+//                        setLocale("ar");
+                        choiceActivity.setLocale(ChooseLanguageActivity.this,"ar");
                         Intent loginIntent = new Intent(ChooseLanguageActivity.this, SplachActivity.class);
                         startActivity(loginIntent);
                         finish();
                     }
 
                     // Changes the textview's text to "Checked: example radiobutton text"
-                    Toast.makeText(ChooseLanguageActivity.this, "Checked:" + checkedRadioButton.getText(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ChooseLanguageActivity.this, "Checked:" + checkedRadioButton.getText(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -81,7 +85,6 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-
 
     }
 }
