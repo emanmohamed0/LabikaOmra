@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.apps.labikaomra.activities.OffersActivity"
+    tools:context="com.app.emaneraky.omrati.activities.OffersActivity"
     tools:showIn="@layout/activity_offers">
 
     <android.support.v7.widget.RecyclerView

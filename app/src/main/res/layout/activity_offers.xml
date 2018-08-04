@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:layoutDirection="ltr"
     android:orientation="vertical"
-    tools:context="com.apps.labikaomra.activities.OffersActivity">
+    tools:context="com.app.emaneraky.omrati.activities.OffersActivity">
 
     <include
         android:id="@+id/toolbar"

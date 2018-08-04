@@ -10,8 +10,7 @@
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <EditText
             android:singleLine="true"
@@ -20,7 +19,7 @@
             android:drawablePadding="@dimen/dp8"
             android:hint="@string/name"
             android:imeOptions="actionNext"
-            android:inputType="textPersonName"></EditText>
+            android:inputType="textPersonName"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout

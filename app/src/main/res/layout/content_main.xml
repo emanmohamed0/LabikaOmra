@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,194 +23,202 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/appbar"
-
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/searchText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/Search"
-                android:textColor="@android:color/black"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/perisent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"
-                android:paddingTop="10dp"
-                android:text="@string/Omera_Company_Touries_and_more"
-                android:textSize="@dimen/sp18" />
-
+            android:layout_height="match_parent"
+            android:layout_below="@+id/appbar">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layoutDirection="ltr"
-                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/pad_10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/shapetext"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingTop="@dimen/pad_10dp"
-                        android:text="@string/Enter_Transportation"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp" />
-
-                    <Spinner
-                        android:id="@+id/type_trans"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:verticalScrollbarPosition="defaultPosition" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/shapetext"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingTop="@dimen/pad_10dp"
-                        android:text="@string/Enter_Distination"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp" />
-
-                    <Spinner
-                        android:id="@+id/type_dest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/pad_10dp"
-                        android:entries="@array/type_places"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:verticalScrollbarPosition="defaultPosition" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:layoutDirection="ltr"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/check_in"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/pad_10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/shapetext"
-                    android:gravity="center"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="@string/check_in"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/check_out"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/shapetext"
-                    android:gravity="center"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="@string/check_out"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/num_seat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/type_bus"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/shapetext"
-                android:gravity="center"
-                android:hint="@string/Number_seat"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:paddingBottom="@dimen/pad_10dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:paddingTop="@dimen/pad_10dp" />
-
-            <Button
-                android:id="@+id/next"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="35dp"
-                android:background="@drawable/button_style"
-                android:text="@string/next"
-                android:textColor="@android:color/white" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="235dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtPop"
+                    android:id="@+id/searchText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="@dimen/pad_10dp"
-                    android:paddingTop="10dp"
-                    android:text="@string/best"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/Search"
+                    android:gravity="left"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/popDest"
+                <TextView
+                    android:id="@+id/perisent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
 
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/Omera_Company_Touries_and_more"
+                    android:textSize="@dimen/sp18" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layoutDirection="ltr"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/pad_10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapetext"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingTop="@dimen/pad_10dp"
+                            android:text="@string/Enter_Transportation"
+                            android:textColor="@android:color/black"
+                            android:textSize="20sp" />
+
+                        <Spinner
+                            android:id="@+id/type_trans"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:verticalScrollbarPosition="defaultPosition" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapetext"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingTop="@dimen/pad_10dp"
+                            android:text="@string/Enter_Distination"
+                            android:textColor="@android:color/black"
+                            android:textSize="20sp" />
+
+                        <Spinner
+                            android:id="@+id/type_dest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pad_10dp"
+                            android:entries="@array/type_places"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:verticalScrollbarPosition="defaultPosition" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layoutDirection="ltr"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/check_in"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/pad_10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapetext"
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/check_in"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/check_out"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapetext"
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/check_out"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/num_seat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/type_bus"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/shapetext"
+                    android:gravity="center"
+                    android:hint="@string/Number_seat"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:paddingBottom="@dimen/pad_10dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="@dimen/pad_10dp" />
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="35dp"
+                    android:background="@drawable/button_style"
+                    android:text="@string/next"
+                    android:textColor="@android:color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="235dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtPop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="@dimen/pad_10dp"
+                        android:paddingTop="10dp"
+                        android:gravity="center"
+                        android:text="@string/best"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/popDest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
+
             </LinearLayout>
 
-
-        </LinearLayout>
-
+        </ScrollView>
     </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

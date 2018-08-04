@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:888906199724:android:66daab92924d33be",
+        "mobilesdk_app_id": "1:888906199724:android:2d7a1a05bd0c4bf2",
         "android_client_info": {
-          "package_name": "com.apps.labikaomra"
+          "package_name": "com.app.emaneraky.omrati"
         }
       },
       "oauth_client": [
         {
-          "client_id": "888906199724-1nir2haajkqitmna377o5k9f3tg98oju.apps.googleusercontent.com",
+          "client_id": "888906199724-45shp4qf5rrg5gdqc9v8rd4i05haqk88.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.apps.labikaomra",
+            "package_name": "com.app.emaneraky.omrati",
             "certificate_hash": "bc4bd7b13d4bf2ec39500829bf0ada203df0dab7"
           }
         },
@@ -40,7 +40,67 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "888906199724-jqmmk6b5opp3r0i11q7h2a6uv1pmq67i.apps.googleusercontent.com",
+              "client_id": "888906199724-9id87oo4kt4sshgiptddlloqat9qjco9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888906199724:android:66daab92924d33be",
+        "android_client_info": {
+          "package_name": "com.apps.labikaomra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888906199724-1nir2haajkqitmna377o5k9f3tg98oju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apps.labikaomra",
+            "certificate_hash": "bc4bd7b13d4bf2ec39500829bf0ada203df0dab7"
+          }
+        },
+        {
+          "client_id": "888906199724-3t90eufvoo0nvkelntm5d0v86vh63dae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apps.labikaomra",
+            "certificate_hash": "6c961dfbdb26c3e672970ec57e71a461067a0804"
+          }
+        },
+        {
+          "client_id": "888906199724-3l0n98vj8708rgla4baj5ohiv3smhg2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apps.labikaomra",
+            "certificate_hash": "5feab3178aa5a31f29b54ede79dc58809e9e9822"
+          }
+        },
+        {
+          "client_id": "888906199724-jqmmk6b5opp3r0i11q7h2a6uv1pmq67i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQc1As7MU_X3uA44_WUsZ01QWzSUzJLak"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888906199724-9id87oo4kt4sshgiptddlloqat9qjco9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

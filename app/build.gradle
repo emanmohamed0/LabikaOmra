@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId "com.apps.labikaomra"
+        applicationId "com.app.emaneraky.omrati"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1

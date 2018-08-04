@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:layoutDirection="ltr"
-    tools:context="com.apps.labikaomra.activities.CompanyOfferDetailActivity">
+    tools:context="com.app.emaneraky.omrati.activities.CompanyOfferDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

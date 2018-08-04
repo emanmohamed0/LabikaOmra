@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:layoutDirection="ltr"
     android:background="@drawable/photo"
-    tools:context="com.apps.labikaomra.activities.CompanyRegisterActivity">
+    tools:context="com.app.emaneraky.omrati.activities.CompanyRegisterActivity">
 
     <include layout="@layout/content_company_register" />
 

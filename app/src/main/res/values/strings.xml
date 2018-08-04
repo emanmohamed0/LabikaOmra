@@ -13,6 +13,8 @@
     <string name="error_notadd">\"Error : not add \"</string>
     <string name="welcome">Welcome</string>
     <string name="data">data</string>
+    <string name="language_ar">Arabic</string>
+    <string name="language_en">English</string>
     <string name="Offer_Detail">Offer Detail</string>
     <string name="error_num">Error number seat</string>
     <string name="register">Register</string>
@@ -222,5 +224,9 @@
     <string name="pricebus">Price of Transportation</string>
     <string name="pricetotal">Price Total(Residence+Transport)</string>
     <string name="pricetotalchair">Price Total with Number Seat</string>
+    <string name="forgetpassword">Forget password?</string>
+    <string name="sendPass">The password sent</string>
+    <string name="enteremail">Please enter your email</string>
+    <string name="companyname">Name Company :</string>
 
 </resources>

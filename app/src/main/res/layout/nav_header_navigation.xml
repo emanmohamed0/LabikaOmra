@@ -24,14 +24,14 @@
         android:layout_height="wrap_content"
         android:gravity="bottom"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-         />
+        />
     <!--<TextView-->
-        <!--android:id="@+id/email"-->
-        <!--android:text="@string/app_name"-->
-        <!--android:gravity="center"-->
-        <!--android:textColor="@android:color/black"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--/>-->
+    <!--android:id="@+id/email"-->
+    <!--android:text="@string/app_name"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--/>-->
 
 </LinearLayout>

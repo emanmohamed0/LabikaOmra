@@ -1,172 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_add_offer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/photo"
-    android:layoutDirection="ltr"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.apps.labikaomra.activities.AddOfferActivity"
-    tools:showIn="@layout/activity_add_offer">
+    android:layoutDirection="ltr">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
+            style="@style/AuthFieldContainer"
+            android:id="@+id/editTextLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingBottom="25dp"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/editTextLayout"
-                style="@style/AuthFieldContainer">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/imageView_profile"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:src="@drawable/ic_add_a_photo_pry" />
 
-                    <ImageView
-                        android:id="@+id/imageView_profile"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:src="@drawable/ic_add_a_photo_pry" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_phote" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_phote" />
-                </LinearLayout>
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnStartDay"
+                    style="@style/add_offer"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:background="@drawable/button_style2"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/startday"
-                    android:imeOptions="actionDone"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp18" />
+                    android:text="@string/startday" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnAttendStartTime"
+                    style="@style/add_offer"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:imeOptions="actionDone"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:background="@drawable/button_style2"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/attend_start_time"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp18" />
+                    android:text="@string/attend_start_time" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnStartTime"
+                    style="@style/add_offer"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:background="@drawable/button_style2"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/start_time"
-                    android:imeOptions="actionDone"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp18" />
+                    android:text="@string/start_time" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnBackDay"
+                    style="@style/add_offer"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:background="@drawable/button_style2"
-                    android:padding="@dimen/padding_8"
-                    android:imeOptions="actionDone"
-                    android:text="@string/back_day"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp18" />
+                    android:text="@string/back_day" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnAttendEndTime"
+                    style="@style/add_offer"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:imeOptions="actionDone"
-                    android:background="@drawable/button_style2"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/attend_end_time"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp18" />
+                    android:text="@string/attend_end_time" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnEndTime"
+                    style="@style/add_offer"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:background="@drawable/button_style2"
-                    android:padding="@dimen/padding_8"
-                    android:imeOptions="actionDone"
-                    android:text="@string/end_time"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp18" />
+                    android:text="@string/end_time" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnLocation"
+                    style="@style/add_offer"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:imeOptions="actionDone"
-                    android:background="@drawable/button_style2"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/location"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp18" />
+                    android:text="@string/location" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnContentOfferImgs"
+                    style="@style/add_offer"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
-                    android:layout_marginTop="@dimen/pad_10dp"
-                    android:imeOptions="actionDone"
-                    android:background="@drawable/button_style2"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/choose_multi_imgs"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp18" />
+                    android:text="@string/choose_multi_imgs" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
                     android:layout_marginTop="@dimen/pad_10dp"
                     android:background="@drawable/button_style2"
                     android:orientation="vertical"
@@ -177,7 +107,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/shap_back"
                         android:paddingBottom="15dp"
                         android:paddingTop="@dimen/pad_5dp"
                         android:text="@string/type_status"
@@ -212,11 +141,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
-                    android:background="@drawable/button_style2"
+                    android:layout_marginTop="@dimen/pad_10dp"
                     android:orientation="vertical"
+                    android:background="@drawable/button_style2"
                     android:padding="@dimen/pad_5dp"
                     android:text="@string/end_time"
                     android:textColor="@color/colorPrimary">
@@ -260,8 +187,6 @@
                     android:id="@+id/spinner_dest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
                     android:layout_marginTop="@dimen/pad_10dp"
                     android:background="@color/colorPrimary"
                     android:entries="@array/type_places"
@@ -279,7 +204,7 @@
                         android:drawablePadding="@dimen/dp8"
                         android:hint="@string/hotelname_hint"
                         android:imeOptions="actionNext"
-                        android:singleLine="true"></EditText>
+                        android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -293,7 +218,7 @@
                         android:drawablePadding="@dimen/dp8"
                         android:hint="@string/deals_hint"
                         android:imeOptions="actionNext"
-                        android:singleLine="true"></EditText>
+                        android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -308,7 +233,7 @@
                         android:hint="@string/chairs_count_hint"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:singleLine="true"></EditText>
+                        android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -323,7 +248,7 @@
                         android:hint="@string/priceplace"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:singleLine="true"></EditText>
+                        android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -338,7 +263,7 @@
                         android:hint="@string/pricebus"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:singleLine="true"></EditText>
+                        android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -353,7 +278,7 @@
                         android:hint="@string/pricetotal"
                         android:imeOptions="actionDone"
                         android:inputType="number"
-                        android:singleLine="true"></EditText>
+                        android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -361,16 +286,13 @@
                 android:id="@+id/btnAddOffer"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@id/editTextLayout"
-                android:layout_marginLeft="26dp"
-                android:layout_marginRight="26dp"
+                android:layout_marginTop="@dimen/pad_10dp"
                 android:background="@drawable/button_style"
                 android:padding="@dimen/padding_8"
+                android:layout_marginBottom="20dp"
                 android:text="@string/add_offer"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp18" />
-
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 </RelativeLayout>

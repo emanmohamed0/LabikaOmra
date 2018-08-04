@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_company_login"
     android:layout_width="match_parent"
-    android:background="@drawable/photo"
     android:layout_height="match_parent"
+    android:background="@drawable/photo"
     android:layoutDirection="ltr"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.apps.labikaomra.activities.CompanyLoginActivity"
+    tools:context="com.app.emaneraky.omrati.activities.CompanyLoginActivity"
     tools:showIn="@layout/activity_company_login">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -57,19 +57,45 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/layout_forgetpass"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:layout_marginRight="@dimen/margin_16"-->
+            <!--android:layout_marginTop="@dimen/margin_16"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/forgetpassword"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/sp18" />-->
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:background="@color/colorCustom" />-->
+            <!--</LinearLayout>-->
+
+
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_login"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_below="@+id/editTextLayout"
-                android:layout_margin="@dimen/margin_16"
-                android:layout_marginBottom="@dimen/margin_16"
-                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginTop="25dp"
                 android:background="@drawable/button_style"
-                android:padding="@dimen/padding_8"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
                 android:text="@string/login"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp18" />
+
+
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_signup"
                 android:layout_width="match_parent"

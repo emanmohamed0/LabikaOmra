@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:layoutDirection="ltr"
     android:background="@drawable/photo"
-    tools:context="com.apps.labikaomra.activities.UserLoginActivity">
+    tools:context="com.app.emaneraky.omrati.activities.UserLoginActivity">
 
 
     <include layout="@layout/content_user_login" />

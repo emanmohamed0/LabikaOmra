@@ -18,6 +18,8 @@
     <string name="dialogactive">من فضلك اتصل بهذا الرقم لتفعيل حسابك</string>
     <string name="highprice">أعلى سعر</string>
     <string name="alert">تحذير</string>
+    <string name="language_ar">العربية</string>
+    <string name="language_en">الانجليزية</string>
     <string name="offer_expire">العرض انتهي</string>
     <string name="OK">موافقة</string>
     <string name="lowprice">أقل سعر</string>
@@ -138,7 +140,7 @@
     <string name="add_phote">اضافة صوره</string>
     <string name="Offer_Detail">تفاصيل العرض</string>
     <string name="Type_Food">نوع الوجبات</string>
-    <string name="choose_lang"> اختر اللغة : </string>
+    <string name="choose_lang"> تغيير اللغة </string>
     <string name="go">ذهاب فقط </string>
     <string name="back">عودة فقط</string>
     <string name="goback">ذهاب وعودة</string>
@@ -181,6 +183,10 @@
     <string name="transonly">سكن</string>
     <string name="transonly2">مواصلات</string>
     <string name="transonly3">سكن ومواصلات</string>
+    <string name="forgetpassword">لا تتذكر كلمة المرور؟</string>
+    <string name="sendPass">تم ارسال الباسورد</string>
+    <string name="enteremail">يرجى ادخال البريد الالكترونى</string>
+    <string name="companyname">اسم الشركة :</string>
 
     <string-array name="types_hotel">
 

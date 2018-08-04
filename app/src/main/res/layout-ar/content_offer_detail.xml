@@ -7,8 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.apps.labikaomra.activities.CompanyOfferDetailActivity"
     tools:showIn="@layout/activity_company_offer_detail">
 
     <ScrollView
@@ -72,19 +70,6 @@
                             app:civ_border_color="@color/colorAccent"
                             app:civ_border_width="3dp" />
 
-                        <!--<RatingBar-->
-                        <!--android:id="@+id/profile_pharmacy_rate"-->
-                        <!--style="@style/Base.Widget.AppCompat.RatingBar.Small"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="bottom"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:numStars="5"-->
-                        <!--android:paddingTop="3dp"-->
-                        <!--android:rating="4"-->
-                        <!--android:stepSize=".1"-->
-                        <!--android:theme="@style/RatingBar" />-->
-
                         <TextView
                             android:id="@+id/hotelNameTxt"
                             android:layout_width="130dp"
@@ -108,7 +93,6 @@
                 card_view:cardElevation="2dp">
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -133,17 +117,28 @@
                         android:layoutDirection="rtl"
                         android:orientation="horizontal">
 
+                        <ImageView
+                            android:id="@+id/imageCompany"
+                            android:layout_width="0dp"
+                            android:src="@drawable/logolabika"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border"
+                            android:scaleType="fitXY" />
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginRight="@dimen/pad_10dp"
                             android:layout_weight="1"
-                            android:gravity="right"
+                            android:gravity="left"
+                            android:paddingLeft="15dp"
                             android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/dispaly_nameCompany"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
+                                android:gravity="center"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:text="@string/companyname_hint"
@@ -153,7 +148,8 @@
 
                             <TextView
                                 android:id="@+id/bus"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
+                                android:gravity="center"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="@dimen/pad_10dp"
@@ -164,7 +160,8 @@
 
                             <TextView
                                 android:id="@+id/food"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
+                                android:gravity="center"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="@dimen/pad_10dp"
@@ -175,7 +172,8 @@
 
                             <TextView
                                 android:id="@+id/hotels"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
+                                android:gravity="center"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="10dp"
@@ -186,7 +184,8 @@
 
                             <TextView
                                 android:id="@+id/seat"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
+                                android:gravity="center"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="10dp"
@@ -197,7 +196,8 @@
 
                             <TextView
                                 android:id="@+id/price"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
+                                android:gravity="center"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="@dimen/pad_10dp"
@@ -207,14 +207,6 @@
                                 android:textStyle="bold|italic" />
                         </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/imageCompany"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/border"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/ka" />
 
                     </LinearLayout>
 
@@ -296,6 +288,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:paddingRight="@dimen/pad_5dp"
                             android:drawableRight="@drawable/ic_directions_bus_black_24dp"
                             android:text="@string/Transportation"
                             android:textColor="@android:color/black"
@@ -314,6 +307,7 @@
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
                         android:textStyle="italic" />
+
                     <TextView
                         android:id="@+id/priceplace"
                         android:layout_width="match_parent"
@@ -324,6 +318,7 @@
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
                         android:textStyle="italic" />
+
                     <TextView
                         android:id="@+id/pricetotal"
                         android:layout_width="match_parent"

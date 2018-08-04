@@ -23,7 +23,7 @@
             android:id="@+id/linearVisible"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layoutDirection="ltr"
+            android:layoutDirection="rtl"
             android:orientation="horizontal"
             android:visibility="visible">
 
@@ -41,20 +41,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/companyname_hint"
-                    android:gravity="left"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
+                    android:gravity="right"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/bus"
                     android:layout_width="match_parent"
-                    android:gravity="left"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/pad_10dp"
                     android:paddingRight="@dimen/pad_10dp"
                     android:paddingTop="@dimen/pad_10dp"
                     android:text="@string/type_bus"
+                    android:gravity="right"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp"
                     android:textStyle="italic" />
@@ -62,33 +62,31 @@
                 <TextView
                     android:id="@+id/food"
                     android:layout_width="match_parent"
-                    android:gravity="left"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/pad_10dp"
                     android:paddingRight="@dimen/pad_10dp"
                     android:paddingTop="@dimen/pad_10dp"
-                    android:text="Type_Food"
+                    android:text="الوجبات"
+                    android:gravity="right"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp"
                     android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/hotels"
-                    android:layout_width="match_parent"
-                    android:gravity="left"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/pad_10dp"
                     android:paddingRight="@dimen/pad_10dp"
                     android:paddingTop="10dp"
-                    android:text="Type_Hotels"
+                    android:text="الفندق"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp"
                     android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/price"
-                    android:layout_width="match_parent"
-                    android:gravity="left"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/pad_10dp"
                     android:paddingRight="@dimen/pad_10dp"
