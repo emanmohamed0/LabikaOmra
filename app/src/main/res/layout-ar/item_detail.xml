@@ -22,7 +22,7 @@
         <LinearLayout
             android:id="@+id/linearVisible"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="160dp"
             android:layoutDirection="rtl"
             android:orientation="horizontal"
             android:visibility="visible">

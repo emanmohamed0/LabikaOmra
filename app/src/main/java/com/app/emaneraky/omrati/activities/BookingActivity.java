@@ -1,14 +1,15 @@
 package com.app.emaneraky.omrati.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.emaneraky.omrati.ConstantsLabika;
 import com.app.emaneraky.omrati.R;
@@ -32,27 +33,45 @@ public class BookingActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private String current_User, mUser_Id;
     static Context c;
+    TextView lbl_name;
+    ImageView img_back;
     String nameCompany;
     private DatabaseReference mBookingRefData;
     private DatabaseReference mOfferRefData;
     private DatabaseReference mCompanyRefData;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(BookingActivity.this, Home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.bookingbar);
-        toolbar.setTitle(R.string.Reservations);
-        setSupportActionBar(toolbar);
+        lbl_name = (TextView) findViewById(R.id.lbl_name);
+        lbl_name.setText(R.string.Reservations);
+        img_back = (ImageView) findViewById(R.id.img_back);
 
-        c =getBaseContext();
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        c = getBaseContext();
         mBookingList = (RecyclerView) findViewById(R.id.bookingrecycle);
         mBookingList.setHasFixedSize(true);
         mBookingList.setLayoutManager(new LinearLayoutManager(this));
 
         auth = FirebaseAuth.getInstance();
-        mUser_Id = Global.get_UserID(BookingActivity.this,"mUser_Id");
+        mUser_Id = Global.get_UserID(BookingActivity.this, "mUser_Id");
         current_User = auth.getCurrentUser().getUid();
 
         mBookingRefData = FirebaseDatabase.getInstance().getReference().child(ConstantsLabika.FIREBASE_LOCATION_BOOKING).child(mUser_Id);
@@ -77,32 +96,37 @@ public class BookingActivity extends AppCompatActivity {
                 mOfferRefData.child(list_UserID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            if (data != null) {
+                                final String hotelname = dataSnapshot.child("hotelName").getValue().toString();
+                                final String busLevel = dataSnapshot.child("destLevel").getValue().toString();
+                                final String deals = dataSnapshot.child("deals").getValue().toString();
+                                final String price = dataSnapshot.child("priceTotal").getValue().toString();
+                                final String offerImage = dataSnapshot.child("offerImage").getValue().toString();
 
-                        final String hotelname = dataSnapshot.child("hotelName").getValue().toString();
-                        final String busLevel = dataSnapshot.child("destLevel").getValue().toString();
-                        final String deals =dataSnapshot.child("deals").getValue().toString();
-                        final String price = dataSnapshot.child("priceTotal").getValue().toString();
-                        final String offerImage = dataSnapshot.child("offerImage").getValue().toString();
+                                viewHolder.setHotels(hotelname);
+                                viewHolder.setBus(busLevel);
+                                viewHolder.setFood(deals);
+                                viewHolder.setPrice(price);
+                                viewHolder.setImage(offerImage);
+                                nameCompany = dataSnapshot.child("companyKeyId").getValue().toString();
 
-                        viewHolder.setHotels(hotelname);
-                        viewHolder.setBus(busLevel);
-                        viewHolder.setFood(deals);
-                        viewHolder.setPrice(price);
-                        viewHolder.setImage(offerImage);
-                        nameCompany = dataSnapshot.child("companyKeyId").getValue().toString();
+                                mCompanyRefData.child(nameCompany).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String firstName = dataSnapshot.child("firstName").getValue().toString();
+                                        viewHolder.setName(firstName);
+                                    }
 
-                        mCompanyRefData.child(nameCompany).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                String firstName = dataSnapshot.child("firstName").getValue().toString();
-                                viewHolder.setName(firstName);
-                            }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                            }
-                        });
-
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
+                            } else
+                                Toast.makeText(c, R.string.nodataload, Toast.LENGTH_SHORT).show();
+                        }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 

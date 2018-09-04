@@ -14,13 +14,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -53,9 +53,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
+        implements
         AdapterView.OnItemSelectedListener, com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener {
-
 
     private com.wdullaer.materialdatetimepicker.date.DatePickerDialog dpd;
     FirebaseDatabase firebaseDatabase;
@@ -64,6 +63,7 @@ public class Home extends AppCompatActivity
     Button next_btn;
     Calendar from, to;
     EditText numseat;
+    ImageView menu, img_back;
     String mUser_Id, local;
     String placeLevel, transLevel;
     //    Locale locale;
@@ -73,6 +73,9 @@ public class Home extends AppCompatActivity
     List<Offer> categoriesModel;
     LinearLayoutManager horizontalLayoutManagaer;
     FirebaseAuth auth;
+    TextView nav_reservations, nav_Favorite_Companies, nav_Service_Provider, nav_Languages, nav_share;
+    String lang;
+    DrawerLayout drawer;
     String date_Out, date_In;
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 100;
     int clicked = 0;
@@ -82,13 +85,9 @@ public class Home extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.app_name));
-        setSupportActionBar(toolbar);
 
         countryNames = new String[]{getString(R.string.transonly), getString(R.string.transonly2), getString(R.string.transonly3)};
-//        local = getIntent().getStringExtra("locale");
-//        mUser_Id = getIntent().getStringExtra("mUser_Id");
+
         mUser_Id = Global.get_UserID(Home.this, "mUser_Id");
         auth = FirebaseAuth.getInstance();
 
@@ -98,13 +97,101 @@ public class Home extends AppCompatActivity
         firebaseDatabase = FirebaseDatabase.getInstance();
         cateagory = firebaseDatabase.getReference("Cateagory");
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        nav_reservations = (TextView) findViewById(R.id.nav_reservations);
+        nav_Favorite_Companies = (TextView) findViewById(R.id.nav_Favorite_Companies);
+        nav_Service_Provider = (TextView) findViewById(R.id.nav_Service_Provider);
+        nav_Languages = (TextView) findViewById(R.id.nav_Languages);
+        nav_share = (TextView) findViewById(R.id.nav_share);
+
+        nav_reservations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (auth.getCurrentUser() == null) {
+                    Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
+                    loginIntent.putExtra("mNumSeat", "0");
+                    startActivity(loginIntent);
+                } else {
+                    if (mUser_Id != null) {
+                        mDatabase.child(ConstantsLabika.FIREBASE_LOCATION_USERS).child(mUser_Id).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String type = dataSnapshot.child("type").getValue().toString();
+                                if (type.equals("user")) {
+                                    Intent bookingIntent = new Intent(Home.this, BookingActivity.class);
+//                                bookingIntent.putExtra("mUser_Id", auth.getCurrentUser().getUid().toString());
+
+                                    startActivity(bookingIntent);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+        nav_Favorite_Companies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (auth.getCurrentUser() == null) {
+                    Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
+                    loginIntent.putExtra("mNumSeat", "0");
+                    startActivity(loginIntent);
+                } else {
+                    if (auth.getCurrentUser().getUid().toString() != null) {
+                        mDatabase.child(ConstantsLabika.FIREBASE_LOCATION_USERS).child(mUser_Id).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String type = dataSnapshot.child("type").getValue().toString();
+                                if (type.equals("user")) {
+                                    Intent favoriteIntent = new Intent(Home.this, FavoriteActivity.class);
+//                                favoriteIntent.putExtra("mUser_Id", auth.getCurrentUser().getUid().toString());
+                                    startActivity(favoriteIntent);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+                }
+            }
+        });
+        nav_Service_Provider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent searchIntent = new Intent(Home.this, CompanyLoginActivity.class);
+                startActivity(searchIntent);
+                finish();
+            }
+        });
+        nav_Languages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialogeLanguage();
+
+            }
+        });
+        nav_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share) + " \n https://play.google.com/store");
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, "Share App"));
+            }
+        });
+
 
         recyclerViewPopDest = (RecyclerView) findViewById(R.id.popDest);
         recyclerViewPopDest.setHasFixedSize(true);
@@ -133,9 +220,28 @@ public class Home extends AppCompatActivity
             }
         });
 
-
+        lang = Global.checkLocal(Home.this);
         numseat = (EditText) findViewById(R.id.num_seat);
+        menu = (ImageView) findViewById(R.id.menu);
+        img_back = (android.widget.ImageView) findViewById(R.id.img_back);
 
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             onBackPressed();
+            }
+        });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (lang.equals("en")) {
+                    drawer.openDrawer(Gravity.LEFT);
+                } else
+                    drawer.openDrawer(Gravity.RIGHT);
+
+            }
+        });
         final Spinner spinnerPlace = (Spinner) findViewById(R.id.type_dest);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
                 R.array.type_places, android.R.layout.simple_spinner_item);
@@ -387,12 +493,12 @@ public class Home extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+
+        super.onBackPressed();
+        Intent intent = new Intent(Home.this, ChoiceActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 
     public void openDialogeLanguage() {
@@ -404,8 +510,7 @@ public class Home extends AppCompatActivity
         final TextView lbl_language = (TextView) dialog.findViewById(R.id.lbl_language);
         if (lang.equals("en")) {
             lbl_language.setText(getString(R.string.language_ar));
-        }
-        else {
+        } else {
             lbl_language.setText(getString(R.string.language_en));
         }
         lbl_language.setOnClickListener(new View.OnClickListener() {
@@ -414,101 +519,18 @@ public class Home extends AppCompatActivity
                 if (lang.equals("en")) {
                     lbl_language.setText(getString(R.string.language_ar));
                     Global.setLocale(Home.this, "ar");
-                }
-                else {
+                } else {
                     lbl_language.setText(getString(R.string.language_en));
                     Global.setLocale(Home.this, "en");
                 }
-                Intent intent = new Intent(Home.this,SplachActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(Home.this, SplachActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 dialog.dismiss();
             }
         });
         dialog.show();
-}
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_reservations) {
-            if (auth.getCurrentUser() == null) {
-                Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
-                loginIntent.putExtra("mNumSeat", "0");
-                startActivity(loginIntent);
-            } else {
-                if (mUser_Id != null) {
-                    mDatabase.child(ConstantsLabika.FIREBASE_LOCATION_USERS).child(mUser_Id).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String type = dataSnapshot.child("type").getValue().toString();
-                            if (type.equals("user")) {
-                                Intent bookingIntent = new Intent(Home.this, BookingActivity.class);
-//                                bookingIntent.putExtra("mUser_Id", auth.getCurrentUser().getUid().toString());
-
-                                startActivity(bookingIntent);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
-                }
-            }
-        } else if (id == R.id.nav_Favorite_Companies) {
-            if (auth.getCurrentUser() == null) {
-                Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
-                loginIntent.putExtra("mNumSeat", "0");
-                startActivity(loginIntent);
-            } else {
-                if (auth.getCurrentUser().getUid().toString() != null) {
-                    mDatabase.child(ConstantsLabika.FIREBASE_LOCATION_USERS).child(mUser_Id).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String type = dataSnapshot.child("type").getValue().toString();
-                            if (type.equals("user")) {
-                                Intent favoriteIntent = new Intent(Home.this, FavoriteActivity.class);
-//                                favoriteIntent.putExtra("mUser_Id", auth.getCurrentUser().getUid().toString());
-                                startActivity(favoriteIntent);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-
-            }
-        } else if (id == R.id.nav_Languages) {
-            openDialogeLanguage();
-//            Intent intentra = new Intent(Home.this, ChooseLanguageActivity.class);
-//            startActivity(intentra);
-
-        } else if (id == R.id.nav_Service_Provider) {
-            FirebaseAuth.getInstance().signOut();
-            Intent searchIntent = new Intent(Home.this, CompanyLoginActivity.class);
-            startActivity(searchIntent);
-            finish();
-
-        } else if (id == R.id.nav_share) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share) + " \n https://play.google.com/store");
-            sendIntent.setType("text/plain");
-            startActivity(Intent.createChooser(sendIntent,"Share App"));
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {

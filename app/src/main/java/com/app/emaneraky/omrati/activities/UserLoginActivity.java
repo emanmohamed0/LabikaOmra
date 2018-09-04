@@ -55,7 +55,7 @@ public class UserLoginActivity extends BaseActivity implements GoogleApiClient.C
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final int RC_SIGN_IN = 9001;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "HomeActivity";
     private String idToken;
     public SharedPrefManager sharedPrefManager;
     private final Context mContext = this;

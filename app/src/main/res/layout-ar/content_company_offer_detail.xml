@@ -20,85 +20,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:cardBackgroundColor="#091a32"
-                app:cardElevation="2dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/button_style"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_gravity="bottom"
-                            android:background="@color/colorPrimary" />
-
-                        <ss.com.bannerslider.views.BannerSlider
-                            android:id="@+id/slider"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="50dp"
-                            app:paddingEnd="120dp"
-                            app:pager_animation="CubeIn" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:layout_below="@id/slider"
-                            android:layout_gravity="bottom"
-                            android:layout_marginBottom="48dp"
-                            android:background="@color/colorAccent" />
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/profilrImg"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_gravity="bottom"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:background="@drawable/button_style"
-                            app:civ_border_color="@color/colorAccent"
-                            app:civ_border_width="3dp" />
-
-                        <!--<RatingBar-->
-                        <!--android:id="@+id/profile_pharmacy_rate"-->
-                        <!--style="@style/Base.Widget.AppCompat.RatingBar.Small"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="bottom"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:numStars="5"-->
-                        <!--android:paddingTop="3dp"-->
-                        <!--android:rating="4"-->
-                        <!--android:stepSize=".1"-->
-                        <!--android:theme="@style/RatingBar" />-->
-
-                        <TextView
-                            android:id="@+id/hotelNameTxt"
-                            android:layout_width="130dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="bottom"
-                            android:layout_marginBottom="40dp"
-                            android:layout_marginLeft="115dp"
-                            android:background="@drawable/button_style"
-                            android:gravity="center"
-                            android:textColor="#FFF" />
-
-                    </FrameLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                android:layout_height="250dp"
+                app:auto_cycle="true"
+                app:pager_animation="Accordion"
+                app:pager_animation_span="1100" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -121,7 +49,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/padding_8"
                         android:paddingRight="@dimen/padding_14"
-                        android:text="Offer Detail"
+                        android:text="تفاصيل العرض"
                         android:textColor="@android:color/white"
                         app:buttonColor="@color/colorPrimary" />
 
@@ -357,6 +285,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="right|center_vertical"
                                     android:layout_weight="1"
+                                    android:padding="@dimen/pad_10dp"
                                     android:textColor="@color/about_description_color" />
 
                                 <ImageView

@@ -226,7 +226,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.postViewHold
 
         void setPrice(String Title) {
             TextView txt_title = (TextView) myView.findViewById(R.id.price);
-            txt_title.setText("Ryial " + Title);
+            txt_title.setText(mContext.getString(R.string.coin)+" " + Title);
         }
 
     }

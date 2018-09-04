@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
@@ -24,6 +25,8 @@
             android:drawableLeft="@drawable/ic_assignment_black_24dp"
             android:drawablePadding="@dimen/pad_10dp"
             android:padding="15dp"
+            android:gravity="left"
+            android:layout_gravity="left"
             android:text="@string/Reservations"
             android:textColor="@android:color/black" />
 
@@ -33,6 +36,8 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_favorite_pry"
             android:drawablePadding="@dimen/pad_10dp"
+            android:gravity="left"
+            android:layout_gravity="left"
             android:padding="15dp"
             android:text="@string/Favorite_Companies"
             android:textColor="@android:color/black" />
@@ -40,9 +45,11 @@
         <TextView
             android:id="@+id/nav_Service_Provider"
             android:layout_width="match_parent"
+            android:gravity="left"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_services"
             android:drawablePadding="@dimen/pad_10dp"
+            android:layout_gravity="left"
             android:padding="15dp"
             android:text="@string/Service_Provider"
             android:textColor="@android:color/black" />
@@ -54,6 +61,8 @@
             android:drawableLeft="@drawable/ic_menu_manage"
             android:drawablePadding="@dimen/pad_10dp"
             android:padding="15dp"
+            android:gravity="left"
+            android:layout_gravity="left"
             android:text="@string/Languages"
             android:textColor="@android:color/black" />
 
@@ -64,6 +73,8 @@
             android:drawableLeft="@drawable/ic_menu_share"
             android:drawablePadding="@dimen/pad_10dp"
             android:padding="15dp"
+            android:gravity="left"
+            android:layout_gravity="left"
             android:text="@string/Share_Application"
             android:textColor="@android:color/black" />
     </LinearLayout>

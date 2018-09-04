@@ -154,6 +154,7 @@
     <string name="Communicate">Communicate</string>
     <string name="transonly">Residence</string>
     <string name="transonly2">Transport</string>
+    <string name="coin">Riyal</string>
     <string name="transonly3">Residence+Transport</string>
 
     <string-array name="type_transport">
@@ -228,5 +229,7 @@
     <string name="sendPass">The password sent</string>
     <string name="enteremail">Please enter your email</string>
     <string name="companyname">Name Company :</string>
+    <string name="FavoriteOffers">Favorite Offers</string>
+    <string name="Companies">Companies</string>
 
 </resources>

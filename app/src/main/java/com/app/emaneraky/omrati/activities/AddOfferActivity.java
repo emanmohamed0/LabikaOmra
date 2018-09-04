@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -50,6 +51,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,6 +60,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
 import com.gun0912.tedpicker.Config;
 
 public class AddOfferActivity extends AppCompatActivity {
@@ -91,6 +94,7 @@ public class AddOfferActivity extends AppCompatActivity {
     int dialogFlag = 0;
     Calendar c, from, to;
     String company_user_id;
+    String locationAddress;
     private EditText inputHotelName, inputDeals, inputPriceTotal, inputPriceBus, inputPriceplace, inputChairCount;
 
     DatePickerDialog.OnDateSetListener date_listener = new DatePickerDialog.OnDateSetListener() {
@@ -149,7 +153,7 @@ public class AddOfferActivity extends AppCompatActivity {
         c = Calendar.getInstance();
         from = Calendar.getInstance();
         to = Calendar.getInstance();
-        company_user_id = Global.get_UserID(AddOfferActivity.this,"company_user_id");
+        company_user_id = Global.get_UserID(AddOfferActivity.this, "company_user_id");
 //        company_user_id = getIntent().getStringExtra("company_user_id");
         mClientsDatabase = FirebaseDatabase.getInstance().getReference();
         mystorage = FirebaseStorage.getInstance().getReference();
@@ -554,9 +558,25 @@ public class AddOfferActivity extends AppCompatActivity {
             Toast.makeText(mContext, R.string.add_doc_tost_lat, Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
-            location = getAddress(ChooseLocationActivity.lat, ChooseLocationActivity.lang);
+            set_current_location_data();
+//            location = getAddress(ChooseLocationActivity.lat, ChooseLocationActivity.lang);
         }
         return valid;
+    }
+
+    public String set_current_location_data() {
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        List<Address> addresses = new ArrayList<Address>();
+        try {
+            addresses = geocoder.getFromLocation(ChooseLocationActivity.lat, ChooseLocationActivity.lang, 1);
+            if (addresses != null && addresses.size() > 0) {
+                Address address = addresses.get(0);
+                 locationAddress = address.getAddressLine(0).toString();
+            }
+        } catch (Exception ex) {
+            Log.i("Exception", ex + "");
+        }
+        return locationAddress;
     }
 
     void radio() {
@@ -611,7 +631,8 @@ public class AddOfferActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             if (requestCode == 2) {
-                location = getAddress(ChooseLocationActivity.lat, ChooseLocationActivity.lang);
+                location = set_current_location_data();
+//                location = getAddress(ChooseLocationActivity.lat, ChooseLocationActivity.lang);
                 btnLocation.setText(location);
             }
             if (requestCode == 1 && resultCode == RESULT_OK) {

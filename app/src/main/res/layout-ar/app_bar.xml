@@ -5,7 +5,7 @@
     android:layout_height="60dp"
     android:background="@color/colorPrimary"
     android:gravity="center"
-    android:layoutDirection="rtl"
+    android:layoutDirection="ltr"
     android:orientation="horizontal">
 
 
@@ -14,29 +14,23 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
-        android:gravity="right">
+        android:gravity="left">
 
         <ImageView
             android:id="@+id/img_back"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:scaleX="-1"
             android:src="@drawable/headerback" />
-
-        <TextView
-            android:id="@+id/lbl_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/sp15"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp20" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/lbl_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_marginRight="@dimen/sp15"
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp20" />
 
 </LinearLayout>
-
-
-
-

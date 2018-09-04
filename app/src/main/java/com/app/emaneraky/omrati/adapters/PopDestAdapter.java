@@ -11,12 +11,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.emaneraky.omrati.ConstantsLabika;
 import com.app.emaneraky.omrati.R;
 import com.app.emaneraky.omrati.activities.OfferDetailActivity;
-import com.app.emaneraky.omrati.constans.Global;
 import com.app.emaneraky.omrati.models.Offer;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +53,7 @@ public class PopDestAdapter extends RecyclerView.Adapter<PopDestAdapter.postView
     public postViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
         itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_detail, parent, false);
+                .inflate(R.layout.item_popdest, parent, false);
 
         return new postViewHolder(itemView);
     }
@@ -96,7 +94,7 @@ public class PopDestAdapter extends RecyclerView.Adapter<PopDestAdapter.postView
         });
 
         setAnimation(viewHolder.myView, position);
-        viewHolder.setNameHotel(model.get(position).getTransLevel());
+        viewHolder.setNameHotel(model.get(position).getHotelName());
         viewHolder.setBus(model.get(position).getDestLevel());
         viewHolder.setFood(model.get(position).getDeals());
         viewHolder.setPrice(model.get(position).getPriceTotal());
@@ -109,7 +107,7 @@ public class PopDestAdapter extends RecyclerView.Adapter<PopDestAdapter.postView
             @Override
             public void onClick(View v) {
                 OfferDetailActivity.mPharmacy = model.get(viewHolder.getAdapterPosition());
-                Toast.makeText(mContext, model.get(viewHolder.getAdapterPosition()).getKeyId(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, model.get(viewHolder.getAdapterPosition()).getKeyId(), Toast.LENGTH_SHORT).show();
 
                 mDatabaseRef.child(ConstantsLabika.FIREBASE_LOCATION_OFFERS).child(model.get(viewHolder.getAdapterPosition()).getKeyId()).addValueEventListener(new ValueEventListener() {
                     @Override
@@ -250,7 +248,7 @@ public class PopDestAdapter extends RecyclerView.Adapter<PopDestAdapter.postView
 
         void setPrice(String Title) {
             TextView txt_title = (TextView) myView.findViewById(R.id.price);
-            txt_title.setText(Title);
+            txt_title.setText(mContext.getString(R.string.coin)+" "+Title);
         }
 
     }

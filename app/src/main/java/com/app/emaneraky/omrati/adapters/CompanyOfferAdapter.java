@@ -140,7 +140,7 @@ public class CompanyOfferAdapter extends RecyclerView.Adapter<CompanyOfferAdapte
 
         void setPrice(String price) {
             TextView txt_price = (TextView) myView.findViewById(R.id.price);
-            txt_price.setText("Ryial "+price);
+            txt_price.setText(context.getString(R.string.coin)+" "+price);
         }
 
         void setImage(String image) {

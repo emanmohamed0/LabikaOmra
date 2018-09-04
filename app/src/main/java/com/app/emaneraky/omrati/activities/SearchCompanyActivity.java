@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.emaneraky.omrati.R;
@@ -31,17 +33,17 @@ public class SearchCompanyActivity extends AppCompatActivity implements Recycler
     List<Company> searchDetails;
     SearchView searchView;
     private DatabaseReference mSearchRefData;
-
+    TextView lbl_name;
+    ImageView img_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_company);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.searchcompany);
-        setSupportActionBar(toolbar);
-        // toolbar fancy stuff
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Companies");
+        lbl_name = (TextView) findViewById(R.id.lbl_name);
+        lbl_name.setText(getString(R.string.Companies));
+        img_back = (ImageView) findViewById(R.id.img_back);
+        img_back.setVisibility(View.GONE);
 
         mSearchRefData = FirebaseDatabase.getInstance().getReference().child("company");
 

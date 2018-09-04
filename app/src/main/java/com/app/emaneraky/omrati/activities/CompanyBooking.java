@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +36,8 @@ public class CompanyBooking extends AppCompatActivity {
     private FirebaseAuth auth;
     private String current_User, mUser_Id;
     static Context c;
+    TextView lbl_name;
+    ImageView img_back;
     private List<DataFacility> model;
     String nameCompany;
     private DatabaseReference mBookingRefData;
@@ -44,13 +45,28 @@ public class CompanyBooking extends AppCompatActivity {
     private DatabaseReference mCompanyRefData;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent startIntent = new Intent(CompanyBooking.this, CompanyOffersActivity.class);
+        startIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startIntent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_booking);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.bookingbar);
-        toolbar.setTitle(R.string.Reservations);
-        setSupportActionBar(toolbar);
+        lbl_name = (TextView) findViewById(R.id.lbl_name);
+        lbl_name.setText(R.string.Reservations);
+        img_back = (ImageView) findViewById(R.id.img_back);
+
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         c = getBaseContext();
         mBookingList = (RecyclerView) findViewById(R.id.bookingrecycle);
@@ -86,22 +102,22 @@ public class CompanyBooking extends AppCompatActivity {
                         mBookingRefData.child(list_UserID).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                HashMap<String, ListBookingCompany> results = dataSnapshot.getValue(new GenericTypeIndicator<HashMap<String, ListBookingCompany>>() {
-                                });
-                                if (results != null) {
-                                    String address = dataSnapshot.child("address").getValue().toString();
-                                    String img = dataSnapshot.child("bookingImage").getValue().toString();
-                                    String email = dataSnapshot.child("email").getValue().toString();
-                                    String lastname = dataSnapshot.child("lastName").getValue().toString();
-                                    String firstname = dataSnapshot.child("firstName").getValue().toString();
-                                    String phone = dataSnapshot.child("phoneNum").getValue().toString();
-                                    ListBookingCompany bookingCompany = new ListBookingCompany(firstname, lastname, email, address, phone, img);
-                                    DetailBooking.bookingCompanies = bookingCompany;
+                                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                    if (data != null) {
+                                        String address = dataSnapshot.child("address").getValue().toString();
+                                        String img = dataSnapshot.child("bookingImage").getValue().toString();
+                                        String email = dataSnapshot.child("email").getValue().toString();
+                                        String lastname = dataSnapshot.child("lastName").getValue().toString();
+                                        String firstname = dataSnapshot.child("firstName").getValue().toString();
+                                        String phone = dataSnapshot.child("phoneNum").getValue().toString();
+                                        ListBookingCompany bookingCompany = new ListBookingCompany(firstname, lastname, email, address, phone, img);
+                                        DetailBooking.bookingCompanies = bookingCompany;
 
-                                    Intent detailOpen = new Intent(CompanyBooking.this, DetailBooking.class);
-                                    startActivity(detailOpen);
-                                } else
-                                    Toast.makeText(c, R.string.nodataload, Toast.LENGTH_SHORT).show();
+                                        Intent detailOpen = new Intent(CompanyBooking.this, DetailBooking.class);
+                                        startActivity(detailOpen);
+                                    } else
+                                        Toast.makeText(c, R.string.nodataload, Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override

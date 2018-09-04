@@ -15,7 +15,7 @@
         android:id="@+id/layout_drawer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="left">
+        android:layout_gravity="right">
 
         <include
             android:id="@+id/drawer_layout_side"

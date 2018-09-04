@@ -3,7 +3,6 @@ package com.app.emaneraky.omrati.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -21,7 +20,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +41,10 @@ import com.app.emaneraky.omrati.models.Booking;
 import com.app.emaneraky.omrati.models.Favorite;
 import com.app.emaneraky.omrati.models.Offer;
 import com.bumptech.glide.Glide;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -82,12 +84,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import javax.net.ssl.SSLEngineResult;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-import ss.com.bannerslider.banners.RemoteBanner;
-import ss.com.bannerslider.views.BannerSlider;
-
 public class OfferDetailActivity extends AppCompatActivity
         implements OnFABMenuSelectedListener, OnMapReadyCallback
         , GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -95,29 +91,36 @@ public class OfferDetailActivity extends AppCompatActivity
     public static Offer mPharmacy;
     private static GoogleMap mMap;
     FABRevealMenu fabMenu;
-    BannerSlider bannerSlider;
+    SliderLayout sliderImage;
     ProgressDialog progressDialog;
     DatabaseReference myDatabase;
     FirebaseAuth auth;
     MapView mapView;
     Location myLocation;
     private GoogleApiClient googleApiClient;
-    CircleImageView profilrImg;
     ImageView imgOffer;
     String nameCompany, mUser_Id;
     TextView mTxtPlace, mTxtPrice, mTxtPriceBus, mTxtPricePlace, mTxtPriceTotal, mTxtHotel,
             mTxtFood, mTxtBus, mTxtSeat, txtPricetotalChair, mTxtTime, mTxtTimecheckin, descr, status, trans;
     String email, name, phoneNum;
     Booking booking;
-    int numseat, seatback;
+    int numseat;
     String value, seat;
+    TextView lbl_name;
+    ImageView img_back;
+    ArrayList<String> imgList;
 
     @Override
     public void onBackPressed() {
         if (fabMenu.isShowing())
             fabMenu.closeMenu();
-        else
+        else {
             super.onBackPressed();
+//            Intent intent = new Intent(OfferDetailActivity.this, OffersActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+        }
+
     }
 
     @Override
@@ -132,11 +135,18 @@ public class OfferDetailActivity extends AppCompatActivity
         value = getIntent().getStringExtra("value");
         seat = getIntent().getStringExtra("mNumSeat");
 
+        imgList = new ArrayList<>();
+        lbl_name = (TextView) findViewById(R.id.lbl_name);
+        lbl_name.setText(nameCompany);
+        img_back = (ImageView) findViewById(R.id.img_back);
+        img_back.setVisibility(View.GONE);
+//        img_back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        setTitle(nameCompany);
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final FABRevealMenu fabMenu = (FABRevealMenu) findViewById(R.id.fabMenu);
 
@@ -149,9 +159,23 @@ public class OfferDetailActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+        sliderImage = (SliderLayout) findViewById(R.id.slider);
+//        bannerSlider = (BannerSlider) findViewById(R.id.slider);
+//        DemoSliderM();
+        if (mPharmacy.getContentImagesList() != null) {
+            if (mPharmacy.getContentImagesList().size() != 0) {
+                imgList.addAll(mPharmacy.getContentImagesList());
+                setUpViewPager(imgList);
+            } else {
+                imgList.add("https://firebasestorage.googleapis.com/v0/b/labika-omra.appspot.com/o/OfferImgs%2Frsz_21photo.jpg?alt=media&token=a70b1715-e43e-4de2-a280-a83b9bc3ced5");
 
-        bannerSlider = (BannerSlider) findViewById(R.id.slider);
-        DemoSliderM();
+                setUpViewPager(imgList);
+            }
+        } else {
+            imgList.add("https://firebasestorage.googleapis.com/v0/b/labika-omra.appspot.com/o/OfferImgs%2Frsz_21photo.jpg?alt=media&token=a70b1715-e43e-4de2-a280-a83b9bc3ced5");
+            setUpViewPager(imgList);
+        }
+
         myDatabase = FirebaseDatabase.getInstance().getReference();
         myDatabase.keepSynced(true);
         auth = FirebaseAuth.getInstance();
@@ -174,7 +198,7 @@ public class OfferDetailActivity extends AppCompatActivity
         mTxtPriceBus = (TextView) findViewById(R.id.pricebus);
         mTxtPricePlace = (TextView) findViewById(R.id.priceplace);
         mTxtPriceTotal = (TextView) findViewById(R.id.pricetotal);
-        txtPricetotalChair = (TextView) findViewById(R.id.pricetotalChair);
+        txtPricetotalChair = (TextView) findViewById(R.id.pricetotalChairoffer);
 
         mTxtSeat = (TextView) findViewById(R.id.seat);
         mTxtHotel = (TextView) findViewById(R.id.hotels);
@@ -187,16 +211,16 @@ public class OfferDetailActivity extends AppCompatActivity
         status = (TextView) findViewById(R.id.status);
         trans = (TextView) findViewById(R.id.trans);
 
-        profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
+//        profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
 
         mTxtPlace.setText(mPharmacy.getLocation());
 
 
-        mTxtPrice.setText("Ryial " + mPharmacy.getPriceTotal());
+        mTxtPrice.setText(getString(R.string.coin) + " " + mPharmacy.getPriceTotal());
         if (value.equals("value")) {
             mTxtPriceBus.setVisibility(View.GONE);
             mTxtPricePlace.setVisibility(View.GONE);
-            mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
+            mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " " + getString(R.string.coin));
             if (numseat == 0) {
                 numseat = 1;
                 txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
@@ -207,7 +231,7 @@ public class OfferDetailActivity extends AppCompatActivity
             if (value.equals("transonly")) {
                 mTxtPriceBus.setVisibility(View.GONE);
                 mTxtPriceTotal.setVisibility(View.GONE);
-                mTxtPricePlace.setText(getString(R.string.priceplace) + " = " + mPharmacy.getPricePlace() + " Ryial ");
+                mTxtPricePlace.setText(getString(R.string.priceplace) + " = " + mPharmacy.getPricePlace() + " " + getString(R.string.coin));
 //                mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
                 if (numseat == 0) {
                     numseat = 1;
@@ -218,7 +242,7 @@ public class OfferDetailActivity extends AppCompatActivity
             } else if (value.equals("transonly2")) {
                 mTxtPricePlace.setVisibility(View.GONE);
                 mTxtPriceTotal.setVisibility(View.GONE);
-                mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " Ryial ");
+                mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " " + getString(R.string.coin));
                 if (numseat == 0) {
                     numseat = 1;
                     txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
@@ -228,7 +252,7 @@ public class OfferDetailActivity extends AppCompatActivity
             } else if (value.equals("transonly3")) {
                 mTxtPriceBus.setVisibility(View.GONE);
                 mTxtPricePlace.setVisibility(View.GONE);
-                mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
+                mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " " + getString(R.string.coin));
                 if (numseat == 0) {
                     numseat = 1;
                     txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
@@ -236,15 +260,15 @@ public class OfferDetailActivity extends AppCompatActivity
                     txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceTotal()))));
                 }
             } else {
-                mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " Ryial ");
+                mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " " + getString(R.string.coin));
                 mTxtPricePlace.setVisibility(View.GONE);
                 mTxtPriceTotal.setVisibility(View.GONE);
                 if (numseat == 0) {
                     numseat = 1;
-                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceBus())) + " Ryial "));
+                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceBus())) + " " + getString(R.string.coin)));
 
                 } else {
-                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceBus())) + " Ryial "));
+                    txtPricetotalChair.setText(getString(R.string.pricetotalchair) + " = " + (numseat * (Integer.parseInt(mPharmacy.getPriceBus())) + " " + getString(R.string.coin)));
                 }
             }
 
@@ -275,7 +299,7 @@ public class OfferDetailActivity extends AppCompatActivity
 
         if (mPharmacy.getOfferImage() != null) {
             Glide.with(OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
-            Glide.with(OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
+//            Glide.with(OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
 
 //            Picasso.with(com.apps.labikaomra.activities.OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
 //            Picasso.with(com.apps.labikaomra.activities.OfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
@@ -298,15 +322,42 @@ public class OfferDetailActivity extends AppCompatActivity
         return formatter.format(calendar.getTime());
     }
 
-    private void DemoSliderM() {
-        for (int i = 0; i < mPharmacy.getContentImagesList().size(); i++) {
-            bannerSlider.addBanner(new RemoteBanner(mPharmacy.getContentImagesList().get(i)));
+//    private void DemoSliderM() {
+//        for (int i = 0; i < mPharmacy.getContentImagesList().size(); i++) {
+//            bannerSlider.addBanner(new RemoteBanner(mPharmacy.getContentImagesList().get(i)));
+//        }
+//        TextView mTxtName = (TextView) findViewById(R.id.hotelNameTxt);
+//        Button mWordBtn = (Button) findViewById(R.id.about_button);
+//        final View mWordTxt = findViewById(R.id.detailOffer);
+//
+//        mTxtName.setText(mPharmacy.getHotelName());
+//        mWordBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (mWordTxt.getVisibility() == View.VISIBLE)
+//                    mWordTxt.setVisibility(View.GONE);
+//                else
+//                    mWordTxt.setVisibility(View.VISIBLE);
+//            }
+//        });
+//    }
+
+    private void setUpViewPager(ArrayList<String> avatar) {
+
+        for (int i = 0; i < avatar.size(); i++) {
+            TextSliderView textSliderView = new TextSliderView(this);
+            textSliderView.description("").image(avatar.get(i)).setScaleType(BaseSliderView.ScaleType.Fit);
+
+            sliderImage.addSlider(textSliderView);
         }
-        TextView mTxtName = (TextView) findViewById(R.id.hotelNameTxt);
+        if (avatar.size() > 1) {
+            sliderImage.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
+            sliderImage.startAutoCycle();
+        }
         Button mWordBtn = (Button) findViewById(R.id.about_button);
         final View mWordTxt = findViewById(R.id.detailOffer);
 
-        mTxtName.setText(mPharmacy.getHotelName());
+
         mWordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -316,8 +367,8 @@ public class OfferDetailActivity extends AppCompatActivity
                     mWordTxt.setVisibility(View.VISIBLE);
             }
         });
-    }
 
+    }
 
     @Override
     public void onMenuItemSelected(View view) {
@@ -536,7 +587,7 @@ public class OfferDetailActivity extends AppCompatActivity
                                                                             .title(getString(R.string.your_location)));
 
                                                                     mMap.addMarker(new MarkerOptions().position(new LatLng(mPharmacy.getLat(), mPharmacy.getlang()))
-                                                                            .title(getString(R.string.companyname)+nameCompany));
+                                                                            .title(getString(R.string.companyname) + nameCompany));
 
                                                                 }
                                                             }
@@ -598,7 +649,7 @@ public class OfferDetailActivity extends AppCompatActivity
                                             .title(getString(R.string.your_location)));
 
                                     mMap.addMarker(new MarkerOptions().position(new LatLng(mPharmacy.getLat(), mPharmacy.getlang()))
-                                            .title(nameCompany));
+                                            .title(getString(R.string.companyname) + nameCompany));
 
                                 }
                             }

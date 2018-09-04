@@ -50,7 +50,7 @@ dependencies {
     compile 'com.google.firebase:firebase-storage:9.8.0'
     compile 'com.firebaseui:firebase-ui-database:0.6.0'
     compile 'com.google.firebase:firebase-messaging:9.8.0'
-
+    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
 //    compile 'com.firebaseui:firebase-ui-auth:0.6.0'
@@ -59,7 +59,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'nl.psdcompany:duo-navigation-drawer:2.0.6'
-    compile 'com.ss.bannerslider:bannerslider:1.6.1'
+//    compile 'com.ss.bannerslider:bannerslider:1.6.1'
     compile 'com.github.medyo:android-about-page:1.1.1'
     compile 'info.hoang8f:fbutton:1.0.5'
     compile 'com.github.piotrek1543:CustomSpinner:0.1'
@@ -78,7 +78,8 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.ParkSangGwon:TedPicker:v1.0.10'
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
-    testCompile 'junit:junit:4.12'
+
+    compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'com.iceteck.silicompressorr:silicompressor:2.1'
     compile 'com.android.volley:volley:1.0.0'
 

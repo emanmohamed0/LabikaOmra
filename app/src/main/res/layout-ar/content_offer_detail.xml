@@ -18,72 +18,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:cardBackgroundColor="#091a32"
-                app:cardElevation="2dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/button_style"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_gravity="bottom"
-                            android:background="@color/colorPrimary" />
-
-                        <ss.com.bannerslider.views.BannerSlider
-                            android:id="@+id/slider"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="50dp"
-                            app:paddingEnd="120dp"
-                            app:pager_animation="CubeIn" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:layout_below="@id/slider"
-                            android:layout_gravity="bottom"
-                            android:layout_marginBottom="48dp"
-                            android:background="@color/colorAccent" />
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/profilrImg"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_gravity="bottom"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:background="@drawable/button_style"
-                            app:civ_border_color="@color/colorAccent"
-                            app:civ_border_width="3dp" />
-
-                        <TextView
-                            android:id="@+id/hotelNameTxt"
-                            android:layout_width="130dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="bottom"
-                            android:layout_marginBottom="40dp"
-                            android:layout_marginLeft="115dp"
-                            android:background="@drawable/button_style"
-                            android:gravity="center"
-                            android:textColor="#FFF" />
-
-                    </FrameLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                android:layout_height="250dp"
+                app:auto_cycle="true"
+                app:indicator_visibility="visible"
+                app:pager_animation="Accordion"
+                app:pager_animation_span="1100" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -138,7 +80,7 @@
                             <TextView
                                 android:id="@+id/dispaly_nameCompany"
                                 android:layout_width="match_parent"
-                                android:gravity="center"
+                                android:gravity="right"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:text="@string/companyname_hint"
@@ -149,7 +91,7 @@
                             <TextView
                                 android:id="@+id/bus"
                                 android:layout_width="match_parent"
-                                android:gravity="center"
+                                android:gravity="right"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="@dimen/pad_10dp"
@@ -161,7 +103,7 @@
                             <TextView
                                 android:id="@+id/food"
                                 android:layout_width="match_parent"
-                                android:gravity="center"
+                                android:gravity="right"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="@dimen/pad_10dp"
@@ -173,7 +115,7 @@
                             <TextView
                                 android:id="@+id/hotels"
                                 android:layout_width="match_parent"
-                                android:gravity="center"
+                                android:gravity="right"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="10dp"
@@ -185,7 +127,7 @@
                             <TextView
                                 android:id="@+id/seat"
                                 android:layout_width="match_parent"
-                                android:gravity="center"
+                                android:gravity="right"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="10dp"
@@ -197,7 +139,7 @@
                             <TextView
                                 android:id="@+id/price"
                                 android:layout_width="match_parent"
-                                android:gravity="center"
+                                android:gravity="right"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/pad_5dp"
                                 android:paddingTop="@dimen/pad_10dp"
@@ -331,7 +273,7 @@
                         android:textStyle="italic" />
 
                     <TextView
-                        android:id="@+id/pricetotalChair"
+                        android:id="@+id/pricetotalChairoffer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/pad_5dp"
@@ -360,6 +302,12 @@
                                 android:layout_gravity="right"
                                 android:layoutDirection="rtl"
                                 android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:padding="4dp"
+                                    android:src="@drawable/ic_gps_fixed_pry" />
+
 
                                 <TextView
                                     android:id="@+id/locationTxt"
@@ -367,14 +315,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="right|center_vertical"
                                     android:layout_weight="1"
+                                    android:padding="@dimen/pad_10dp"
                                     android:textColor="@color/about_description_color" />
 
-                                <ImageView
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:padding="4dp"
-                                    android:src="@drawable/ic_gps_fixed_pry" />
-                            </LinearLayout>
+                                 </LinearLayout>
                         </TableRow>
                     </TableLayout>
 

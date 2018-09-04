@@ -21,7 +21,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +38,10 @@ import com.app.emaneraky.omrati.R;
 import com.app.emaneraky.omrati.models.Company;
 import com.app.emaneraky.omrati.models.Offer;
 import com.bumptech.glide.Glide;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -65,8 +68,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import ss.com.bannerslider.banners.RemoteBanner;
-import ss.com.bannerslider.views.BannerSlider;
+//import ss.com.bannerslider.banners.RemoteBanner;
+//import ss.com.bannerslider.views.BannerSlider;
 
 import static android.content.Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP;
 
@@ -80,39 +83,44 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
     ImageView imgOffer;
     private static GoogleMap mMap;
     FABRevealMenu fabMenu;
-    BannerSlider bannerSlider;
+    //    BannerSlider bannerSlider;
     ProgressDialog progressDialog;
     DatabaseReference myDatabase;
     FirebaseAuth auth;
     MapView mapView;
     private GoogleApiClient googleApiClient;
-    CircleImageView profilrImg;
+    //    CircleImageView profilrImg;
+    TextView lbl_name;
+    ImageView img_back;
     TextView mTxtPlace, mTxtPrice, mTxtPriceBus, mTxtPricePlace, mTxtPriceTotal, mTxtHotel, mTxtFood, mTxtBus, mTxtSeat, mTxtTime, mTxtTimecheckin, descr, status, trans;
     String nameCompany;
-
-    @Override
-    public void onBackPressed() {
-        if (fabMenu.isShowing())
-            fabMenu.closeMenu();
-        else {
-            Intent intent = new Intent(CompanyOfferDetailActivity.this, CompanyOffersActivity.class);
-            startActivity(intent);
-        }
-
-    }
-
+    SliderLayout sliderImage;
+    ArrayList<String> imgList;
+//    @Override
+//    public void onBackPressed() {
+////        if (fabMenu.isShowing())
+////            fabMenu.closeMenu();
+////        else {
+//        super.onBackPressed();
+//            Intent intent = new Intent(CompanyOfferDetailActivity.this, CompanyOffersActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+////        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.animation1, R.anim.animation2);
         setContentView(R.layout.activity_company_offer_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        imgList = new ArrayList<>();
         nameCompany = getIntent().getStringExtra("nameCompany");
-        setTitle(nameCompany);
+
+        lbl_name = (TextView) findViewById(R.id.lbl_name);
+        lbl_name.setText(nameCompany);
+        img_back = (ImageView) findViewById(R.id.img_back);
+
+        img_back.setVisibility(View.GONE);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final FABRevealMenu fabMenu = (FABRevealMenu) findViewById(R.id.fabMenu);
@@ -143,7 +151,7 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         mTxtTimecheckin = (TextView) findViewById(R.id.timecheckin);
         descr = (TextView) findViewById(R.id.descr);
         TextView name = (TextView) findViewById(R.id.dispaly_nameCompany);
-        profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
+//        profilrImg = (CircleImageView) findViewById(R.id.profilrImg);
         status = (TextView) findViewById(R.id.status);
         trans = (TextView) findViewById(R.id.trans);
 
@@ -153,10 +161,10 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         trans.setText(mPharmacy.getValue_twotrans());
 
 
-        mTxtPrice.setText("Ryial " + mPharmacy.getPriceTotal());
-        mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " Ryial ");
-        mTxtPricePlace.setText(getString(R.string.priceplace) + " = " + mPharmacy.getPricePlace() + " Ryial ");
-        mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " Ryial ");
+        mTxtPrice.setText(getString(R.string.coin) + mPharmacy.getPriceTotal());
+        mTxtPriceBus.setText(getString(R.string.pricebus) + " = " + mPharmacy.getPriceBus() + " " + getString(R.string.coin));
+        mTxtPricePlace.setText(getString(R.string.priceplace) + " = " + mPharmacy.getPricePlace() + " " + getString(R.string.coin));
+        mTxtPriceTotal.setText(getString(R.string.pricetotal) + " = " + mPharmacy.getPriceTotal() + " " + getString(R.string.coin));
 
 
         mTxtHotel.setText(mPharmacy.getHotelName());
@@ -177,14 +185,27 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         name.setText(nameCompany);
 
         if (mPharmacy.getOfferImage() != null) {
-            Glide.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
+//            Glide.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
             Glide.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
 //            Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(profilrImg);
 //            Picasso.with(CompanyOfferDetailActivity.this).load(mPharmacy.getOfferImage()).into(imgOffer);
         }
+        sliderImage = (SliderLayout) findViewById(R.id.slider);
 
-        bannerSlider = (BannerSlider) findViewById(R.id.slider);
-        DemoSliderM();
+//        bannerSlider = (BannerSlider) findViewById(R.id.slider);
+//        DemoSliderM();
+        if (mPharmacy.getContentImagesList() != null) {
+            if (mPharmacy.getContentImagesList().size() != 0) {
+                imgList.addAll(mPharmacy.getContentImagesList());
+                setUpViewPager(imgList);
+            } else {
+                imgList.add("https://firebasestorage.googleapis.com/v0/b/labika-omra.appspot.com/o/OfferImgs%2Frsz_21photo.jpg?alt=media&token=a70b1715-e43e-4de2-a280-a83b9bc3ced5");
+                setUpViewPager(imgList);
+            }
+        }else {
+            imgList.add("https://firebasestorage.googleapis.com/v0/b/labika-omra.appspot.com/o/OfferImgs%2Frsz_21photo.jpg?alt=media&token=a70b1715-e43e-4de2-a280-a83b9bc3ced5");
+            setUpViewPager(imgList);
+        }
         myDatabase = FirebaseDatabase.getInstance().getReference();
         myDatabase.keepSynced(true);
         auth = FirebaseAuth.getInstance();
@@ -218,18 +239,48 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         return formatter.format(calendar.getTime());
     }
 
-    private void DemoSliderM() {
-        //add banner using image url
-        for (int i = 0; i < mPharmacy.getContentImagesList().size(); i++) {
-            bannerSlider.addBanner(new RemoteBanner(mPharmacy.getContentImagesList().get(i)));
+//    private void DemoSliderM() {
+//        //add banner using image url
+//        for (int i = 0; i < mPharmacy.getContentImagesList().size(); i++) {
+//            bannerSlider.addBanner(new RemoteBanner(mPharmacy.getContentImagesList().get(i)));
+//        }
+////        RatingBar mRatingBar = (RatingBar) findViewById(R.id.profile_pharmacy_rate);
+//        TextView mTxtName = (TextView) findViewById(R.id.hotelNameTxt);
+//        Button mWordBtn = (Button) findViewById(R.id.about_button);
+//        final View mWordTxt = findViewById(R.id.detailOffer);
+//
+//        mTxtName.setText(nameCompany);
+////        mRatingBar.setRating(Float.parseFloat(String.valueOf(mPharmacy.getRate() / mPharmacy.getNumOfRaters())));
+//        mWordBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (mWordTxt.getVisibility() == View.VISIBLE)
+//                    mWordTxt.setVisibility(View.GONE);
+//                else
+//                    mWordTxt.setVisibility(View.VISIBLE);
+//            }
+//        });
+////        mWordTxt.setText(mPharmacy.getDetailWord());
+//
+//
+//    }
+
+    private void setUpViewPager(ArrayList<String> avatar) {
+
+        for (int i = 0; i < avatar.size(); i++) {
+            TextSliderView textSliderView = new TextSliderView(this);
+            textSliderView.description("").image(avatar.get(i)).setScaleType(BaseSliderView.ScaleType.Fit);
+
+            sliderImage.addSlider(textSliderView);
         }
-//        RatingBar mRatingBar = (RatingBar) findViewById(R.id.profile_pharmacy_rate);
-        TextView mTxtName = (TextView) findViewById(R.id.hotelNameTxt);
+        if (avatar.size() > 1) {
+            sliderImage.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
+            sliderImage.startAutoCycle();
+        }
         Button mWordBtn = (Button) findViewById(R.id.about_button);
         final View mWordTxt = findViewById(R.id.detailOffer);
 
-        mTxtName.setText(nameCompany);
-//        mRatingBar.setRating(Float.parseFloat(String.valueOf(mPharmacy.getRate() / mPharmacy.getNumOfRaters())));
+
         mWordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,11 +290,7 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
                     mWordTxt.setVisibility(View.VISIBLE);
             }
         });
-//        mWordTxt.setText(mPharmacy.getDetailWord());
-
-
     }
-
 
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
@@ -363,13 +410,6 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
 
@@ -417,17 +457,6 @@ public class CompanyOfferDetailActivity extends AppCompatActivity
         }
     }
 
-    private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {
-        Drawable background = ContextCompat.getDrawable(context, R.drawable.ic_location_on_black_24dp);
-        background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorDrawableResourceId);
-        vectorDrawable.setBounds(40, 20, vectorDrawable.getIntrinsicWidth() + 40, vectorDrawable.getIntrinsicHeight() + 20);
-        Bitmap bitmap = Bitmap.createBitmap(background.getIntrinsicWidth(), background.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        background.draw(canvas);
-        vectorDrawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-    }
 
     @Override
     public void onConnectionSuspended(int i) {

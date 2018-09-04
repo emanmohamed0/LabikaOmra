@@ -1,11 +1,11 @@
 package com.app.emaneraky.omrati.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,29 +34,47 @@ public class FavoriteActivity extends AppCompatActivity {
     private RecyclerView recChatList;
     private View view;
     private FirebaseAuth auth;
-    private String current_User, mUser_Id ,nameCompany;
+    private String current_User, mUser_Id, nameCompany;
     static Context c;
 
     private DatabaseReference mChatRefData;
     private DatabaseReference mOfferRefData;
     private DatabaseReference mCompanyRefData;
 
+    TextView lbl_name;
+    ImageView img_back;
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(FavoriteActivity.this, Home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.favoritebar);
-        toolbar.setTitle("FavoriteOffers");
-        setSupportActionBar(toolbar);
+        lbl_name = (TextView) findViewById(R.id.lbl_name);
+        lbl_name.setText(getString(R.string.FavoriteOffers));
+        img_back = (ImageView) findViewById(R.id.img_back);
 
-        c =getBaseContext();
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
+        c = getBaseContext();
         recChatList = (RecyclerView) findViewById(R.id.favoriterecycle);
         recChatList.setHasFixedSize(true);
         recChatList.setLayoutManager(new LinearLayoutManager(this));
 
         auth = FirebaseAuth.getInstance();
-        mUser_Id = Global.get_UserID(FavoriteActivity.this,"mUser_Id");
+        mUser_Id = Global.get_UserID(FavoriteActivity.this, "mUser_Id");
         current_User = auth.getCurrentUser().getUid();
         mChatRefData = FirebaseDatabase.getInstance().getReference().child(ConstantsLabika.FIREBASE_LOCATION_FAVORITE).child(mUser_Id);
         mOfferRefData = FirebaseDatabase.getInstance().getReference().child(ConstantsLabika.FIREBASE_LOCATION_OFFERS);
@@ -84,27 +102,36 @@ public class FavoriteActivity extends AppCompatActivity {
                         mOfferRefData.child(keyId).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                Offer offer = dataSnapshot.getValue(Offer.class);
-                                viewHolder.setBus(offer.getDestLevel());
-                                viewHolder.setFood(offer.getDeals());
-                                viewHolder.setHotels(offer.getTransLevel());
-                                viewHolder.setPrice(offer.getPriceTotal());
-                                viewHolder.setImage(offer.getOfferImage());
-                                nameCompany = dataSnapshot.child("companyKeyId").getValue().toString();
+                                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                    if (data != null) {
+                                        Offer offer = dataSnapshot.getValue(Offer.class);
+                                        viewHolder.setBus(offer.getDestLevel());
+                                        viewHolder.setFood(offer.getDeals());
+                                        viewHolder.setHotels(offer.getTransLevel());
+                                        viewHolder.setPrice(offer.getPriceTotal());
+                                        viewHolder.setImage(offer.getOfferImage());
+                                        viewHolder.setNameHotel(offer.getHotelName());
+                                        nameCompany = dataSnapshot.child("companyKeyId").getValue().toString();
 
-                                mCompanyRefData.child(nameCompany).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String firstName = dataSnapshot.child("firstName").getValue().toString();
-                                        viewHolder.setName(firstName);
+                                        mCompanyRefData.child(nameCompany).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                String firstName = dataSnapshot.child("firstName").getValue().toString();
+                                                viewHolder.setName(firstName);
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
                                     }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
+                                    else
+                                        Toast.makeText(c, R.string.nodataload, Toast.LENGTH_SHORT).show();
+                                }
                             }
+
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
                             }
@@ -137,6 +164,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
 
         }
+
         void setNameHotel(String Title) {
             TextView txt_hotel = (TextView) myView.findViewById(R.id.hotels);
             txt_hotel.setText(Title);

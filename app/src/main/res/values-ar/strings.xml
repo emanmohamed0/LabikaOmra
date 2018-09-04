@@ -46,6 +46,7 @@
     <string name="enable_gps">Goto Settings Page To Enable GPS</string>
     <string name="title_activity_company_login">تسجيل دخول لشركة</string>
     <string name="login_account">الدخول للحساب ..</string>
+    <string name="coin">ريال</string>
     <string name="faild">فشل</string>
     <string name="singleandfamily">عزاب وعوائل</string>
     <string name="less6">اقل من 6</string>
@@ -187,6 +188,7 @@
     <string name="sendPass">تم ارسال الباسورد</string>
     <string name="enteremail">يرجى ادخال البريد الالكترونى</string>
     <string name="companyname">اسم الشركة :</string>
+    <string name="FavoriteOffers">العروض المفضلة</string>
 
     <string-array name="types_hotel">
 

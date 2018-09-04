@@ -14,24 +14,26 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/pad_10dp"
-            android:layout_marginTop="10dp"
-            android:paddingTop="@dimen/pad_10dp"
-            android:text="@string/persondata"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/sp18"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="@dimen/pad_10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:paddingTop="@dimen/pad_10dp"-->
+            <!--android:text="@string/persondata"-->
+            <!--android:textColor="@android:color/black"-->
+            <!--android:textSize="@dimen/sp18"-->
+            <!--android:textStyle="bold" />-->
 
         <Button
             android:id="@+id/login"
             android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/sp18"
             android:background="@drawable/button_style2"
             android:drawableLeft="@drawable/ic_person_black_24dp"
-            android:text="@string/login"
+            android:text="@string/persondata"
             android:textColor="@color/colorPrimary" />
 
         <android.support.design.widget.TextInputLayout

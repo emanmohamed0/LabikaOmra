@@ -12,7 +12,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -67,19 +66,36 @@ public class ConfirmBooking extends AppCompatActivity {
     //    String image_uri = "";
     Uri image_uriget = null;
     byte[] thumb_byte;
+    TextView lbl_name;
+    ImageView img_back;
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(ConfirmBooking.this, DialogBooking.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_booking);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.barConfirm);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle(getString(R.string.titleconfirm));
+
+        lbl_name = (TextView) findViewById(R.id.lbl_name);
+        lbl_name.setText(getString(R.string.titleconfirm));
+        img_back = (ImageView) findViewById(R.id.img_back);
+
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         CompanyKeyId = getIntent().getStringExtra("CompanyKeyId");
-        mUser_Id = Global.get_UserID(ConfirmBooking.this,"mUser_Id");
+        mUser_Id = Global.get_UserID(ConfirmBooking.this, "mUser_Id");
         auth = FirebaseAuth.getInstance();
         if (mUser_Id == null) {
             mUser_Id = auth.getCurrentUser().getUid();
@@ -299,7 +315,7 @@ public class ConfirmBooking extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Global.set_UserId(ConfirmBooking.this,"mUser_Id",mUser_Id);
+                            Global.set_UserId(ConfirmBooking.this, "mUser_Id", mUser_Id);
                             Intent intent = new Intent(ConfirmBooking.this, Home.class);
                             startActivity(intent);
                             progressDialog.dismiss();
@@ -330,7 +346,7 @@ public class ConfirmBooking extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             bookingUser(booking);
                             Intent intent = new Intent(ConfirmBooking.this, Home.class);
-                            Global.set_UserId(ConfirmBooking.this,"mUser_Id",mUser_Id);
+                            Global.set_UserId(ConfirmBooking.this, "mUser_Id", mUser_Id);
                             startActivity(intent);
                             progressDialog.dismiss();
                             finish();

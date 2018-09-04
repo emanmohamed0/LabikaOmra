@@ -20,9 +20,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.emaneraky.omrati.Application_config.myApplication;
@@ -73,17 +75,34 @@ public class OffersActivity extends AppCompatActivity implements
     static List<String> priceList;
     String value;
     Date checkIn, checkOut, checkOutoffer, checkInoffer;
+    TextView lbl_name;
+    ImageView img_back;
 
+    //    @Override
+//    public void onBackPressed() {
+//       new Intent(OffersActivity.this, CompanyBooking.class);
+//
+//        Intent intent = new Intent(OffersActivity.this, CompleteSearchActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offers);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getString(R.string.title_activity_offers));
+        lbl_name = (TextView) findViewById(R.id.lbl_name);
+        lbl_name.setText(getString(R.string.title_activity_offers));
+        img_back = (ImageView) findViewById(R.id.img_back);
+        img_back.setVisibility(View.GONE);
+        //        img_back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
         mcontext = getBaseContext();
-        mUser_Id= Global.get_UserID(OffersActivity.this,"mUser_Id");
+        mUser_Id = Global.get_UserID(OffersActivity.this, "mUser_Id");
 //        mUser_Id = getIntent().getStringExtra("mUser_Id");
         numseatback = getIntent().getIntExtra("numseat", 1);
 
@@ -238,6 +257,7 @@ public class OffersActivity extends AppCompatActivity implements
                 adapter = new OfferAdapter(mcontext, clientList, mUser_Id, numseatback, value);
                 mCategoriesRecyclerView.setAdapter(adapter);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 //                Toast.makeText(mcontext, R.string.nodataload, Toast.LENGTH_SHORT).show();

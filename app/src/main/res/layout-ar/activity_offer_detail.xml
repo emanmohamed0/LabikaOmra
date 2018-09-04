@@ -16,9 +16,8 @@
         <include
             layout="@layout/app_bar"/>
 
-
         <include
-            layout="@layout/content_company_offer_detail" />
+            layout="@layout/content_offer_detail" />
     </LinearLayout>
 
 
@@ -42,7 +41,7 @@
         app:animateItems="true"
         app:menuBackgroundColor="@color/colorPrimaryDark"
         app:menuDirection="up"
-        app:menuRes="@menu/menu_fab"
+        app:menuRes="@menu/menu_fab2"
         app:menuTitleTextColor="@color/colorWhite"
         app:showOverlay="true"
         app:showTitle="true" />
