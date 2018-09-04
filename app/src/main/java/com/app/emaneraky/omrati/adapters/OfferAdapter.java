@@ -106,7 +106,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.postViewHold
         }
 
 
-        if (model.get(position).getContentImagesList() != null) {
+        if (model.get(position)!= null) {
 
             viewHolder.myView.setOnClickListener(new View.OnClickListener() {
                 @Override
